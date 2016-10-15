@@ -150,9 +150,7 @@ namespace TowerBotUniversalConsole
         //private static void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         private static void OnTimer(object sender, object args)
         {
-            //Task.Run(async () =>
-            //{
-            var teste = TowerBotFoundationCore.AirportWeather.GetWeather("SB*");
+            TowerBotFoundationCore.AirportWeather.GetWeather("SB*");
 
             TowerBotLibCore.AlertFilter currentAlertFilter = null; // Para tratatamento de erro.
             string messageFlow = "No Flow";

@@ -57,7 +57,7 @@ namespace TowerBotLibCore
         public string ID { get; set; }
         public DateTime TimeCreated { get; set; }
         
-        public DateTime TimeToBeDeleted { get; set; }
+        public DateTime TimeToBeRemoved { get; set; }
         public string AirplaneID { get; set; }
         public IconType Icon { get; set; }
 
@@ -145,8 +145,8 @@ namespace TowerBotLibCore
             {
 
 
-                if (item.TimeToBeDeleted.Year < 2000)
-                    item.TimeToBeDeleted = item.TimeCreated.AddDays(3);
+                if (item.TimeToBeRemoved.Year < 2000)
+                    item.TimeToBeRemoved = item.TimeCreated.AddDays(3);
 
                 item.Radar = Radar.GetRadar(item.Radar.Name);
 
@@ -186,7 +186,7 @@ namespace TowerBotLibCore
             this.FilterName = filtername;
             this.Radar = radar;
             TimeCreated = DateTime.Now;
-            TimeToBeDeleted = DateTime.Now.AddHours(1);
+            TimeToBeRemoved = DateTime.Now.AddHours(1);
             this.Icon = iconType;
         }
 
@@ -207,7 +207,7 @@ namespace TowerBotLibCore
 
             this.Radar = radar;
             TimeCreated = DateTime.Now;
-            TimeToBeDeleted = DateTime.Now.AddHours(1);
+            TimeToBeRemoved = DateTime.Now.AddHours(1);
             this.Icon = iconType;
             TimeCreated = new DateTime(
                 TimeCreated.Ticks - (TimeCreated.Ticks % TimeSpan.TicksPerSecond),

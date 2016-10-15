@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0",
-    "signature": "4aad51608c1ec17c26524e8e1f8197d83c658d96"
+    "signature": "ad658cd593d94215fa178a144e87588044887f7f"
   },
   "compilationOptions": {},
   "targets": {
@@ -58,12 +58,13 @@
           "lib/netstandard1.3/System.Runtime.Serialization.Primitives.dll": {}
         }
       },
-      "TweetinviAPI/1.1.0.4": {
+      "TweetinviAPI/1.1.1": {
         "dependencies": {
           "Autofac": "4.1.0",
           "Newtonsoft.Json": "9.0.1"
         },
         "runtime": {
+          "lib/netstandard1.5/NET1.5.dll": {},
           "lib/netstandard1.5/Tweetinvi.Controllers.dll": {},
           "lib/netstandard1.5/Tweetinvi.Core.dll": {},
           "lib/netstandard1.5/Tweetinvi.Credentials.dll": {},
@@ -88,7 +89,7 @@
           "Newtonsoft.Json": "9.0.1",
           "TowerBotFoundationCore": "1.0.0",
           "Microsoft.NETCore.Portable.Compatibility": "1.0.1-rc2-24027",
-          "TweetinviAPI": "1.1.0.4"
+          "TweetinviAPI": "1.1.1"
         },
         "runtime": {
           "TowerBotLibCore.dll": {}
@@ -132,10 +133,10 @@
       "serviceable": true,
       "sha512": "sha512-HZ6Du5QrTG8MNJbf4e4qMO3JRAkIboGT5Fk804uZtg3Gq516S7hAqTm2UZKUHa7/6HUGdVy3AqMQKbns06G/cg=="
     },
-    "TweetinviAPI/1.1.0.4": {
+    "TweetinviAPI/1.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-1R1xa8rT/gd/VFmpMvQfyV0Yc1aPiyVUwGvgjvKCNBJ3kF4tnKwZvzMLQ367y8RBv9i9qjwaOiRdgRFf+mCRDQ=="
+      "sha512": "sha512-59zLwW4s9eGiYnpkMsH/xCT/sJu1ZLPnmfjuPzC4dpQUXloGkHL5YI8NGLwY96/a8fGHAr1K0Nwmr/lEQX09Hw=="
     },
     "TowerBotFoundationCore/1.0.0": {
       "type": "project",

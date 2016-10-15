@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using TowerBotFoundationCore;
+using TowerBotLibCore.Filters;
 
 namespace TowerBotLibCore
 {
@@ -22,6 +23,8 @@ namespace TowerBotLibCore
         public int Port { get; set; }
         [IgnoreDataMemberAttribute]
         public List<AirplaneBasic> CurrentAirplanes { get; set; }
+        [IgnoreDataMemberAttribute]
+        public List<Filters.IFilter> Filters { get; set; }
         [IgnoreDataMemberAttribute]
         public List<AirplaneBasic> LastAirplanes { get; set; }
         [IgnoreDataMemberAttribute]
@@ -178,6 +181,7 @@ namespace TowerBotLibCore
             LastAirplanes = new List<AirplaneBasic>();
             this.ModeSAllowed = true;
             ListRunways = new List<RunwayBasic>();
+            Filters = new List<IFilter>();
             //CurrentAlerts = new List<AlertFilter>();
         }
 
@@ -192,6 +196,13 @@ namespace TowerBotLibCore
                 IsRaw = true,
                 IsActive = true,
                 EndpointUrl = "http://162.243.32.213:8088/json",
+                Filters = new List<IFilter>()
+                {
+                    new FilterLogAll(),
+                    new FilterUnknowAirplanes(false, false),
+                    new FilterWide(),
+                    new FilterRatification(false, false, false, false, true)
+                },
             });
             listRadars.Add(new Radar()
             {
@@ -208,6 +219,16 @@ namespace TowerBotLibCore
                 LongitudeY = -47.256692,
                 LatitudeY = -16.194103,
                 RadarParent = Radar.GetRadar("BRA"),
+                Filters = new List<IFilter>()
+                {
+                    new FilterLogAll(),
+                    new FilterUnknowAirplanes(false, false),
+                    new FilterWide(),
+                    new FilterBackingOrGo(),
+                    new FilterRatification(false, false, false, false, true),
+                    new FilterMetarDF(),
+                    new FilterAlertAll(),
+                },
                 ListBrothersRadars = new List<Radar>()
                 {
                     Radar.GetRadar("SWUZ"),

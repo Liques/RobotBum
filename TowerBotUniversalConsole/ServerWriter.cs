@@ -56,7 +56,7 @@ namespace TowerBotUniversalConsole
 
 
             // Verificar se algum alerta antigo passou da data de validade e remove-lo.
-            List<AlertFilter> listOldBeyondValidationAlerts = AlertFilter.ListOfAlerts.Where(s => s.TimeToBeDeleted <= DateTime.Now).ToList();
+            List<AlertFilter> listOldBeyondValidationAlerts = AlertFilter.ListOfAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
             for (int i = 0; i < listOldBeyondValidationAlerts.Count; i++)
             {
                 AlertFilter.ListOfAlerts.Remove(listOldBeyondValidationAlerts[i]);
@@ -65,7 +65,7 @@ namespace TowerBotUniversalConsole
             for (int i = 0; i < listNewAlerts.Count; i++)
             {
                 if (listNewAlerts[i].AlertType == FilterAlertType.NoAlert && listNewAlerts[i].Radar.Name == "BSB")                    
-                    listNewAlerts[i].TimeToBeDeleted = DateTime.Now.AddDays(3);
+                    listNewAlerts[i].TimeToBeRemoved = DateTime.Now.AddDays(3);
 
             }
 

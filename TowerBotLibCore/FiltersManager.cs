@@ -10,11 +10,15 @@ namespace TowerBotLibCore
 {
     public static class FiltersManager
     {
-        public static List<GroupFilters> ListFilterGroup { get; set; }
         public static List<AirplaneBasic> ListOldAirplanesDF { get; set; }
         private static List<Airport> listMainAirports = new List<Airport>();
         public static List<Airport> ListMainAirports { get { return listMainAirports; } }
 
+        public static DateTime TimeNext { get; set; }
+        public static TimeSpan Period { get; set; }
+        public static List<AlertFilter> listOldAlerts { get; set; }
+
+        private static List<Radar> listRadars { get; set; }
 
         static FiltersManager()
         {
@@ -23,89 +27,46 @@ namespace TowerBotLibCore
             listMainAirports.Add(Airport.GetAirportByIata("SWUZ"));
 
             ListOldAirplanesDF = new List<AirplaneBasic>();
-            ListFilterGroup = new List<GroupFilters>();
+            Period = new TimeSpan(0, 0, 15);
+            listOldAlerts = new List<AlertFilter>();
 
-            GroupFilters listFilterBrazilArea = new GroupFilters();
-            listFilterBrazilArea.Period = new TimeSpan(0, 0, 15);
-            listFilterBrazilArea.Radar = Radar.GetRadar("BRA");
-            listFilterBrazilArea.AddFilter(new FilterLogAll());
-            listFilterBrazilArea.AddFilter(new FilterUnknowAirplanes(false, false));
-            listFilterBrazilArea.AddFilter(new FilterWide());
-            listFilterBrazilArea.AddFilter(new FilterRatification(false, false, false, false, true));
-            //listFilterBrazilArea.AddFilter(new FilterGoodEvening());
-           
-            listFilterBrazilArea.AddFilter(new FilterAlertAll());
+            listRadars = new List<Radar>()
+            {
+                Radar.GetRadar("BRA"),
+                Radar.GetRadar("BSB"),
+            };
 
-            ListFilterGroup.Add(listFilterBrazilArea);
-
-            GroupFilters listFilterBrasiliaArea = new GroupFilters();
-            listFilterBrasiliaArea.Period = new TimeSpan(0, 0, 15);
-            listFilterBrasiliaArea.Radar = Radar.GetRadar("BSB");
-            listFilterBrasiliaArea.AddFilter(new FilterLogAll());
-            listFilterBrasiliaArea.AddFilter(new FilterUnknowAirplanes(false, false));
-            listFilterBrasiliaArea.AddFilter(new FilterWide());
-            listFilterBrasiliaArea.AddFilter(new FilterBackingOrGo());
-            listFilterBrasiliaArea.AddFilter(new FilterRatification(false, true, false, true, true));
-            listFilterBrasiliaArea.AddFilter(new FilterMetarDF());
-            listFilterBrasiliaArea.AddFilter(new FilterAlertAll());
-            ListFilterGroup.Add(listFilterBrasiliaArea);
-
-            //            GroupFilters listFilterCuritibaArea = new GroupFilters();
-            //            listFilterCuritibaArea.Period = new TimeSpan(0, 0, 15);
-            //            listFilterCuritibaArea.Radar = Radar.GetRadar("CWB");
-            //            listFilterCuritibaArea.AddFilter(new FilterLogAll());
-            //            listFilterCuritibaArea.AddFilter(new FilterUnknowAirplanes(false, true));
-            //            listFilterCuritibaArea.AddFilter(new FilterWide());
-            //            listFilterCuritibaArea.AddFilter(new FilterBackingOrGo());
-            //            listFilterCuritibaArea.AddFilter(new FilterRatification(true, true, true, true, true));
-            //            listFilterCuritibaArea.AddFilter(new FilterMetarCWB());
-            //            //ListFilterGroup.Add(listFilterCuritibaArea);
-
-
-            GroupFilters listFilterSAOArea = new GroupFilters();
-            listFilterSAOArea.Period = new TimeSpan(0, 0, 15);
-            listFilterSAOArea.Radar = Radar.GetRadar("SAO");
-            listFilterSAOArea.AddFilter(new FilterLogAll());
-            listFilterSAOArea.AddFilter(new FilterUnknowAirplanes(false, false));
-            listFilterSAOArea.AddFilter(new FilterWide());
-            listFilterSAOArea.AddFilter(new FilterBackingOrGo());
-            listFilterSAOArea.AddFilter(new FilterRatification(true, true, true, true, true));
-            listFilterBrasiliaArea.AddFilter(new FilterAlertAll());
-            ListFilterGroup.Add(listFilterSAOArea);
-
-
-            //            GroupFilters listFilterDeepRec = new GroupFilters();
-            //            listFilterDeepRec.Period = new TimeSpan(0, 0, 25);
-            //            //listFilterDeepRec.ListFilters = new List<IFilter>();
-            //            listFilterDeepRec.AddFilter(new FilterDeepRecorder());
-            //            ListFilterGroup.Add(listFilterDeepRec);
-
-
+            foreach (var radar in listRadars)
+            {
+                foreach (var filter in radar.Filters)
+                {
+                    filter.Radar = radar;
+                }
+            }
         }
 
         public static List<AlertFilter> GetAlerts(bool updateAll)
         {
             List<AlertFilter> listAlerts = new List<AlertFilter>();
 
-
-            for (int i = 0; i < ListFilterGroup.Count; i++)
+            if (TimeNext == null || TimeNext <= DateTime.Now || updateAll)
             {
-                var filterGroup = ListFilterGroup[i];
 
-
-                if (filterGroup.TimeNext == null || filterGroup.TimeNext <= DateTime.Now || updateAll)
+                for (int i = 0; i < listRadars.Count; i++)
                 {
+                    var radar = listRadars[i];
+
                     List<AirplaneBasic> listAirplanes = null;
-                    if (filterGroup.Radar != null)
+                    if (radar != null)
                     {
 
-                        listAirplanes = AirplanesData.GetAirplanes(filterGroup.Radar).Result;
-                        var newAlerts = filterGroup.Run(listAirplanes);
+                        listAirplanes = AirplanesData.GetAirplanes(radar).Result;
+                        var newAlerts = Run(radar, listAirplanes);
 
                         var listToDelete = new List<AlertFilter>();
 
 
-                        if (filterGroup.Radar.Name == "BRA")
+                        if (radar.Name == "BRA")
                         {
                             var listOfAirports = new List<Airport>();
 
@@ -113,7 +74,7 @@ namespace TowerBotLibCore
 
                             if (newAlerts.Count > 0)
                             {
-                                listOfAirports = Airport.ListAirports.Where(s => s.Value["ICAO"].ToString().StartsWith("SB")).Select(s => Airport.GetAirportByIata(s.Key)).ToList();                                
+                                listOfAirports = Airport.ListAirports.Where(s => s.Value["ICAO"].ToString().StartsWith("SB")).Select(s => Airport.GetAirportByIata(s.Key)).ToList();
                             }
 
 
@@ -131,7 +92,7 @@ namespace TowerBotLibCore
                                     listToDelete.Add(item);
                                     continue;
                                 }
-                                
+
                             }
                         }
 
@@ -144,10 +105,9 @@ namespace TowerBotLibCore
 
                     ListOldAirplanesDF = listAirplanes;
 
-                    filterGroup.TimeNext = DateTime.Now + filterGroup.Period;
-
-
                 }
+
+                TimeNext = DateTime.Now + Period;
 
             }
 
@@ -156,34 +116,89 @@ namespace TowerBotLibCore
 
         }
 
+        private static List<AlertFilter> Run(Radar radar, object parameter = null)
+        {
+
+            List<AlertFilter> listAlerts = new List<AlertFilter>();
+
+            for (int i = 0; i < radar.Filters.Count; i++)
+            {
+                listAlerts.AddRange(radar.Filters[i].Analyser(parameter));
+            }
+
+            // Verify if there are some alert older then it's time to be removed
+            if (listAlerts.Count > 0)
+            {
+                List<AlertFilter> list = listOldAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
+                for (int i = 0; i < list.Count; i++)
+                {
+                    listOldAlerts.Remove(list[i]);
+                }
+            }
+
+            // Verify if there is any alert equal.
+            List<AlertFilter> listAlertLessThenOneHour = listOldAlerts;
+            if (radar.Name == "BRA")
+                listAlertLessThenOneHour = listOldAlerts.Where(s => s.TimeCreated > DateTime.Now.AddHours(-1)).ToList();
+
+            for (int i = 0; i < listAlertLessThenOneHour.Count; i++)
+            {
+                var alertEqual = listAlerts.Where(s => s.ID == listAlertLessThenOneHour[i].ID && s.AlertType == listAlertLessThenOneHour[i].AlertType).ToList().LastOrDefault();
+                if (alertEqual != null)
+                {
+                    if (alertEqual.Level <= listAlertLessThenOneHour[i].Level)
+                    {
+                        listAlerts.Remove(alertEqual);
+                    }
+                }
+
+                // Verify if there are some alert from the same group
+                if (!String.IsNullOrEmpty(listAlertLessThenOneHour[i].Group))
+                {
+                    var alertSameGroup = listAlerts.Where(s => s.ID != listAlertLessThenOneHour[i].ID && s.Group == listAlertLessThenOneHour[i].Group).ToList();
+                    for (int j = 0; j < alertSameGroup.Count; j++)
+                    {
+                        listAlertLessThenOneHour[i].Group = String.Empty;
+                        listAlertLessThenOneHour[i].TimeToBeRemoved = listAlertLessThenOneHour[i].TimeCreated.AddDays(1);
+                        listAlertLessThenOneHour[i].ID += listAlertLessThenOneHour[i].TimeCreated.ToString("ddMMyyyyhhmm");
+
+                    }
+                }
+
+            }
+
+            listOldAlerts.AddRange(listAlerts);
+
+            return listAlerts;
+
+        }
+
         public static void RefreshAll()
         {
-            for (int i = 0; i < ListFilterGroup.Count; i++)
-            {
-                ListFilterGroup[i].Refresh();
-            }
+            TimeNext = new DateTime(1988, 4, 1);
+            listOldAlerts = new List<AlertFilter>();
         }
 
         public static void AccessFilterCommandLine()
         {
             Console.WriteLine("Qual filtro você deseja acessar?\n");
 
-            for (int i = 0; i < ListFilterGroup.Count; i++)
+            for (int i = 0; i < listRadars.Count; i++)
             {
-                for (int j = 0; j < ListFilterGroup[i].ListFilters.Count; j++)
+                for (int j = 0; j < listRadars[i].Filters.Count; j++)
                 {
-                    Console.WriteLine("-{0} (ativo:{1}, em teste:{2})", ListFilterGroup[i].ListFilters[j].Name, ListFilterGroup[i].ListFilters[j].IsActive, ListFilterGroup[i].ListFilters[j].IsTesting);
+                    Console.WriteLine("-{0} (ativo:{1}, em teste:{2})", listRadars[i].Filters[j].Name, listRadars[i].Filters[j].IsActive, listRadars[i].Filters[j].IsTesting);
                 }
             }
             string comando = Console.ReadLine();
             IFilter selectedFilter = null;
-            for (int i = 0; i < ListFilterGroup.Count; i++)
+            for (int i = 0; i < listRadars[i].Filters.Count; i++)
             {
-                for (int j = 0; j < ListFilterGroup[i].ListFilters.Count; j++)
+                for (int j = 0; j < listRadars[i].Filters.Count; j++)
                 {
-                    if (ListFilterGroup[i].ListFilters[j].Name.ToLower().StartsWith(comando.ToLower()))
+                    if (listRadars[i].Filters[j].Name.ToLower().StartsWith(comando.ToLower()))
                     {
-                        selectedFilter = ListFilterGroup[i].ListFilters[j];
+                        selectedFilter = listRadars[i].Filters[j];
                         selectedFilter.CommandLine();
                         break;
                     }

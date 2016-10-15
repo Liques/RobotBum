@@ -38,7 +38,7 @@ namespace TowerBotLibCore.Filters
                         AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "Rwy11", IconType.AirportWeather);
                         filterAlert.Message = message;
                         filterAlert.Group = "RunwayChange";
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddYears(1);
+                        filterAlert.TimeToBeRemoved = DateTime.Now.AddYears(1);
                         filterAlert.AlertType = FilterAlertType.High;
                         listAlerts.Add(filterAlert);
 
@@ -49,7 +49,7 @@ namespace TowerBotLibCore.Filters
                         AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "Rwy29", IconType.AirportWeather);
                         filterAlert.Message = message;
                         filterAlert.Group = "RunwayChange";
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddYears(1);
+                        filterAlert.TimeToBeRemoved = DateTime.Now.AddYears(1);
                         filterAlert.AlertType = FilterAlertType.High;
                         listAlerts.Add(filterAlert);
 
@@ -61,7 +61,7 @@ namespace TowerBotLibCore.Filters
                         message = "Talvez o aeroporto está fechado, visibilidade muito baixa. (" + brasiliaWeather.Metar + ")";
                         AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "VisibilityCAT3", IconType.AirportWeather);
                         filterAlert.Message = message;
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddHours(3);
+                        filterAlert.TimeToBeRemoved = DateTime.Now.AddHours(3);
                         filterAlert.AlertType = FilterAlertType.High;
                         listAlerts.Add(filterAlert);
 
@@ -72,7 +72,7 @@ namespace TowerBotLibCore.Filters
 
                         AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "VisibilityCAT2", IconType.AirportWeather);
                         filterAlert.Message = message;
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddHours(3);
+                        filterAlert.TimeToBeRemoved = DateTime.Now.AddHours(3);
                         filterAlert.AlertType = FilterAlertType.High;
                         listAlerts.Add(filterAlert);
 
@@ -83,7 +83,7 @@ namespace TowerBotLibCore.Filters
 
                         AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "VisibilityCAT1", IconType.AirportWeather);
                         filterAlert.Message = message;
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddHours(3);
+                        filterAlert.TimeToBeRemoved = DateTime.Now.AddHours(3);
                         filterAlert.AlertType = FilterAlertType.High;
                         listAlerts.Add(filterAlert);
                     }
@@ -91,7 +91,7 @@ namespace TowerBotLibCore.Filters
                     // condições do tempo
                     AlertFilter filterAlertWeatherConditition = new AlertFilter(this.Radar, this.Name, "VisibilityCAT1", IconType.AirportWeather);
                     filterAlertWeatherConditition.Group = "filterAlertWeatherConditition";
-                    filterAlertWeatherConditition.TimeToBeDeleted = DateTime.Now.AddYears(1);
+                    filterAlertWeatherConditition.TimeToBeRemoved = DateTime.Now.AddYears(1);
 
                     switch (brasiliaWeather.WeatherType)
                     {

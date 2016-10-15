@@ -45,7 +45,7 @@ namespace TowerBotLibCore.Filters
                             string toPlace = !String.IsNullOrEmpty(airplane.To.City) ? " com destino a " + airplane.To.City : "";
                             string fromPlaceShort = !String.IsNullOrEmpty(airplane.From.City) ? " de " + airplane.From.IATA : "";
                             string toPlaceShort = !String.IsNullOrEmpty(airplane.To.City) ? " para " + airplane.To.IATA : "";
-                            filterAlert.TimeToBeDeleted = DateTime.Now.AddHours(10);
+                            filterAlert.TimeToBeRemoved = DateTime.Now.AddHours(10);
 
                             filterAlert.Message = "Um " + airplane.AircraftType.Name + " (" + airplane.FlightName + "/" + airplane.Registration + ")";
 

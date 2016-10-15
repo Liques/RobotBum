@@ -1,5 +1,5 @@
---temp-output:D:\Projetos\TowerBot\TowerBot\TowerBotUniversalConsole\obj\Debug\netcoreapp1.0\
---out:D:\Projetos\TowerBot\TowerBot\TowerBotUniversalConsole\bin\Debug\netcoreapp1.0\TowerBotUniversalConsole.dll
+--temp-output:D:\Projetos\RobotBum\TowerBotUniversalConsole\obj\Debug\netcoreapp1.0\
+--out:D:\Projetos\RobotBum\TowerBotUniversalConsole\bin\Debug\netcoreapp1.0\TowerBotUniversalConsole.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -112,9 +112,9 @@
 --reference:C:\Users\Liques\.nuget\packages\TweetinviAPI\1.1.1\lib\netstandard1.5\Tweetinvi.Streams.dll
 --reference:C:\Users\Liques\.nuget\packages\TweetinviAPI\1.1.1\lib\netstandard1.5\Tweetinvi.WebLogic.dll
 --reference:C:\Users\Liques\.nuget\packages\TweetinviAPI\1.1.1\lib\netstandard1.5\Tweetinvi.dll
---reference:D:\Projetos\TowerBot\TowerBot\TowerBotFoundationCore\bin\Debug\netstandard1.6\TowerBotFoundationCore.dll
---reference:D:\Projetos\TowerBot\TowerBot\TowerBotLibCore\bin\Debug\netstandard1.6\TowerBotLibCore.dll
-D:\Projetos\TowerBot\TowerBot\TowerBotUniversalConsole\Core.cs
-D:\Projetos\TowerBot\TowerBot\TowerBotUniversalConsole\Program.cs
-D:\Projetos\TowerBot\TowerBot\TowerBotUniversalConsole\ServerWriter.cs
-D:\Projetos\TowerBot\TowerBot\TowerBotUniversalConsole\Properties\AssemblyInfo.cs
+--reference:D:\Projetos\RobotBum\TowerBotFoundationCore\bin\Debug\netstandard1.6\TowerBotFoundationCore.dll
+--reference:D:\Projetos\RobotBum\TowerBotLibCore\bin\Debug\netstandard1.6\TowerBotLibCore.dll
+D:\Projetos\RobotBum\TowerBotUniversalConsole\Core.cs
+D:\Projetos\RobotBum\TowerBotUniversalConsole\Program.cs
+D:\Projetos\RobotBum\TowerBotUniversalConsole\ServerWriter.cs
+D:\Projetos\RobotBum\TowerBotUniversalConsole\Properties\AssemblyInfo.cs

@@ -1,0 +1,7 @@
+15/10/2016 20:44:13 ;Vai pousar logo mais o GLO5402 (PR-GXV), Boeing 737-800. #Avião #RobôBum;BRAUnknowAirE48FB6;High;,em Modo S,, Hex:E48FB6, . !IsKnownAirplane.;
+15/10/2016 20:45:49 ;Bem rapidinho está pousando o PR-AZA, Embraer 195. #Avião #RobôBum;BRAUnknowAirE48283;High;,em Modo S,, Hex:E48283, . !IsKnownAirplane.;
+15/10/2016 20:48:36 ;As pistas em operação são agora as pistas 11L e 11R. Há muita nuvem no céu da capital. (SBBR 152300Z 10003KT 9999 FEW040 BKN100 25/12 Q1018);BSBFilterMetarDFRwy11;High;;
+15/10/2016 20:50:45 ;As pistas em operação são agora as pistas 11L e 11R. Há muita nuvem no céu da capital. (SBBR 152300Z 10003KT 9999 FEW040 BKN100 25/12 Q1018);BSBFilterMetarDFRwy11;High;;
+15/10/2016 20:55:10 ;Vai chegando no aeroporto o ONE6363 (PR-ONL), Airbus A320 de Brasília - DF. #Avião #RobôBum;GYNUnknowAirE48BB3;High;Velocidade vertical abaixo de -500:-1344 e altude menor que 28000:5175, Hex:E48BB3, . !IsKnownAirplane.;
+15/10/2016 20:55:11 ;Vai chegando no aeroporto o TAM3724 (PR-TYA), Airbus A320 de São Paulo (Congonhas). #Avião #RobôBum;BRAUnknowAirE48E46;High;Velocidade vertical abaixo de -500:-832 e altude menor que 28000:3850, Hex:E48E46, . !IsKnownAirplane.;
+15/10/2016 20:55:11 ;As pistas em operação são agora as pistas 11L e 11R. Há muita nuvem no céu da capital. (SBBR 152300Z 10003KT 9999 FEW040 BKN100 25/12 Q1018);BSBFilterMetarDFRwy11;High;;
