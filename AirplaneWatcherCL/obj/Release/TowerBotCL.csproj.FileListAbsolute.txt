@@ -45,6 +45,3 @@ D:\Projetos\TowerBot\TowerBot\AirplaneWatcherCL\bin\Release\System.Data.SQLite.d
 D:\Projetos\TowerBot\TowerBot\AirplaneWatcherCL\bin\Release\EntityFramework.xml
 D:\Projetos\TowerBot\TowerBot\AirplaneWatcherCL\bin\Release\EntityFramework.SqlServer.xml
 D:\Projetos\TowerBot\TowerBot\AirplaneWatcherCL\bin\Release\System.Data.SQLite.xml
-D:\Projetos\RobotBum\AirplaneWatcherCL\bin\Release\TowerBotCL.exe.config
-D:\Projetos\RobotBum\AirplaneWatcherCL\obj\Release\TowerBotCL.exe
-D:\Projetos\RobotBum\AirplaneWatcherCL\obj\Release\TowerBotCL.pdb

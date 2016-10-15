@@ -3,19 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerBotCL", "AirplaneWatcherCL\TowerBotCL.csproj", "{43A4016D-A706-417E-AFD8-61C1140DB153}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerBotLib", "TowerBotLib\TowerBotLib.csproj", "{19DA191A-4DDD-40C1-9334-4EDC455C07F9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerBotWS", "TowerBotWS\TowerBotWS.csproj", "{9FBDB222-6287-4735-A937-BFE33C09AE64}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerBotTests", "TowerBotTests\TowerBotTests.csproj", "{193B542E-5FA6-42E2-8D9D-164B5516EBFD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerBotFoundation", "TowerBotFoundation\TowerBotFoundation.csproj", "{AF7FDB53-6B65-4FC4-8214-9DEB11142400}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TowerBotFoundationCore", "TowerBotFoundationCore\TowerBotFoundationCore.xproj", "{FD7AF56B-6280-4E71-AB1D-5CEA99E015B6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetFramework", "NetFramework", "{092A1E70-03E4-4F70-BDD6-867C0A9E6135}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TowerBotLibCore", "TowerBotLibCore\TowerBotLibCore.xproj", "{B3FC9E54-E1E7-4A0C-AD5B-839938F45BAF}"
 EndProject
@@ -28,36 +16,6 @@ Global
 		SIT|Any CPU = SIT|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{43A4016D-A706-417E-AFD8-61C1140DB153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43A4016D-A706-417E-AFD8-61C1140DB153}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43A4016D-A706-417E-AFD8-61C1140DB153}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43A4016D-A706-417E-AFD8-61C1140DB153}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43A4016D-A706-417E-AFD8-61C1140DB153}.SIT|Any CPU.ActiveCfg = SIT|Any CPU
-		{43A4016D-A706-417E-AFD8-61C1140DB153}.SIT|Any CPU.Build.0 = SIT|Any CPU
-		{19DA191A-4DDD-40C1-9334-4EDC455C07F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19DA191A-4DDD-40C1-9334-4EDC455C07F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19DA191A-4DDD-40C1-9334-4EDC455C07F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19DA191A-4DDD-40C1-9334-4EDC455C07F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19DA191A-4DDD-40C1-9334-4EDC455C07F9}.SIT|Any CPU.ActiveCfg = SIT|Any CPU
-		{19DA191A-4DDD-40C1-9334-4EDC455C07F9}.SIT|Any CPU.Build.0 = SIT|Any CPU
-		{9FBDB222-6287-4735-A937-BFE33C09AE64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FBDB222-6287-4735-A937-BFE33C09AE64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FBDB222-6287-4735-A937-BFE33C09AE64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FBDB222-6287-4735-A937-BFE33C09AE64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FBDB222-6287-4735-A937-BFE33C09AE64}.SIT|Any CPU.ActiveCfg = SIT|Any CPU
-		{9FBDB222-6287-4735-A937-BFE33C09AE64}.SIT|Any CPU.Build.0 = SIT|Any CPU
-		{193B542E-5FA6-42E2-8D9D-164B5516EBFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{193B542E-5FA6-42E2-8D9D-164B5516EBFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{193B542E-5FA6-42E2-8D9D-164B5516EBFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{193B542E-5FA6-42E2-8D9D-164B5516EBFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{193B542E-5FA6-42E2-8D9D-164B5516EBFD}.SIT|Any CPU.ActiveCfg = SIT|Any CPU
-		{193B542E-5FA6-42E2-8D9D-164B5516EBFD}.SIT|Any CPU.Build.0 = SIT|Any CPU
-		{AF7FDB53-6B65-4FC4-8214-9DEB11142400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF7FDB53-6B65-4FC4-8214-9DEB11142400}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF7FDB53-6B65-4FC4-8214-9DEB11142400}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF7FDB53-6B65-4FC4-8214-9DEB11142400}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF7FDB53-6B65-4FC4-8214-9DEB11142400}.SIT|Any CPU.ActiveCfg = Release|Any CPU
-		{AF7FDB53-6B65-4FC4-8214-9DEB11142400}.SIT|Any CPU.Build.0 = Release|Any CPU
 		{FD7AF56B-6280-4E71-AB1D-5CEA99E015B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD7AF56B-6280-4E71-AB1D-5CEA99E015B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD7AF56B-6280-4E71-AB1D-5CEA99E015B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,48 +37,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{43A4016D-A706-417E-AFD8-61C1140DB153} = {092A1E70-03E4-4F70-BDD6-867C0A9E6135}
-		{19DA191A-4DDD-40C1-9334-4EDC455C07F9} = {092A1E70-03E4-4F70-BDD6-867C0A9E6135}
-		{9FBDB222-6287-4735-A937-BFE33C09AE64} = {092A1E70-03E4-4F70-BDD6-867C0A9E6135}
-		{193B542E-5FA6-42E2-8D9D-164B5516EBFD} = {092A1E70-03E4-4F70-BDD6-867C0A9E6135}
-		{AF7FDB53-6B65-4FC4-8214-9DEB11142400} = {092A1E70-03E4-4F70-BDD6-867C0A9E6135}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 9
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://bsbit.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = AirplaneWatcherCL\\TowerBotCL.csproj
-		SccProjectTopLevelParentUniqueName1 = TowerBot.sln
-		SccProjectName1 = AirplaneWatcherCL
-		SccLocalPath1 = AirplaneWatcherCL
-		SccProjectUniqueName2 = TowerBotLib\\TowerBotLib.csproj
-		SccProjectTopLevelParentUniqueName2 = TowerBot.sln
-		SccProjectName2 = TowerBotLib
-		SccLocalPath2 = TowerBotLib
-		SccProjectUniqueName3 = TowerBotWS\\TowerBotWS.csproj
-		SccProjectTopLevelParentUniqueName3 = TowerBot.sln
-		SccProjectName3 = TowerBotWS
-		SccLocalPath3 = TowerBotWS
-		SccProjectUniqueName4 = TowerBotTests\\TowerBotTests.csproj
-		SccProjectTopLevelParentUniqueName4 = TowerBot.sln
-		SccProjectName4 = TowerBotTests
-		SccLocalPath4 = TowerBotTests
-		SccProjectUniqueName5 = TowerBotFoundation\\TowerBotFoundation.csproj
-		SccProjectTopLevelParentUniqueName5 = TowerBot.sln
-		SccProjectName5 = TowerBotFoundation
-		SccLocalPath5 = TowerBotFoundation
-		SccProjectUniqueName6 = TowerBotFoundationCore\\TowerBotFoundationCore.xproj
-		SccProjectName6 = TowerBotFoundationCore
-		SccLocalPath6 = TowerBotFoundationCore
-		SccProjectUniqueName7 = TowerBotLibCore\\TowerBotLibCore.xproj
-		SccProjectName7 = TowerBotLibCore
-		SccLocalPath7 = TowerBotLibCore
-		SccProjectUniqueName8 = TowerBotUniversalConsole\\TowerBotUniversalConsole.xproj
-		SccProjectTopLevelParentUniqueName8 = TowerBot.sln
-		SccProjectName8 = TowerBotUniversalConsole
-		SccLocalPath8 = TowerBotUniversalConsole
 	EndGlobalSection
 EndGlobal

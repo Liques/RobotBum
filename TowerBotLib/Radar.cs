@@ -8,6 +8,9 @@ using TowerBotFoundation;
 
 namespace TowerBotLib
 {
+    /// <summary>
+    /// The source of data
+    /// </summary>
     public class Radar
     {
 
