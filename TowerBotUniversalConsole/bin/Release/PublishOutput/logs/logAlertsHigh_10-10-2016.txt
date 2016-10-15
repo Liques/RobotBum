@@ -1,0 +1,4 @@
+10/10/2016 21:42:09 ;Vai pousar já já o GLO1148 (PR-VBH), Boeing 737-700 de Brasília - DF, vai passar pelo centro e Colombo. #Avião #RobôBum;BRAUnknowAirE48339;High;Velocidade vertical abaixo de -500:-768 e altude menor que 28000:4350, Hex:E48339, . !IsKnownAirplane.;
+10/10/2016 21:42:09 ;As pistas em operação são agora as pistas 11L e 11R. Céu aberto na capital federal! (SBBR 110000Z 13007KT CAVOK 25/16 Q1019);BSBFilterMetarDFRwy11;High;;
+10/10/2016 21:42:52 ;O TAM3591 (PR-MBA) está decolando do aeroporto modelo Airbus A320 para Campo Grande, vai passar pelo Plano Piloto. #Avião #RobôBum;BRAUnknowAirE47FA6;High;Velocidade vertical superior a 500:3840 e altude entre 4000 e 18000:4250, Hex:E47FA6, ;
+10/10/2016 21:42:52 ;O GLO6716 (PR-GGM) está parece estar pousando modelo Boeing 737-800. #Avião #RobôBum;GYNUnknowAirE481D8;High;Velocidade vertical abaixo de -500:-576 e altude menor que 28000:7375, Hex:E481D8, . !IsKnownAirplane.;

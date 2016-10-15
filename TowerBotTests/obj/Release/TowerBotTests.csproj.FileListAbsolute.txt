@@ -1,0 +1,29 @@
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Resources\charts.json
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Resources\checkpoints.json
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\TowerBotTests.dll.config
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\TowerBotTests.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\TowerBotTests.pdb
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\TowerBot Foundation (all devices).dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\TowerBotLib.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Newtonsoft.Json.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.Core.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.Credentials.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Autofac.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.Controllers.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.Factories.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Microsoft.Threading.Tasks.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.Logic.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.WebLogic.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.Streams.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Tweetinvi.Security.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Microsoft.Threading.Tasks.Extensions.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\TowerBot Foundation (all devices).pdb
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\TowerBotLib.pdb
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Newtonsoft.Json.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Autofac.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Microsoft.Threading.Tasks.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Release\Microsoft.Threading.Tasks.Extensions.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\obj\Release\TowerBotTests.csprojResolveAssemblyReference.cache
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\obj\Release\TowerBotTests.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\obj\Release\TowerBotTests.pdb

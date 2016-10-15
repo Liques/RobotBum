@@ -1,0 +1,152 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v1.0",
+    "signature": "ad658cd593d94215fa178a144e87588044887f7f"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v1.0": {
+      "TowerBotUniversalConsole/1.0.0": {
+        "dependencies": {
+          "TowerBotFoundationCore": "1.0.0",
+          "TowerBotLibCore": "1.0.0"
+        },
+        "runtime": {
+          "TowerBotUniversalConsole.dll": {}
+        }
+      },
+      "Autofac/4.1.0": {
+        "runtime": {
+          "lib/netstandard1.1/Autofac.dll": {}
+        }
+      },
+      "Microsoft.NETCore.Portable.Compatibility/1.0.1-rc2-24027": {
+        "dependencies": {
+          "Microsoft.NETCore.Runtime": "1.0.2-rc2-24027"
+        },
+        "runtime": {
+          "lib/netstandard1.0/System.ComponentModel.DataAnnotations.dll": {},
+          "lib/netstandard1.0/System.Core.dll": {},
+          "lib/netstandard1.0/System.Net.dll": {},
+          "lib/netstandard1.0/System.Numerics.dll": {},
+          "lib/netstandard1.0/System.Runtime.Serialization.dll": {},
+          "lib/netstandard1.0/System.ServiceModel.Web.dll": {},
+          "lib/netstandard1.0/System.ServiceModel.dll": {},
+          "lib/netstandard1.0/System.Windows.dll": {},
+          "lib/netstandard1.0/System.Xml.Linq.dll": {},
+          "lib/netstandard1.0/System.Xml.Serialization.dll": {},
+          "lib/netstandard1.0/System.Xml.dll": {},
+          "lib/netstandard1.0/System.dll": {}
+        }
+      },
+      "Microsoft.NETCore.Runtime/1.0.2-rc2-24027": {
+        "dependencies": {
+          "Microsoft.NETCore.Runtime.Native": "1.0.2-rc2-24027"
+        }
+      },
+      "Microsoft.NETCore.Runtime.Native/1.0.2-rc2-24027": {},
+      "Newtonsoft.Json/9.0.1": {
+        "dependencies": {
+          "System.Runtime.Serialization.Primitives": "4.1.1"
+        },
+        "runtime": {
+          "lib/netstandard1.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "System.Runtime.Serialization.Primitives/4.1.1": {
+        "runtime": {
+          "lib/netstandard1.3/System.Runtime.Serialization.Primitives.dll": {}
+        }
+      },
+      "TweetinviAPI/1.1.1": {
+        "dependencies": {
+          "Autofac": "4.1.0",
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.5/NET1.5.dll": {},
+          "lib/netstandard1.5/Tweetinvi.Controllers.dll": {},
+          "lib/netstandard1.5/Tweetinvi.Core.dll": {},
+          "lib/netstandard1.5/Tweetinvi.Credentials.dll": {},
+          "lib/netstandard1.5/Tweetinvi.Factories.dll": {},
+          "lib/netstandard1.5/Tweetinvi.Logic.dll": {},
+          "lib/netstandard1.5/Tweetinvi.Security.dll": {},
+          "lib/netstandard1.5/Tweetinvi.Streams.dll": {},
+          "lib/netstandard1.5/Tweetinvi.WebLogic.dll": {},
+          "lib/netstandard1.5/Tweetinvi.dll": {}
+        }
+      },
+      "TowerBotFoundationCore/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "runtime": {
+          "TowerBotFoundationCore.dll": {}
+        }
+      },
+      "TowerBotLibCore/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1",
+          "TowerBotFoundationCore": "1.0.0",
+          "Microsoft.NETCore.Portable.Compatibility": "1.0.1-rc2-24027",
+          "TweetinviAPI": "1.1.1"
+        },
+        "runtime": {
+          "TowerBotLibCore.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TowerBotUniversalConsole/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Autofac/4.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PZlRrOjtQ/pyxoA/oDuyFsKlL/toYIxfL4wQvm9TY7lj+/jeQHQIlJ832nwvPFBlOuRZQErHsfsGmo3zW+pCxA=="
+    },
+    "Microsoft.NETCore.Portable.Compatibility/1.0.1-rc2-24027": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nmnHPnAyp2QV31KGNfANo90Y8zs8LrNSStsOEoPOEYAhYLNyn4C8o5DF8AEhgtsdYaOWIpY6aSREVob3xFC34w=="
+    },
+    "Microsoft.NETCore.Runtime/1.0.2-rc2-24027": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-z/R3npq0vJi1urIComaxGXX2CCfv27N78pNa3dMG4fyCQZA6u50v8ttWFnPV1caSN1O5JvDavqpBXVT1FdHcrA=="
+    },
+    "Microsoft.NETCore.Runtime.Native/1.0.2-rc2-24027": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aUtA5PJE7rGp0v6aKdYefj8GGpbf5nsND7xlMzPf0+n00YeYuM65sQtrd3TwtQlfmN4J57d40wfzEM3suVwWlg=="
+    },
+    "Newtonsoft.Json/9.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw=="
+    },
+    "System.Runtime.Serialization.Primitives/4.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HZ6Du5QrTG8MNJbf4e4qMO3JRAkIboGT5Fk804uZtg3Gq516S7hAqTm2UZKUHa7/6HUGdVy3AqMQKbns06G/cg=="
+    },
+    "TweetinviAPI/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-59zLwW4s9eGiYnpkMsH/xCT/sJu1ZLPnmfjuPzC4dpQUXloGkHL5YI8NGLwY96/a8fGHAr1K0Nwmr/lEQX09Hw=="
+    },
+    "TowerBotFoundationCore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TowerBotLibCore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

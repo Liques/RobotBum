@@ -1,0 +1,5 @@
+
+
+10/10/2016 21:42:30
+Code Place: Error on Charts
+C# Message: Could not find a part of the path 'D:\Projetos\TowerBot\TowerBot\TowerBotUniversalConsole\bin\Release\PublishOutput\Resources\charts.json'.

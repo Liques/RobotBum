@@ -1,0 +1,7 @@
+D:\Projetos\TowerBot\TowerBot\TowerBotFoundation\bin\Debug\TowerBot Foundation (all devices).dll
+D:\Projetos\TowerBot\TowerBot\TowerBotFoundation\bin\Debug\TowerBot Foundation (all devices).pdb
+D:\Projetos\TowerBot\TowerBot\TowerBotFoundation\bin\Debug\Newtonsoft.Json.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotFoundation\bin\Debug\Newtonsoft.Json.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotFoundation\obj\Debug\TowerBotFoundation.csprojResolveAssemblyReference.cache
+D:\Projetos\TowerBot\TowerBot\TowerBotFoundation\obj\Debug\TowerBot Foundation (all devices).dll
+D:\Projetos\TowerBot\TowerBot\TowerBotFoundation\obj\Debug\TowerBot Foundation (all devices).pdb

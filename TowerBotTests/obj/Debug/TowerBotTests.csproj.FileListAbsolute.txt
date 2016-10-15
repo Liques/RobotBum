@@ -1,0 +1,29 @@
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Resources\charts.json
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Resources\checkpoints.json
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\TowerBotTests.dll.config
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\TowerBotTests.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\TowerBotTests.pdb
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\TowerBot Foundation (all devices).dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\TowerBotLib.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Newtonsoft.Json.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.Core.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Microsoft.Threading.Tasks.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.Credentials.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Autofac.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.Controllers.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.Factories.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.Logic.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.WebLogic.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.Streams.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Tweetinvi.Security.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Microsoft.Threading.Tasks.Extensions.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\TowerBot Foundation (all devices).pdb
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\TowerBotLib.pdb
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Newtonsoft.Json.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Microsoft.Threading.Tasks.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Autofac.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\bin\Debug\Microsoft.Threading.Tasks.Extensions.xml
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\obj\Debug\TowerBotTests.csprojResolveAssemblyReference.cache
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\obj\Debug\TowerBotTests.dll
+D:\Projetos\TowerBot\TowerBot\TowerBotTests\obj\Debug\TowerBotTests.pdb
