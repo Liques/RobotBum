@@ -9,6 +9,9 @@ using TowerBotLibCore;
 
 namespace TowerBotUniversalConsole
 {
+    /// <summary>
+    /// Core object
+    /// </summary>
     public class Core
     {
         static bool showUpdates = true;
