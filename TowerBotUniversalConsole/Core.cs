@@ -22,6 +22,10 @@ namespace TowerBotUniversalConsole
         static DateTime nextTimeTwitterMediumAlertPost;
         static int hoursToNextTwitterMediumAlertPost;
 
+        /// <summary>
+        /// Start App
+        /// </summary>
+        /// <param name="isConsole"></param>
         public static void Start(bool isConsole)
         {
             if (isConsole)

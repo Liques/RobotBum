@@ -38,8 +38,7 @@ namespace TowerBotUniversalConsole
         
         public static void UpdatePages(List<Alert> listNewAlerts)
         {
-            
-            // Verificar se algum alerta antigo passou da data de validade e remove-lo.
+            // Verify if any old alert is older than it's time to be removed 
             List<Alert> listOldBeyondValidationAlerts = Alert.ListOfAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
             for (int i = 0; i < listOldBeyondValidationAlerts.Count; i++)
             {
