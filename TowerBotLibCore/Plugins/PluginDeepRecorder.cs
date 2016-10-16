@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using TowerBotFoundationCore;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    class FilterDeepRecorder : IFilter
+    class PluginDeepRecorder : IPlugin
     {
 
         private class BlockAnalyserSchedule
@@ -61,7 +61,7 @@ namespace TowerBotLibCore.Filters
 
         string strPath = String.Empty;
 
-        public FilterDeepRecorder()
+        public PluginDeepRecorder()
         {
             Name = "DeepRec";
             IsActive = true;
@@ -70,11 +70,11 @@ namespace TowerBotLibCore.Filters
             listBlockAnalyserSchedule = new List<BlockAnalyserSchedule>();
         }
 
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
             // Já vem como padrão a lista dos aviões do DF
             List<AirplaneBasic> listAirplanes = null;
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             try
             {
@@ -206,7 +206,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter Deep Recorder");
+                ErrorManager.ThrowError(e, "Plugin Deep Recorder");
             }
 
             return listAlerts;

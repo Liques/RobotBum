@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using TowerBotFoundationCore;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    class FilterMetarDF : IFilter
+    class PluginMetarDF : IPlugin
     {
         public bool IsActive { get; set; }
         public bool IsTesting { get; set; }
@@ -12,15 +12,15 @@ namespace TowerBotLibCore.Filters
         DateTime emergencyEndTime = new DateTime();
         public Radar Radar { get; set; }
 
-        public FilterMetarDF()
+        public PluginMetarDF()
         {
-            Name = "FilterMetarDF";
+            Name = "PluginMetarDF";
             IsActive = true;
             IsTesting = false;
         }
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {           
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             try
             {
@@ -35,23 +35,23 @@ namespace TowerBotLibCore.Filters
                     if (brasiliaWeather.WindDirection >= 20 && brasiliaWeather.WindDirection < 200)
                     {
                         message = "As pistas em operação são agora as pistas 11L e 11R. " + GetWeatherConditionMessage(brasiliaWeather.WeatherType, brasiliaWeather.Sky, brasiliaWeather.Metar);
-                        AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "Rwy11", IconType.AirportWeather);
-                        filterAlert.Message = message;
-                        filterAlert.Group = "RunwayChange";
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddYears(1);
-                        filterAlert.AlertType = FilterAlertType.High;
-                        listAlerts.Add(filterAlert);
+                        Alert PluginAlert = new Alert(this.Radar, this.Name, "Rwy11", IconType.AirportWeather);
+                        PluginAlert.Message = message;
+                        PluginAlert.Group = "RunwayChange";
+                        PluginAlert.TimeToBeRemoved = DateTime.Now.AddYears(1);
+                        PluginAlert.AlertType = PluginAlertType.High;
+                        listAlerts.Add(PluginAlert);
 
                     }
                     else if ((brasiliaWeather.WindDirection > 200 && brasiliaWeather.WindDirection < 360 || brasiliaWeather.WindDirection > 20 && brasiliaWeather.WindDirection < 0))
                     {
                         message = "As pistas em operação são agora as pistas  29L e 29R. " + GetWeatherConditionMessage(brasiliaWeather.WeatherType, brasiliaWeather.Sky, brasiliaWeather.Metar);
-                        AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "Rwy29", IconType.AirportWeather);
-                        filterAlert.Message = message;
-                        filterAlert.Group = "RunwayChange";
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddYears(1);
-                        filterAlert.AlertType = FilterAlertType.High;
-                        listAlerts.Add(filterAlert);
+                        Alert PluginAlert = new Alert(this.Radar, this.Name, "Rwy29", IconType.AirportWeather);
+                        PluginAlert.Message = message;
+                        PluginAlert.Group = "RunwayChange";
+                        PluginAlert.TimeToBeRemoved = DateTime.Now.AddYears(1);
+                        PluginAlert.AlertType = PluginAlertType.High;
+                        listAlerts.Add(PluginAlert);
 
                     }
 
@@ -59,39 +59,39 @@ namespace TowerBotLibCore.Filters
                     if (brasiliaWeather.Visibility > -1 && brasiliaWeather.Visibility < 210 && !String.IsNullOrEmpty(brasiliaWeather.Metar))
                     {
                         message = "Talvez o aeroporto está fechado, visibilidade muito baixa. (" + brasiliaWeather.Metar + ")";
-                        AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "VisibilityCAT3", IconType.AirportWeather);
-                        filterAlert.Message = message;
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddHours(3);
-                        filterAlert.AlertType = FilterAlertType.High;
-                        listAlerts.Add(filterAlert);
+                        Alert PluginAlert = new Alert(this.Radar, this.Name, "VisibilityCAT3", IconType.AirportWeather);
+                        PluginAlert.Message = message;
+                        PluginAlert.TimeToBeRemoved = DateTime.Now.AddHours(3);
+                        PluginAlert.AlertType = PluginAlertType.High;
+                        listAlerts.Add(PluginAlert);
 
                     }
                     else if (brasiliaWeather.Visibility > -1 && brasiliaWeather.Visibility < 370 && !String.IsNullOrEmpty(brasiliaWeather.Metar))
                     {
                         message = "Baixa visibilidade, Brasília parece estar operando na categoria CAT II. (" + brasiliaWeather.Metar + ")";
 
-                        AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "VisibilityCAT2", IconType.AirportWeather);
-                        filterAlert.Message = message;
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddHours(3);
-                        filterAlert.AlertType = FilterAlertType.High;
-                        listAlerts.Add(filterAlert);
+                        Alert PluginAlert = new Alert(this.Radar, this.Name, "VisibilityCAT2", IconType.AirportWeather);
+                        PluginAlert.Message = message;
+                        PluginAlert.TimeToBeRemoved = DateTime.Now.AddHours(3);
+                        PluginAlert.AlertType = PluginAlertType.High;
+                        listAlerts.Add(PluginAlert);
 
                     }
                     else if (brasiliaWeather.Visibility > -1 && brasiliaWeather.Visibility < 370 && !String.IsNullOrEmpty(brasiliaWeather.Metar))
                     {
                         message = "Pouca visibilidade, Brasília parece estar operando na categoria CAT I. (" + brasiliaWeather.Metar + ")";
 
-                        AlertFilter filterAlert = new AlertFilter(this.Radar, this.Name, "VisibilityCAT1", IconType.AirportWeather);
-                        filterAlert.Message = message;
-                        filterAlert.TimeToBeDeleted = DateTime.Now.AddHours(3);
-                        filterAlert.AlertType = FilterAlertType.High;
-                        listAlerts.Add(filterAlert);
+                        Alert PluginAlert = new Alert(this.Radar, this.Name, "VisibilityCAT1", IconType.AirportWeather);
+                        PluginAlert.Message = message;
+                        PluginAlert.TimeToBeRemoved = DateTime.Now.AddHours(3);
+                        PluginAlert.AlertType = PluginAlertType.High;
+                        listAlerts.Add(PluginAlert);
                     }
 
                     // condições do tempo
-                    AlertFilter filterAlertWeatherConditition = new AlertFilter(this.Radar, this.Name, "VisibilityCAT1", IconType.AirportWeather);
-                    filterAlertWeatherConditition.Group = "filterAlertWeatherConditition";
-                    filterAlertWeatherConditition.TimeToBeDeleted = DateTime.Now.AddYears(1);
+                    Alert PluginAlertWeatherConditition = new Alert(this.Radar, this.Name, "VisibilityCAT1", IconType.AirportWeather);
+                    PluginAlertWeatherConditition.Group = "PluginAlertWeatherConditition";
+                    PluginAlertWeatherConditition.TimeToBeRemoved = DateTime.Now.AddYears(1);
 
                     switch (brasiliaWeather.WeatherType)
                     {
@@ -104,8 +104,8 @@ namespace TowerBotLibCore.Filters
                         case WeatherType.Fog:
                         case WeatherType.Hail:
                         case WeatherType.VeryStrongRain:
-                            filterAlertWeatherConditition.ID = this.Name + brasiliaWeather.WeatherType;
-                            filterAlertWeatherConditition.Message = GetWeatherConditionMessage(brasiliaWeather.WeatherType, brasiliaWeather.Sky, brasiliaWeather.Metar);
+                            PluginAlertWeatherConditition.ID = this.Name + brasiliaWeather.WeatherType;
+                            PluginAlertWeatherConditition.Message = GetWeatherConditionMessage(brasiliaWeather.WeatherType, brasiliaWeather.Sky, brasiliaWeather.Metar);
                             SetEmergencyTime();
                             break;
                         case WeatherType.Haze:
@@ -114,8 +114,8 @@ namespace TowerBotLibCore.Filters
                         case WeatherType.StrongRain:
                         case WeatherType.NeighborRain:
                         case WeatherType.Drizzle:
-                            filterAlertWeatherConditition.ID = this.Name + brasiliaWeather.WeatherType;
-                            filterAlertWeatherConditition.Message = GetWeatherConditionMessage(brasiliaWeather.WeatherType, brasiliaWeather.Sky, brasiliaWeather.Metar);
+                            PluginAlertWeatherConditition.ID = this.Name + brasiliaWeather.WeatherType;
+                            PluginAlertWeatherConditition.Message = GetWeatherConditionMessage(brasiliaWeather.WeatherType, brasiliaWeather.Sky, brasiliaWeather.Metar);
                             break;
                         default:
 
@@ -126,8 +126,8 @@ namespace TowerBotLibCore.Filters
                                 case SkyType.Overcast:
                                 case SkyType.SomeCloud:
                                 case SkyType.VeryCloudy:
-                                    filterAlertWeatherConditition.ID = this.Name + brasiliaWeather.Sky;
-                                    filterAlertWeatherConditition.Message = GetWeatherConditionMessage(brasiliaWeather.WeatherType, brasiliaWeather.Sky, brasiliaWeather.Metar);
+                                    PluginAlertWeatherConditition.ID = this.Name + brasiliaWeather.Sky;
+                                    PluginAlertWeatherConditition.Message = GetWeatherConditionMessage(brasiliaWeather.WeatherType, brasiliaWeather.Sky, brasiliaWeather.Metar);
                                     break;
                             }
 
@@ -141,10 +141,10 @@ namespace TowerBotLibCore.Filters
 
                     bool isEmergency = emergencyEndTime > DateTime.Now;
 
-                    filterAlertWeatherConditition.AlertType = isEmergency ? FilterAlertType.High : FilterAlertType.Low;
+                    PluginAlertWeatherConditition.AlertType = isEmergency ? PluginAlertType.High : PluginAlertType.Low;
 
-                    if (!String.IsNullOrEmpty(filterAlertWeatherConditition.Message))
-                        listAlerts.Add(filterAlertWeatherConditition);
+                    if (!String.IsNullOrEmpty(PluginAlertWeatherConditition.Message))
+                        listAlerts.Add(PluginAlertWeatherConditition);
 
 
                     if (IsTesting)
@@ -152,7 +152,7 @@ namespace TowerBotLibCore.Filters
                         for (int i = 0; i < listAlerts.Count; i++)
                         {
                             listAlerts[i].Message += " Nível:" + listAlerts[i].AlertType;
-                            listAlerts[i].AlertType = FilterAlertType.Test;
+                            listAlerts[i].AlertType = PluginAlertType.Test;
                         }
 
                     }
@@ -160,7 +160,7 @@ namespace TowerBotLibCore.Filters
                     //{
                     //    for (int i = 0; i < listAlerts.Count; i++)
                     //    {
-                    //        listAlerts[i].AlertType = FilterAlertType.Low;
+                    //        listAlerts[i].AlertType = PluginAlertType.Low;
                     //    }
 
                     //    isFirstTime = false;
@@ -175,7 +175,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter METAR");
+                ErrorManager.ThrowError(e, "Plugin METAR");
             }
 
             return listAlerts;

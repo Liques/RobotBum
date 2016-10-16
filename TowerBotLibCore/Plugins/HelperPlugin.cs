@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TowerBotFoundationCore;
 using System.Linq;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    public static class HelperFilter
+    public static class HelperPlugin
     {
         public static string[] ListSuperHighAirplanes { get; set; }
         public static string[] ListWideAirplanes { get; set; }
@@ -28,7 +28,7 @@ namespace TowerBotLibCore.Filters
             }
         }
 
-        static HelperFilter()
+        static HelperPlugin()
         {
             ListCommonAirplanes = new string[] { 
                 "A31", // Airbus a31x
@@ -344,22 +344,22 @@ namespace TowerBotLibCore.Filters
             {
                 string final = String.Empty;
                 List<Place> locationsFound = GetForwardLocations(airplane, isPassNear);
-                List<Place> locationsFoundFilterred = new List<Place>();
+                List<Place> locationsFoundPluginred = new List<Place>();
 
                 // O For abaixo foi necessário para arrrumar um bug em q não respeitava o número máximo de localizações
                 maxLocations = (maxLocations > locationsFound.Count) ? locationsFound.Count : maxLocations;
                 for (int i = 0; i < maxLocations; i++)
                 {
-                    locationsFoundFilterred.Add(locationsFound[i]);
+                    locationsFoundPluginred.Add(locationsFound[i]);
                 }
 
-                for (int i = 0; i < locationsFoundFilterred.Count; i++)
+                for (int i = 0; i < locationsFoundPluginred.Count; i++)
                 {
                     if (i == 0)
                     {
                         final += ", vai passar ";
-                        if (!String.IsNullOrEmpty(locationsFoundFilterred[i].Preposicao))
-                            final += locationsFoundFilterred[i].Preposicao;
+                        if (!String.IsNullOrEmpty(locationsFoundPluginred[i].Preposicao))
+                            final += locationsFoundPluginred[i].Preposicao;
                         else
                             final += "por";
 
@@ -367,11 +367,11 @@ namespace TowerBotLibCore.Filters
 
                     }
 
-                    final += locationsFoundFilterred[i];
+                    final += locationsFoundPluginred[i];
 
-                    if (locationsFoundFilterred.Count - 2 == i)
+                    if (locationsFoundPluginred.Count - 2 == i)
                         final += " e ";
-                    else if (locationsFoundFilterred.Count - 3 >= i)
+                    else if (locationsFoundPluginred.Count - 3 >= i)
                         final += ", ";
 
 
@@ -439,63 +439,63 @@ namespace TowerBotLibCore.Filters
         /// <param name="isImportantToSee">Fazemos questão de ver?</param>
         /// <param name="isAcceptedCommonAirplanes">Aceitamos aviões comuns que não pertecem uma linha aerea e que não são brasileiros</param>
         /// <returns></returns>
-        public static FilterAlertType GetAlertByLevel(AirplaneBasic airplane, bool isImportantToSee, bool isAcceptedCommonAirplanes = false)
+        public static PluginAlertType GetAlertByLevel(AirplaneBasic airplane, bool isImportantToSee, bool isAcceptedCommonAirplanes = false)
         {
 
             // Lista de aeronaves comuns que, se de empresas diferente, podem emitir alerta
-            var listAircraftTypeCommon = HelperFilter.ListCommonAirplanes;
+            var listAircraftTypeCommon = HelperPlugin.ListCommonAirplanes;
 
             // Lista de aeronaves que estão alerta HIGH
-            var listAircraftTypeHighAlert = HelperFilter.ListWideAirplanes;
+            var listAircraftTypeHighAlert = HelperPlugin.ListWideAirplanes;
 
             // Lista de aeronaves que estão alerta SUPER HIGH
-            var listAircraftTypeSuperHighAlert = HelperFilter.ListSuperHighAirplanes;
+            var listAircraftTypeSuperHighAlert = HelperPlugin.ListSuperHighAirplanes;
 
-            FilterAlertType alertType = FilterAlertType.Low;
+            PluginAlertType alertType = PluginAlertType.Low;
 
             bool isHighAlert = listAircraftTypeHighAlert.Where(s => airplane.AircraftType != null && airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
             bool isSuperHighAlert = listAircraftTypeSuperHighAlert.Where(s => airplane.AircraftType != null && airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
             bool isCommonAirplane = listAircraftTypeCommon.Where(s => airplane.AircraftType != null && airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
 
             if (isSuperHighAlert)
-                alertType = FilterAlertType.High;
+                alertType = PluginAlertType.High;
             else if (isCommonAirplane && isAcceptedCommonAirplanes)
-                alertType = FilterAlertType.High;
+                alertType = PluginAlertType.High;
             else if (isHighAlert && isImportantToSee)
-                alertType = FilterAlertType.High;
+                alertType = PluginAlertType.High;
             else if (isHighAlert && !isImportantToSee)
-                alertType = FilterAlertType.Medium;
+                alertType = PluginAlertType.Medium;
             else if (isAcceptedCommonAirplanes)
-                alertType = FilterAlertType.High;
+                alertType = PluginAlertType.High;
 
             return alertType;
         }
 
-        public static FilterAlertType GetAlertByLevel(AirplaneBasic airplane, Radar radar, bool lightWeight, bool mediumWeight, bool heavyWeight, bool superHeavysAndRare)
+        public static PluginAlertType GetAlertByLevel(AirplaneBasic airplane, Radar radar, bool lightWeight, bool mediumWeight, bool heavyWeight, bool superHeavysAndRare)
         {
 
             // Lista de aeronaves que estão alerta HIGH
-            var listAircraftTypeHighAlert = HelperFilter.ListWideAirplanes;
+            var listAircraftTypeHighAlert = HelperPlugin.ListWideAirplanes;
 
             // Lista de aeronaves que estão alerta SUPER HIGH
-            var listAircraftTypeSuperHighAlert = HelperFilter.ListSuperHighAirplanes;
+            var listAircraftTypeSuperHighAlert = HelperPlugin.ListSuperHighAirplanes;
 
-            FilterAlertType alertType = FilterAlertType.Low;
+            PluginAlertType alertType = PluginAlertType.Low;
 
             bool isSuperHighAlert = listAircraftTypeSuperHighAlert.Where(s => airplane.AircraftType != null && airplane.AircraftType.ICAO.Contains(s)).Count() > 0
                                     && superHeavysAndRare;
 
             if (isSuperHighAlert)
-                alertType = FilterAlertType.High;
+                alertType = PluginAlertType.High;
             else if (heavyWeight && airplane.Weight == AirplaneWeight.Heavy ||
                         mediumWeight && airplane.Weight == AirplaneWeight.Medium ||
                         lightWeight && airplane.Weight == AirplaneWeight.Light)
-                alertType = FilterAlertType.High;
+                alertType = PluginAlertType.High;
             else if (!heavyWeight && airplane.Weight == AirplaneWeight.Heavy)
-                alertType = FilterAlertType.Medium;
+                alertType = PluginAlertType.Medium;
 
             if(!radar.AvoidCommonTraffic && (airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.TakingOff))
-                alertType = FilterAlertType.High;
+                alertType = PluginAlertType.High;
 
 
             return alertType;

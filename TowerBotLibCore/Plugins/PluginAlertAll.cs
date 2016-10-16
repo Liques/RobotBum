@@ -3,44 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using TowerBotFoundationCore;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    public class FilterAlertAll : IFilter
+    public class PluginAlertAll : IPlugin
     {
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public bool IsTesting { get; set; }
         public Radar Radar { get; set; }
 
-        public FilterAlertAll()
+        public PluginAlertAll()
         {
             Name = "Ax";
             IsActive = false;
             IsTesting = false;
         }
 
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
             List<AirplaneBasic> listAirplanes = (List<AirplaneBasic>)parameter;
 
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             try
             {
                 if (IsActive)
                 {
 
-                    var listOfRecentAlerts = AlertFilter.ListOfRecentAlerts != null ? AlertFilter.ListOfRecentAlerts.Where(w => w.TimeCreated > DateTime.Now.AddMinutes(-30) && w.Radar.Name == this.Radar.Name).ToList() : new List<AlertFilter>();
+                    var listOfRecentAlerts = Alert.ListOfRecentAlerts != null ? Alert.ListOfRecentAlerts.Where(w => w.TimeCreated > DateTime.Now.AddMinutes(-30) && w.Radar.Name == this.Radar.Name).ToList() : new List<Alert>();
 
                     foreach (AirplaneBasic airplane in listAirplanes)
                     {
                         foreach (var radar in airplane.Radars)
                         {
-                            AlertFilter alert = new AlertFilter(radar, Name, airplane, IconType.NoIcon);
+                            Alert alert = new Alert(radar, Name, airplane, IconType.NoIcon);
                             alert.ID += DateTime.Now.ToString("yyMdHm");
                             alert.CustomMessage = String.Empty;
                             alert.Airplane = airplane;
-                            alert.AlertType = FilterAlertType.NoAlert;
+                            alert.AlertType = PluginAlertType.NoAlert;
 
                             if (airplane.IsOrbiting)
                             {
@@ -78,7 +78,7 @@ namespace TowerBotLibCore.Filters
                                     listAlerts.Add(alert);
                             }
 
-                            if (listOfRecentAlerts.Any(a => a.Icon == IconType.AirportWeather && a.AlertType != FilterAlertType.NoAlert))
+                            if (listOfRecentAlerts.Any(a => a.Icon == IconType.AirportWeather && a.AlertType != PluginAlertType.NoAlert))
                             {
                                 alert.Icon = IconType.AirportWeather;
                                 alert.Message = listOfRecentAlerts.Where(a => a.Icon == IconType.AirportWeather).First().Message;
@@ -130,7 +130,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter AlertAll");
+                ErrorManager.ThrowError(e, "Plugin AlertAll");
             }
             return listAlerts;
         }
@@ -140,9 +140,9 @@ namespace TowerBotLibCore.Filters
             return airplane.ID + "|" + airplane.Registration.Name + "|" + airplane.AircraftType.ICAO + "|" + ((int)airplane.Weight);
         }
 
-        private bool IsDuplicated(List<AlertFilter> listOfRecentAlerts, AlertFilter alert)
+        private bool IsDuplicated(List<Alert> listOfRecentAlerts, Alert alert)
         {
-            return (listOfRecentAlerts.Any(a => a.AlertType == FilterAlertType.NoAlert &&
+            return (listOfRecentAlerts.Any(a => a.AlertType == PluginAlertType.NoAlert &&
                          a.AirplaneID == alert.Airplane.ID &&
                          a.Icon == alert.Icon
                         ));

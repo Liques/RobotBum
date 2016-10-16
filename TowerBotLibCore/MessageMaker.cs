@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TowerBotFoundationCore;
-using TowerBotLibCore.Filters;
+using TowerBotLibCore.Plugins;
 
 namespace TowerBotLibCore
 {
@@ -66,7 +66,7 @@ namespace TowerBotLibCore
                 this.Message = String.Empty;
                 this.Radar = radar;
 
-                isSuperHighAlert = HelperFilter.ListSuperHighAirplanes.Where(s => this.Airplane.AircraftType != null && this.Airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
+                isSuperHighAlert = HelperPlugin.ListSuperHighAirplanes.Where(s => this.Airplane.AircraftType != null && this.Airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
 
                 formatedAltitude = (this.Airplane.Altitude / 1000).ToString("##.##0ft");
 
@@ -262,17 +262,17 @@ namespace TowerBotLibCore
 
                         if (airplane.State == AirplaneStatus.ParkingOrTaxing)
                         {
-                            string overLocation = HelperFilter.GetOverLocation(airplane);
+                            string overLocation = HelperPlugin.GetOverLocation(airplane);
                             if (!String.IsNullOrEmpty(overLocation))
                                 Message += " no " + overLocation;
                         }
                         else if (Message.Length <= 110)
                         {
-                            Message += TowerBotLibCore.Filters.HelperFilter.GetForwardLocationsPhrase(this.Airplane, true, 2);
+                            Message += TowerBotLibCore.Plugins.HelperPlugin.GetForwardLocationsPhrase(this.Airplane, true, 2);
                         }
                         else
                         {
-                            Message += TowerBotLibCore.Filters.HelperFilter.GetForwardLocationsPhrase(this.Airplane, true);
+                            Message += TowerBotLibCore.Plugins.HelperPlugin.GetForwardLocationsPhrase(this.Airplane, true);
                         }
 
                     }
@@ -589,7 +589,7 @@ namespace TowerBotLibCore
             List<string> lstPhrases = phrases.Split(';').ToList();
             string phrase = RandomListPhrases(lstPhrases);
 
-            bool isSuperHighAlert = HelperFilter.ListSuperHighAirplanes.Where(s => this.Airplane.AircraftType != null && this.Airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
+            bool isSuperHighAlert = HelperPlugin.ListSuperHighAirplanes.Where(s => this.Airplane.AircraftType != null && this.Airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
 
             if (isSuperHighAlert)
                 phrase = "ATENÇÃO: " + phrase;
@@ -806,7 +806,7 @@ namespace TowerBotLibCore
             List<string> lstPhrases = phrases.Split(';').ToList();
             string phrase = RandomListPhrases(lstPhrases);
 
-            bool isSuperHighAlert = HelperFilter.ListSuperHighAirplanes.Where(s => this.Airplane.AircraftType != null && this.Airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
+            bool isSuperHighAlert = HelperPlugin.ListSuperHighAirplanes.Where(s => this.Airplane.AircraftType != null && this.Airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
 
             if (isSuperHighAlert)
                 phrase = "ATENÇÃO: " + phrase;
@@ -851,9 +851,9 @@ namespace TowerBotLibCore
             List<string> lstPhrases = phrases.Split(';').ToList();
             string phrase = RandomListPhrases(lstPhrases);
 
-            bool isSuperHighAlert = HelperFilter.ListSuperHighAirplanes.Where(s => this.Airplane.AircraftType != null && this.Airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
+            bool isSuperHighAlert = HelperPlugin.ListSuperHighAirplanes.Where(s => this.Airplane.AircraftType != null && this.Airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
 
-            if (isSuperHighAlert && HelperFilter.IsAirplaneInApproximation(this.Airplane, this.Radar))
+            if (isSuperHighAlert && HelperPlugin.IsAirplaneInApproximation(this.Airplane, this.Radar))
                 phrase = "ATENÇÃO: " + phrase;
 
             return phrase;
@@ -880,7 +880,7 @@ namespace TowerBotLibCore
 
             if (phrase.Length <= 110)
             {
-                phrase += TowerBotLibCore.Filters.HelperFilter.GetForwardLocationsPhrase(this.Airplane, true, 2);
+                phrase += TowerBotLibCore.Plugins.HelperPlugin.GetForwardLocationsPhrase(this.Airplane, true, 2);
             }
 
             phrase += ". #Chart ";

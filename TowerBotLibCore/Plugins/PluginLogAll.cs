@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TowerBotFoundationCore;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    class FilterLogAll : IFilter
+    class PluginLogAll : IPlugin
     {
         public string Name { get; set; }
         public bool IsActive { get; set; }
@@ -16,7 +16,7 @@ namespace TowerBotLibCore.Filters
         public Radar Radar { get; set; }
 
 
-        public FilterLogAll()
+        public PluginLogAll()
         {
             Name = "LogAll";
             IsActive = true;
@@ -24,11 +24,11 @@ namespace TowerBotLibCore.Filters
 
         }
 
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
             List<AirplaneBasic> listAirplanes = (List<AirplaneBasic>)parameter;
 
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             try
             {
@@ -37,7 +37,7 @@ namespace TowerBotLibCore.Filters
                 {
 
                     // Lista de voos já conhecidos
-                    var listAirplanesFiltered = listAirplanes;
+                    var listAirplanesPlugined = listAirplanes;
 
                     string strPath = System.IO.Directory.GetCurrentDirectory() + "\\logs\\reg";
 
@@ -51,28 +51,28 @@ namespace TowerBotLibCore.Filters
                     if (!exists)
                         System.IO.Directory.CreateDirectory(strPath);
 
-                    foreach (AirplaneBasic airplane in listAirplanesFiltered)
+                    foreach (AirplaneBasic airplane in listAirplanesPlugined)
                     {
                         foreach (var radar in airplane.Radars)
                         {
                             if (radar.Name != "BSB" || radar.Name != "BRA")
                                 continue;
 
-                            AlertFilter filterAlert = new AlertFilter(radar, Name, airplane, IconType.NoIcon, MessageType.Fixed);
+                            Alert PluginAlert = new Alert(radar, Name, airplane, IconType.NoIcon, MessageType.Fixed);
 
                             //// Data fim dos alertas gerais de log, dando lugar aos regs
                             //if (DateTime.Now.Month == 4 && DateTime.Now.Year == 2015)
                             //{
 
-                            //    filterAlert.AlertType = FilterAlertType.NoAlert;
-                            //    filterAlert.Airplane = airplane;
+                            //    PluginAlert.AlertType = PluginAlertType.NoAlert;
+                            //    PluginAlert.Airplane = airplane;
 
-                            //    filterAlert.Message = airplane.AircraftType + ";" + airplane.Registration + ";" + airplane.FlightName + ";" + ";" + airplane.State + ";" + airplane.From.IATA + ";" + airplane.To.IATA + ";" + airplane.Altitude + ";" + airplane.VerticalSpeed + ";" + airplane.Speed;
-                            //    filterAlert.ID = "LogAll" + airplane.ID + airplane.State.ToString();
-                            //    filterAlert.TimeToBeDeleted = DateTime.Now.AddHours(1);
-                            //    filterAlert.Justify += ";" + airplane.StateJustify + ";" + HelperFilter.GetForwardLocationsPhrase(airplane, true);
-                            //    filterAlert.Level = 0;
-                            //    listAlerts.Add(filterAlert);
+                            //    PluginAlert.Message = airplane.AircraftType + ";" + airplane.Registration + ";" + airplane.FlightName + ";" + ";" + airplane.State + ";" + airplane.From.IATA + ";" + airplane.To.IATA + ";" + airplane.Altitude + ";" + airplane.VerticalSpeed + ";" + airplane.Speed;
+                            //    PluginAlert.ID = "LogAll" + airplane.ID + airplane.State.ToString();
+                            //    PluginAlert.TimeToBeDeleted = DateTime.Now.AddHours(1);
+                            //    PluginAlert.Justify += ";" + airplane.StateJustify + ";" + HelperPlugin.GetForwardLocationsPhrase(airplane, true);
+                            //    PluginAlert.Level = 0;
+                            //    listAlerts.Add(PluginAlert);
                             //}
 
                             string stateString = "N";
@@ -110,7 +110,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter Log All DF");
+                ErrorManager.ThrowError(e, "Plugin Log All DF");
             }
 
             return listAlerts;

@@ -4,9 +4,9 @@ using TowerBotFoundationCore;
 using System.Linq;
 using System.Globalization;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    class SpecialAlert : IFilter
+    class SpecialAlert : IPlugin
     {
 
         private class SpecialAlertSchedule
@@ -21,7 +21,7 @@ namespace TowerBotLibCore.Filters
             public DateTime nextAnalyse;
             public TimeSpan periodToAnalyse;
             public string message;
-            public FilterAlertType alertType;
+            public PluginAlertType alertType;
             public string lat1, lat2, lon1, lon2 = String.Empty;
             public AirplaneStatus Status { get; set; }
 
@@ -39,7 +39,7 @@ namespace TowerBotLibCore.Filters
                 periodToAnalyse = new TimeSpan(0);
                 message = string.Empty;
                 flightName = string.Empty;
-                alertType = FilterAlertType.Low;
+                alertType = PluginAlertType.Low;
 
             }
 
@@ -67,7 +67,7 @@ namespace TowerBotLibCore.Filters
         //private DateTime nextAnalyse;
         //private TimeSpan periodToAnalyse;
         //private string message;
-        //private FilterAlertType alertType;
+        //private PluginAlertType alertType;
 
         private List<SpecialAlertSchedule> listSpecialAlertSchedule;
 
@@ -86,11 +86,11 @@ namespace TowerBotLibCore.Filters
             listSpecialAlertSchedule = new List<SpecialAlertSchedule>();
         }
 
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
             // Já vem como padrão a lista dos aviões do DF
             List<AirplaneBasic> listAirplanes = (List<AirplaneBasic>)parameter;
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             try
             {
@@ -118,20 +118,20 @@ namespace TowerBotLibCore.Filters
                                 listAirplanes = listAirplanes.Where(s => s.State == specialAlertSchedule.Status).ToList();
                             }
 
-                            AirplaneBasic airplaneFiltered = null;
+                            AirplaneBasic airplanePlugined = null;
 
                             if (specialAlertSchedule.aircraftRegistration != null)
-                                airplaneFiltered = listAirplanes.Where(s => s.Registration.Name.ToLower().StartsWith(specialAlertSchedule.aircraftRegistration.Name.ToLower())).FirstOrDefault();
+                                airplanePlugined = listAirplanes.Where(s => s.Registration.Name.ToLower().StartsWith(specialAlertSchedule.aircraftRegistration.Name.ToLower())).FirstOrDefault();
                             else if (specialAlertSchedule.aircraftType != null)
-                                airplaneFiltered = listAirplanes.Where(s => s.AircraftType.ICAO.ToLower().Contains(specialAlertSchedule.aircraftType.ICAO.ToLower())).FirstOrDefault();
+                                airplanePlugined = listAirplanes.Where(s => s.AircraftType.ICAO.ToLower().Contains(specialAlertSchedule.aircraftType.ICAO.ToLower())).FirstOrDefault();
                             else if (!String.IsNullOrEmpty(specialAlertSchedule.flightName))
-                                airplaneFiltered = listAirplanes.Where(s => s.FlightName.ToLower().Contains(specialAlertSchedule.flightName.ToLower())).FirstOrDefault();
+                                airplanePlugined = listAirplanes.Where(s => s.FlightName.ToLower().Contains(specialAlertSchedule.flightName.ToLower())).FirstOrDefault();
 
-                            if (airplaneFiltered != null)
+                            if (airplanePlugined != null)
                             {
                                 MessageType messageType = (!String.IsNullOrEmpty(specialAlertSchedule.message)) ? MessageType.Fixed : MessageType.General;
 
-                                AlertFilter alert = new AlertFilter(this.Radar, specialAlertSchedule.ID, airplaneFiltered, IconType.NoIcon, messageType);
+                                Alert alert = new Alert(this.Radar, specialAlertSchedule.ID, airplanePlugined, IconType.NoIcon, messageType);
                                 alert.Message = specialAlertSchedule.message;
                                 alert.AlertType = specialAlertSchedule.alertType;
                                 listAlerts.Add(alert);
@@ -147,7 +147,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter Special Alert");
+                ErrorManager.ThrowError(e, "Plugin Special Alert");
             }
 
             return listAlerts;
@@ -291,9 +291,9 @@ namespace TowerBotLibCore.Filters
 
                 Console.WriteLine("\n> É alerta de nível alto? (S/N)");
                 if (Console.ReadKey().Key == ConsoleKey.S)
-                    schedule.alertType = FilterAlertType.High;
+                    schedule.alertType = PluginAlertType.High;
                 else
-                    schedule.alertType = FilterAlertType.Medium;
+                    schedule.alertType = PluginAlertType.Medium;
 
                 Console.WriteLine("\n\n-----------Revisão-----------\n");
                 Console.WriteLine(schedule.ToString());

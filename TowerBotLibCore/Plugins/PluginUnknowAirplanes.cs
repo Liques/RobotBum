@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TowerBotFoundationCore;
 using System.Linq;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    public class FilterUnknowAirplanes : IFilter
+    public class PluginUnknowAirplanes : IPlugin
     {
         public string Name { get; set; }
         public bool IsActive { get; set; }
@@ -15,7 +15,7 @@ namespace TowerBotLibCore.Filters
         bool ShowGeneralAviation = false;
         bool ShowBrazilianCompanies = false;
 
-        public FilterUnknowAirplanes(bool showBrazilianCompanies, bool showGeneralAviation)
+        public PluginUnknowAirplanes(bool showBrazilianCompanies, bool showGeneralAviation)
         {
             Name = "UnknowAir";
             IsActive = true;
@@ -26,24 +26,24 @@ namespace TowerBotLibCore.Filters
 
         }
 
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
             List<AirplaneBasic> listAirplanes = (List<AirplaneBasic>)parameter;
 
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             try
             {
                 if (IsActive)
                 {
                     // Necessário essa lista de Wide, pq o Lambda não estava funcionando direito junto com os outros filtros.
-                    var listAirplanesFiltered = listAirplanes.Where(s =>
+                    var listAirplanesPlugined = listAirplanes.Where(s =>
                         s.AircraftType.Type != AircraftModel.AirplaneHeavy && // Para não entrar em conflito com o filtro Wide
                         s.AircraftType.Type != AircraftModel.NoModel &&
                         s.AircraftType.IsValid == true
                         ).ToList();
 
-                    foreach (AirplaneBasic airplane in listAirplanesFiltered)
+                    foreach (AirplaneBasic airplane in listAirplanesPlugined)
                     {
                         foreach (var radar in airplane.Radars)
                         {
@@ -73,22 +73,22 @@ namespace TowerBotLibCore.Filters
                             }
 
 
-                            bool inApproximation = HelperFilter.IsAirplaneInApproximation(airplane, Radar);
+                            bool inApproximation = HelperPlugin.IsAirplaneInApproximation(airplane, Radar);
                             bool isLightAirplaneBelowTransitionLimit = airplane.Altitude <= 5000;
 
-                            AlertFilter filterAlert = new AlertFilter(radar, Name, airplane, IconType.NoIcon);
-                            filterAlert.Airplane = airplane;
+                            Alert PluginAlert = new Alert(radar, Name, airplane, IconType.NoIcon);
+                            PluginAlert.Airplane = airplane;
                             string fromPlace = !String.IsNullOrEmpty(airplane.From.City) ? " vindo de " + airplane.From.City : "";
                             string toPlace = !String.IsNullOrEmpty(airplane.To.City) ? " com destino a " + airplane.To.City : "";
                             string fromPlaceShort = !String.IsNullOrEmpty(airplane.From.City) ? " de " + airplane.From.IATA : "";
                             string toPlaceShort = !String.IsNullOrEmpty(airplane.To.City) ? " para " + airplane.To.IATA : "";
 
-                            filterAlert.Message = "Um " + airplane.AircraftType + " (" + airplane.Registration + " - " + airplane.FlightName + ")";
+                            PluginAlert.Message = "Um " + airplane.AircraftType + " (" + airplane.Registration + " - " + airplane.FlightName + ")";
 
                             switch (airplane.State)
                             {
                                 case AirplaneStatus.Cruise:
-                                    filterAlert.Icon = IconType.Cruise;
+                                    PluginAlert.Icon = IconType.Cruise;
 
 
                                     if ((airplane.FlightName.StartsWith("TAM") || airplane.FlightName.StartsWith("JJ") ||
@@ -104,12 +104,12 @@ namespace TowerBotLibCore.Filters
 
                                     if (airplane.To.IATA != "CWB")
                                     {
-                                        filterAlert.Level = 0;
-                                        filterAlert.Message += " está em cruzeiro " + HelperFilter.GetForwardLocationsPhrase(airplane, false) + fromPlaceShort + toPlaceShort;
-                                        filterAlert.Message += (airplane.FlightDistance > 0) ? ", numa viagem de " + airplane.FlightDistance.ToString("#") + " km." : ".";
-                                        filterAlert.AlertType = HelperFilter.GetAlertByLevel(airplane, radar, isLightAirplaneBelowTransitionLimit, false, inApproximation, true);
+                                        PluginAlert.Level = 0;
+                                        PluginAlert.Message += " está em cruzeiro " + HelperPlugin.GetForwardLocationsPhrase(airplane, false) + fromPlaceShort + toPlaceShort;
+                                        PluginAlert.Message += (airplane.FlightDistance > 0) ? ", numa viagem de " + airplane.FlightDistance.ToString("#") + " km." : ".";
+                                        PluginAlert.AlertType = HelperPlugin.GetAlertByLevel(airplane, radar, isLightAirplaneBelowTransitionLimit, false, inApproximation, true);
 
-                                        listAlerts.Add(filterAlert);
+                                        listAlerts.Add(PluginAlert);
                                     }
                                     break;
 
@@ -118,54 +118,54 @@ namespace TowerBotLibCore.Filters
                                     if (radar.AltitudeOfTolerence <= airplane.Altitude || airplane.Weight == AirplaneWeight.Medium && radar.IsMediusNotAllowed)
                                         continue;
 
-                                    filterAlert.Icon = IconType.Landing;
+                                    PluginAlert.Icon = IconType.Landing;
 
                                     //    if (string.IsNullOrEmpty(airplane.To.City) && !IsKnownAirplane(airplane))
                                     //    {
-                                    //        filterAlert.Message += fromPlace + toPlace + ", parece que vai pousar em Curitiba!";
-                                    //        filterAlert.Justify = airplane.StateJustify;
-                                    //        filterAlert.AlertType = GetAlertByLevel(airplane, true, false);
+                                    //        PluginAlert.Message += fromPlace + toPlace + ", parece que vai pousar em Curitiba!";
+                                    //        PluginAlert.Justify = airplane.StateJustify;
+                                    //        PluginAlert.AlertType = GetAlertByLevel(airplane, true, false);
                                     //    }
 
                                     //    else 
 
-                                    filterAlert.Message += fromPlace + toPlace + " parece estar em aproximação" + HelperFilter.GetForwardLocationsPhrase(airplane, false);
-                                    filterAlert.AlertType = HelperFilter.GetAlertByLevel(airplane, radar, isLightAirplaneBelowTransitionLimit, false, inApproximation, true);
-                                    filterAlert.Justify += ". !IsKnownAirplane.";
+                                    PluginAlert.Message += fromPlace + toPlace + " parece estar em aproximação" + HelperPlugin.GetForwardLocationsPhrase(airplane, false);
+                                    PluginAlert.AlertType = HelperPlugin.GetAlertByLevel(airplane, radar, isLightAirplaneBelowTransitionLimit, false, inApproximation, true);
+                                    PluginAlert.Justify += ". !IsKnownAirplane.";
 
 
                                     // Se for para ter aviação geral...
                                     if (ShowGeneralAviation && airplane.AircraftType.Type == AircraftModel.AirplaneLow)
                                     {
-                                        filterAlert.Message += fromPlace + toPlace + " parece estar em aproximação" + HelperFilter.GetForwardLocationsPhrase(airplane, false);
-                                        filterAlert.AlertType = FilterAlertType.High;
-                                        filterAlert.Justify += ". Aviação geral.";
+                                        PluginAlert.Message += fromPlace + toPlace + " parece estar em aproximação" + HelperPlugin.GetForwardLocationsPhrase(airplane, false);
+                                        PluginAlert.AlertType = PluginAlertType.High;
+                                        PluginAlert.Justify += ". Aviação geral.";
                                     }
 
                                     if (airplane.Registration.IsValid && airplane.Registration.Country != "Brasil")
                                     {
                                         if (!String.IsNullOrEmpty(airplane.Registration.Country))
-                                            filterAlert.Message += ". País de origem: " + airplane.Registration.Country;
+                                            PluginAlert.Message += ". País de origem: " + airplane.Registration.Country;
 
                                         string[] listKnownCountries = new string[] { "Brasil", "EUA", "Inglaterra", "Canadá", "Uruguai", "Bolivia", "Argentina", "Chile", "Espanha", "Portugal", "França", "Panama", "Colômbia", "Países Baixos", "México", "Reino Unido", "Coreia do Sul" };
                                         bool isKnownCountry = listKnownCountries.Where(s => s == airplane.Registration.Country).Count() > 0;
 
                                         if (!isKnownCountry)
                                         {
-                                            filterAlert.AlertType = FilterAlertType.High;
-                                            filterAlert.Justify += ". É de um país não comum voar por aqui.";
+                                            PluginAlert.AlertType = PluginAlertType.High;
+                                            PluginAlert.Justify += ". É de um país não comum voar por aqui.";
                                         }
 
                                     }
 
                                     if (airplane.IsSpecial)
                                     {
-                                        filterAlert.AlertType = FilterAlertType.High;
-                                        filterAlert.Justify += ". IsSpecial.";
+                                        PluginAlert.AlertType = PluginAlertType.High;
+                                        PluginAlert.Justify += ". IsSpecial.";
                                     }
 
-                                    filterAlert.Level = 1;
-                                    listAlerts.Add(filterAlert);
+                                    PluginAlert.Level = 1;
+                                    listAlerts.Add(PluginAlert);
 
                                     break;
 
@@ -174,30 +174,30 @@ namespace TowerBotLibCore.Filters
                                     if (radar.AltitudeOfTolerence <= airplane.Altitude || airplane.Weight == AirplaneWeight.Medium && radar.IsMediusNotAllowed)
                                         continue;
 
-                                    filterAlert.Icon = IconType.TakingOff;
+                                    PluginAlert.Icon = IconType.TakingOff;
 
-                                    filterAlert.Level = 4;
-                                    filterAlert.Message += ", parece estar decolando de Curitiba" + HelperFilter.GetForwardLocationsPhrase(airplane, true) + toPlace + "!";
+                                    PluginAlert.Level = 4;
+                                    PluginAlert.Message += ", parece estar decolando de Curitiba" + HelperPlugin.GetForwardLocationsPhrase(airplane, true) + toPlace + "!";
 
-                                    filterAlert.AlertType = HelperFilter.GetAlertByLevel(airplane, radar, isLightAirplaneBelowTransitionLimit, false, inApproximation, true);
+                                    PluginAlert.AlertType = HelperPlugin.GetAlertByLevel(airplane, radar, isLightAirplaneBelowTransitionLimit, false, inApproximation, true);
 
                                     // Se for para ter aviação geral...
                                     if (ShowGeneralAviation && airplane.AircraftType.Type == AircraftModel.AirplaneLow && airplane.Altitude <= 6100)
                                     {
-                                        filterAlert.AlertType = FilterAlertType.High;
+                                        PluginAlert.AlertType = PluginAlertType.High;
                                     }
                                     if (airplane.IsSpecial)
                                     {
-                                        filterAlert.AlertType = FilterAlertType.High;
-                                        filterAlert.Justify += ". IsSpecial.";
+                                        PluginAlert.AlertType = PluginAlertType.High;
+                                        PluginAlert.Justify += ". IsSpecial.";
                                     }
 
-                                    listAlerts.Add(filterAlert);
+                                    listAlerts.Add(PluginAlert);
                                     break;
                                 case AirplaneStatus.ParkingOrTaxing:
-                                    filterAlert.Icon = IconType.Taxing;
+                                    PluginAlert.Icon = IconType.Taxing;
 
-                                    string placeInAirport = HelperFilter.GetOverLocation(airplane);
+                                    string placeInAirport = HelperPlugin.GetOverLocation(airplane);
                                     placeInAirport = (!string.IsNullOrEmpty(placeInAirport)) ? " no " + placeInAirport : "";
 
                                     bool isBrazilianComercailAirplane = airplane.Registration.IsValid && airplane.Registration.Country == "Brasil";
@@ -205,10 +205,10 @@ namespace TowerBotLibCore.Filters
 
                                     if (!isBrazilianComercailAirplane || isPlaceInteresting)
                                     {
-                                        filterAlert.Level = 3;
-                                        filterAlert.Message += " parece estar no aeroporto" + placeInAirport + toPlace + ".";
-                                        filterAlert.AlertType = HelperFilter.GetAlertByLevel(airplane, radar, isLightAirplaneBelowTransitionLimit, false, inApproximation, true);
-                                        listAlerts.Add(filterAlert);
+                                        PluginAlert.Level = 3;
+                                        PluginAlert.Message += " parece estar no aeroporto" + placeInAirport + toPlace + ".";
+                                        PluginAlert.AlertType = HelperPlugin.GetAlertByLevel(airplane, radar, isLightAirplaneBelowTransitionLimit, false, inApproximation, true);
+                                        listAlerts.Add(PluginAlert);
                                     }
                                     break;
 
@@ -220,7 +220,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter Unknow Airplanes DF");
+                ErrorManager.ThrowError(e, "Plugin Unknow Airplanes DF");
             }
             return listAlerts;
         }

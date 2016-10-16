@@ -3,38 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using TowerBotFoundationCore;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    public class FilterGoodEvening : IFilter
+    public class PluginGoodEvening : IPlugin
     {
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public bool IsTesting { get; set; }
         public Radar Radar { get; set; }
 
-        public FilterGoodEvening()
+        public PluginGoodEvening()
         {
             Name = "GoodEve";
             IsActive = false;
             IsTesting = false;
         }
 
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
             List<AirplaneBasic> listAirplanes = (List<AirplaneBasic>)parameter;
 
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             try
             {
                 if (IsActive)
                 {
 
-                    if (AlertFilter.ListOfAlerts == null)
+                    if (Alert.ListOfAlerts == null)
                         return listAlerts;
                     
-                    var listOfActiveRadar = AlertFilter.ListOfAlerts.Where(w => w.Radar != null).Select(s => s.Radar.Name).Distinct().ToList();
-                    var listOfAlerts24Hours = AlertFilter.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddDays(-1)).ToList();
+                    var listOfActiveRadar = Alert.ListOfAlerts.Where(w => w.Radar != null).Select(s => s.Radar.Name).Distinct().ToList();
+                    var listOfAlerts24Hours = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddDays(-1)).ToList();
 
                     foreach (var radra in listOfActiveRadar)
                     {
@@ -47,7 +47,7 @@ namespace TowerBotLibCore.Filters
 
                             var listOfAlertByRadar = listOfAlerts24Hours.Where(w => w.Radar.Name == radra).ToList();
 
-                            AlertFilter alert = new AlertFilter(radar, "gdAnun", "", IconType.GoodNightAnnoucement);
+                            Alert alert = new Alert(radar, "gdAnun", "", IconType.GoodNightAnnoucement);
                             alert.ID += DateTime.Now.ToString("yyMdHm");
                             alert.CustomMessage = FirstPhrase(radar) + " "
                                                 + SecondPhrase(radar) + " "
@@ -66,7 +66,7 @@ namespace TowerBotLibCore.Filters
                                                 + WeatherTomorrowPhrase(radar) + " "
                                                 + FinalPhrase(radar);
 
-                            alert.AlertType = FilterAlertType.Test;
+                            alert.AlertType = PluginAlertType.Test;
 
                             listAlerts.Add(alert);
                         }
@@ -80,7 +80,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter Good Evening");
+                ErrorManager.ThrowError(e, "Plugin Good Evening");
             }
             return listAlerts;
         }
@@ -446,7 +446,7 @@ namespace TowerBotLibCore.Filters
             return name;
         }
 
-        private string TakeoffsPhrase(Radar radar, List<AlertFilter> listOfAlerts, bool forceRadarName)
+        private string TakeoffsPhrase(Radar radar, List<Alert> listOfAlerts, bool forceRadarName)
         {
             string radarName = radar.Description.Replace(" - ", "|").Split('|').First();
             var listPhares = new List<string>();
@@ -531,7 +531,7 @@ namespace TowerBotLibCore.Filters
             return start + takeoffPhare + airplanes;
         }
 
-        private string LandingsPhrase(Radar radar, List<AlertFilter> listOfAlerts)
+        private string LandingsPhrase(Radar radar, List<Alert> listOfAlerts)
         {
             string radarName = radar.Description.Replace(" - ", "|").Split('|').First();
             var listPhares = new List<string>();
@@ -641,7 +641,7 @@ namespace TowerBotLibCore.Filters
             return start + landingPhare + airplanes + ".";
         }
 
-        private string OrbitPhrase(Radar radar, List<AlertFilter> listOfAlerts)
+        private string OrbitPhrase(Radar radar, List<Alert> listOfAlerts)
         {
             string radarName = radar.Description.Replace(" - ", "|").Split('|').First();
             var listPhares = new List<string>();

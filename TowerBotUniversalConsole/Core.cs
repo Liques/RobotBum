@@ -107,11 +107,11 @@ namespace TowerBotUniversalConsole
                                 Console.WriteLine("O proximo twitter de nível médio será em: {0}\n", nextTimeTwitterMediumAlertPost.ToString());
                                 break;
                             case "refresh":
-                                FiltersManager.RefreshAll();
+                                PluginsManager.RefreshAll();
                                 Console.WriteLine("Cache limpado.\n");
                                 break;
-                            case "filters":
-                                FiltersManager.AccessFilterCommandLine();
+                            case "Plugins":
+                                PluginsManager.AccessPluginCommandLine();
                                 break;
 
                             case "help":
@@ -120,7 +120,7 @@ namespace TowerBotUniversalConsole
                                 Console.WriteLine("- online");
                                 Console.WriteLine("- twitter on/off/test/postmedium/nextmedium");
                                 Console.WriteLine("- refresh");
-                                Console.WriteLine("- filters");
+                                Console.WriteLine("- Plugins");
 
                                 break;
                             case "exit":
@@ -150,17 +150,15 @@ namespace TowerBotUniversalConsole
         //private static void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         private static void OnTimer(object sender, object args)
         {
-            //Task.Run(async () =>
-            //{
-            var teste = TowerBotFoundationCore.AirportWeather.GetWeather("SB*");
+            TowerBotFoundationCore.AirportWeather.GetWeather("SB*");
 
-            TowerBotLibCore.AlertFilter currentAlertFilter = null; // Para tratatamento de erro.
+            TowerBotLibCore.Alert currentAlert = null; // Para tratatamento de erro.
             string messageFlow = "No Flow";
 #if !DEBUG
             try
             {
 #endif
-            var alerts = FiltersManager.GetAlerts(isToForceUpdateAll);
+            var alerts = PluginsManager.GetAlerts(isToForceUpdateAll);
             isToForceUpdateAll = false;
 
             if (showUpdates)
@@ -169,25 +167,25 @@ namespace TowerBotUniversalConsole
             for (int i = 0; i < alerts.Count; i++)
             {
 
-                currentAlertFilter = alerts[i];
+                currentAlert = alerts[i];
                 ConsoleColor color = ConsoleColor.Gray;
 
-                switch (currentAlertFilter.AlertType)
+                switch (currentAlert.AlertType)
                 {
-                    case TowerBotLibCore.FilterAlertType.Low:
+                    case TowerBotLibCore.PluginAlertType.Low:
                         color = ConsoleColor.Green;
                         break;
-                    case TowerBotLibCore.FilterAlertType.Medium:
+                    case TowerBotLibCore.PluginAlertType.Medium:
                         color = ConsoleColor.Yellow;
                         break;
-                    case TowerBotLibCore.FilterAlertType.High:
+                    case TowerBotLibCore.PluginAlertType.High:
                         color = ConsoleColor.Red;
                         break;
                 }
 
                 messageFlow = "";
                 messageFlow += ">Tratando alerta ";
-                if (alerts[i].AlertType != TowerBotLibCore.FilterAlertType.NoAlert)
+                if (alerts[i].AlertType != TowerBotLibCore.PluginAlertType.NoAlert)
                 {
                     messageFlow += ">Gravação de log de alertas";
 
@@ -202,19 +200,19 @@ namespace TowerBotUniversalConsole
                     }
                 }
                 // Se o alerta for high, postar no twitter de todo jeito
-                if (alerts[i].AlertType == TowerBotLibCore.FilterAlertType.High ||
+                if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.High ||
                     // Se passou 9 horas sem postar nada, então ver se é alerta médio, se não ta de madrugada e postar.
-                    alerts[i].AlertType == TowerBotLibCore.FilterAlertType.Medium && nextTimeTwitterMediumAlertPost <= DateTime.Now && DateTime.Now.Hour >= 9)
+                    alerts[i].AlertType == TowerBotLibCore.PluginAlertType.Medium && nextTimeTwitterMediumAlertPost <= DateTime.Now && DateTime.Now.Hour >= 9)
                 {
                     messageFlow += ">Alerta High ";
 
                     using (StreamWriter w = File.AppendText(strPath + "\\logAlertsHigh_" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt"))
                     {
-                        if (alerts[i].AlertType == TowerBotLibCore.FilterAlertType.Medium)
+                        if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.Medium)
                         {
                             messageFlow += ">Alerta Medium convertido em High ";
                             alerts[i].Message = "Curiosidade: " + alerts[i].Message;
-                            alerts[i].AlertType = TowerBotLibCore.FilterAlertType.High;
+                            alerts[i].AlertType = TowerBotLibCore.PluginAlertType.High;
                         }
 
                         if (isTwitterActive && !isFirstTime)
@@ -230,7 +228,7 @@ namespace TowerBotUniversalConsole
 
                     }
                 }
-                if (alerts[i].AlertType == TowerBotLibCore.FilterAlertType.NoAlert)
+                if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.NoAlert)
                 {
                     messageFlow += ">Gravando no log NoAlert ";
 

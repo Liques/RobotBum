@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using TowerBotFoundationCore;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    class FilterBackingOrGo : IFilter
+    class PluginBackingOrGo : IPlugin
     {
         public bool IsActive { get; set; }
         public bool IsTesting { get; set; }
         public string Name { get; set; }
         public Radar Radar { get; set; }
 
-        public FilterBackingOrGo()
+        public PluginBackingOrGo()
         {
             Name = "Backing";
             IsActive = false;
             IsTesting = false;
         }
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
 
             List<AirplaneBasic> listAirplanes = (List<AirplaneBasic>)parameter;
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
             try
             {
                 if (IsActive)
@@ -30,14 +30,14 @@ namespace TowerBotLibCore.Filters
 
 
                     // Lista de voos já conhecidos
-                    var listAirplanesFiltered = listAirplanes.Where(s => s.From.IATA.Contains("BSB") && !String.IsNullOrEmpty(s.From.IATA) && s.State == AirplaneStatus.Landing ||
+                    var listAirplanesPlugined = listAirplanes.Where(s => s.From.IATA.Contains("BSB") && !String.IsNullOrEmpty(s.From.IATA) && s.State == AirplaneStatus.Landing ||
                                                                     s.To.IATA.Contains("BSB") && !String.IsNullOrEmpty(s.To.IATA) && s.State == AirplaneStatus.TakingOff
                     ).ToList();
 
                     // TODO para testes foi feito isso, mas engloba td
-                    listAirplanesFiltered = listAirplanes;
+                    listAirplanesPlugined = listAirplanes;
 
-                    foreach (AirplaneBasic airplane in listAirplanesFiltered)
+                    foreach (AirplaneBasic airplane in listAirplanesPlugined)
                     {
                         string toPlace = (airplane.To.City != null) ? " que ia para " + airplane.To.City : "";
                         string fromPlace = !String.IsNullOrEmpty(airplane.From.City) ? " vindo de " + airplane.From.City : "";
@@ -75,13 +75,13 @@ namespace TowerBotLibCore.Filters
                         if (orbit && !string.IsNullOrEmpty(runway))
                         {
                             airplane.IsTouchAndGo = true;
-                            AlertFilter filterAlert = new AlertFilter(this.Radar, Name, airplane, IconType.TouchAndGo, MessageType.Fixed);
-                            filterAlert.Message = "O voo " + airplane.FlightName + " (" + airplane.Registration + ")";
+                            Alert PluginAlert = new Alert(this.Radar, Name, airplane, IconType.TouchAndGo, MessageType.Fixed);
+                            PluginAlert.Message = "O voo " + airplane.FlightName + " (" + airplane.Registration + ")";
 
-                            filterAlert.Message += ", parece que teve que arremeter da pista " + runway + ".";
-                            filterAlert.Level = 1;
-                            filterAlert.AlertType = FilterAlertType.High;
-                            listAlerts.Add(filterAlert);
+                            PluginAlert.Message += ", parece que teve que arremeter da pista " + runway + ".";
+                            PluginAlert.Level = 1;
+                            PluginAlert.AlertType = PluginAlertType.High;
+                            listAlerts.Add(PluginAlert);
                         }
                         #endregion
 
@@ -91,7 +91,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter Backing or Go");
+                ErrorManager.ThrowError(e, "Plugin Backing or Go");
             }
 
             return listAlerts;

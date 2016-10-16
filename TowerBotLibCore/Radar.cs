@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using TowerBotFoundationCore;
+using TowerBotLibCore.Plugins;
 
 namespace TowerBotLibCore
 {
@@ -22,6 +23,8 @@ namespace TowerBotLibCore
         public int Port { get; set; }
         [IgnoreDataMemberAttribute]
         public List<AirplaneBasic> CurrentAirplanes { get; set; }
+        [IgnoreDataMemberAttribute]
+        public List<Plugins.IPlugin> Plugins { get; set; }
         [IgnoreDataMemberAttribute]
         public List<AirplaneBasic> LastAirplanes { get; set; }
         [IgnoreDataMemberAttribute]
@@ -178,7 +181,8 @@ namespace TowerBotLibCore
             LastAirplanes = new List<AirplaneBasic>();
             this.ModeSAllowed = true;
             ListRunways = new List<RunwayBasic>();
-            //CurrentAlerts = new List<AlertFilter>();
+            Plugins = new List<IPlugin>();
+            //CurrentAlerts = new List<Alert>();
         }
 
         private static void LoadRadars()
@@ -192,6 +196,13 @@ namespace TowerBotLibCore
                 IsRaw = true,
                 IsActive = true,
                 EndpointUrl = "http://162.243.32.213:8088/json",
+                Plugins = new List<IPlugin>()
+                {
+                    new PluginLogAll(),
+                    new PluginUnknowAirplanes(false, false),
+                    new PluginWide(),
+                    new PluginRatification(false, false, false, false, true)
+                },
             });
             listRadars.Add(new Radar()
             {
@@ -208,6 +219,16 @@ namespace TowerBotLibCore
                 LongitudeY = -47.256692,
                 LatitudeY = -16.194103,
                 RadarParent = Radar.GetRadar("BRA"),
+                Plugins = new List<IPlugin>()
+                {
+                    new PluginLogAll(),
+                    new PluginUnknowAirplanes(false, false),
+                    new PluginWide(),
+                    new PluginBackingOrGo(),
+                    new PluginRatification(false, false, false, false, true),
+                    new PluginMetarDF(),
+                    new PluginAlertAll(),
+                },
                 ListBrothersRadars = new List<Radar>()
                 {
                     Radar.GetRadar("SWUZ"),
