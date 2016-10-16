@@ -35,26 +35,10 @@ namespace TowerBotUniversalConsole
             OpenDateTime = DateTime.Now;
            
         }
-
-        //SQLiteConnection m_dbConnection = new SQLiteConnection(@"Data Source=d:\Documents\logs\LastAlerts.sqb;");
-
-        //string sql = "SELECT * FROM Alerts";
-        //SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-        //m_dbConnection.Open();
-        //SQLiteDataReader reader = command.ExecuteReader();
-        //var context = new DataContext(m_dbConnection);
-
-        //var companies = context.GetTable<AircraftEntitie>().ToList();
-
-
-
+        
         public static void UpdatePages(List<Alert> listNewAlerts)
         {
-
-
-
-
-
+            
             // Verificar se algum alerta antigo passou da data de validade e remove-lo.
             List<Alert> listOldBeyondValidationAlerts = Alert.ListOfAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
             for (int i = 0; i < listOldBeyondValidationAlerts.Count; i++)
