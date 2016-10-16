@@ -1,4 +1,4 @@
-﻿using TowerBotLibCore.Filters;
+﻿using TowerBotLibCore.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using TowerBotFoundationCore;
 
 namespace TowerBotLibCore
 {
-    public static class FiltersManager
+    public static class PluginsManager
     {
         public static List<AirplaneBasic> ListOldAirplanesDF { get; set; }
         private static List<Airport> listMainAirports = new List<Airport>();
@@ -16,11 +16,11 @@ namespace TowerBotLibCore
 
         public static DateTime TimeNext { get; set; }
         public static TimeSpan Period { get; set; }
-        public static List<AlertFilter> listOldAlerts { get; set; }
+        public static List<Alert> listOldAlerts { get; set; }
 
         private static List<Radar> listRadars { get; set; }
 
-        static FiltersManager()
+        static PluginsManager()
         {
 
             listMainAirports = Airport.ListAirports.Where(s => s.Value["ICAO"].ToString().StartsWith("SB")).Select(s => Airport.GetAirportByIata(s.Key)).ToList();
@@ -28,7 +28,7 @@ namespace TowerBotLibCore
 
             ListOldAirplanesDF = new List<AirplaneBasic>();
             Period = new TimeSpan(0, 0, 15);
-            listOldAlerts = new List<AlertFilter>();
+            listOldAlerts = new List<Alert>();
 
             listRadars = new List<Radar>()
             {
@@ -38,16 +38,16 @@ namespace TowerBotLibCore
 
             foreach (var radar in listRadars)
             {
-                foreach (var filter in radar.Filters)
+                foreach (var Plugin in radar.Plugins)
                 {
-                    filter.Radar = radar;
+                    Plugin.Radar = radar;
                 }
             }
         }
 
-        public static List<AlertFilter> GetAlerts(bool updateAll)
+        public static List<Alert> GetAlerts(bool updateAll)
         {
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             if (TimeNext == null || TimeNext <= DateTime.Now || updateAll)
             {
@@ -63,7 +63,7 @@ namespace TowerBotLibCore
                         listAirplanes = AirplanesData.GetAirplanes(radar).Result;
                         var newAlerts = Run(radar, listAirplanes);
 
-                        var listToDelete = new List<AlertFilter>();
+                        var listToDelete = new List<Alert>();
 
 
                         if (radar.Name == "BRA")
@@ -81,13 +81,13 @@ namespace TowerBotLibCore
                             foreach (var item in newAlerts)
                             {
 
-                                if (AlertFilter.ListOfRecentAlerts != null && AlertFilter.ListOfRecentAlerts.Any(a => a.ID == item.ID))
+                                if (Alert.ListOfRecentAlerts != null && Alert.ListOfRecentAlerts.Any(a => a.ID == item.ID))
                                 {
                                     listToDelete.Add(item);
                                     continue;
                                 }
 
-                                if (AlertFilter.ListOfRecentAlerts != null && AlertFilter.ListOfRecentAlerts.Where(w => w.TimeCreated > DateTime.Now.AddMinutes(-15) && w.TimeCreated < DateTime.Now.AddMinutes(-2)).Any(a => a.AirplaneID == item.AirplaneID && item.Icon == a.Icon))
+                                if (Alert.ListOfRecentAlerts != null && Alert.ListOfRecentAlerts.Where(w => w.TimeCreated > DateTime.Now.AddMinutes(-15) && w.TimeCreated < DateTime.Now.AddMinutes(-2)).Any(a => a.AirplaneID == item.AirplaneID && item.Icon == a.Icon))
                                 {
                                     listToDelete.Add(item);
                                     continue;
@@ -116,20 +116,20 @@ namespace TowerBotLibCore
 
         }
 
-        private static List<AlertFilter> Run(Radar radar, object parameter = null)
+        private static List<Alert> Run(Radar radar, object parameter = null)
         {
 
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
-            for (int i = 0; i < radar.Filters.Count; i++)
+            for (int i = 0; i < radar.Plugins.Count; i++)
             {
-                listAlerts.AddRange(radar.Filters[i].Analyser(parameter));
+                listAlerts.AddRange(radar.Plugins[i].Analyser(parameter));
             }
 
             // Verify if there are some alert older then it's time to be removed
             if (listAlerts.Count > 0)
             {
-                List<AlertFilter> list = listOldAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
+                List<Alert> list = listOldAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
                 for (int i = 0; i < list.Count; i++)
                 {
                     listOldAlerts.Remove(list[i]);
@@ -137,7 +137,7 @@ namespace TowerBotLibCore
             }
 
             // Verify if there is any alert equal.
-            List<AlertFilter> listAlertLessThenOneHour = listOldAlerts;
+            List<Alert> listAlertLessThenOneHour = listOldAlerts;
             if (radar.Name == "BRA")
                 listAlertLessThenOneHour = listOldAlerts.Where(s => s.TimeCreated > DateTime.Now.AddHours(-1)).ToList();
 
@@ -176,37 +176,37 @@ namespace TowerBotLibCore
         public static void RefreshAll()
         {
             TimeNext = new DateTime(1988, 4, 1);
-            listOldAlerts = new List<AlertFilter>();
+            listOldAlerts = new List<Alert>();
         }
 
-        public static void AccessFilterCommandLine()
+        public static void AccessPluginCommandLine()
         {
             Console.WriteLine("Qual filtro você deseja acessar?\n");
 
             for (int i = 0; i < listRadars.Count; i++)
             {
-                for (int j = 0; j < listRadars[i].Filters.Count; j++)
+                for (int j = 0; j < listRadars[i].Plugins.Count; j++)
                 {
-                    Console.WriteLine("-{0} (ativo:{1}, em teste:{2})", listRadars[i].Filters[j].Name, listRadars[i].Filters[j].IsActive, listRadars[i].Filters[j].IsTesting);
+                    Console.WriteLine("-{0} (ativo:{1}, em teste:{2})", listRadars[i].Plugins[j].Name, listRadars[i].Plugins[j].IsActive, listRadars[i].Plugins[j].IsTesting);
                 }
             }
             string comando = Console.ReadLine();
-            IFilter selectedFilter = null;
-            for (int i = 0; i < listRadars[i].Filters.Count; i++)
+            IPlugin selectedPlugin = null;
+            for (int i = 0; i < listRadars[i].Plugins.Count; i++)
             {
-                for (int j = 0; j < listRadars[i].Filters.Count; j++)
+                for (int j = 0; j < listRadars[i].Plugins.Count; j++)
                 {
-                    if (listRadars[i].Filters[j].Name.ToLower().StartsWith(comando.ToLower()))
+                    if (listRadars[i].Plugins[j].Name.ToLower().StartsWith(comando.ToLower()))
                     {
-                        selectedFilter = listRadars[i].Filters[j];
-                        selectedFilter.CommandLine();
+                        selectedPlugin = listRadars[i].Plugins[j];
+                        selectedPlugin.CommandLine();
                         break;
                     }
 
                 }
             }
 
-            if (selectedFilter == null)
+            if (selectedPlugin == null)
             {
                 Console.WriteLine("Filtro não encontrado.");
             }

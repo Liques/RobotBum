@@ -7,7 +7,7 @@ using TowerBotFoundationCore;
 
 namespace TowerBotLibCore
 {
-    public enum FilterAlertType
+    public enum PluginAlertType
     {
         NoData = -1,
         NoAlert = 0,
@@ -46,10 +46,10 @@ namespace TowerBotLibCore
         GoodNightAnnoucement = 8,
     }
 
-    public class AlertFilter
+    public class Alert
     {
-        public static List<AlertFilter> ListOfAlerts { get; set; }
-        public static List<AlertFilter> ListOfRecentAlerts { get; set; }
+        public static List<Alert> ListOfAlerts { get; set; }
+        public static List<Alert> ListOfRecentAlerts { get; set; }
 
 
         private string message = String.Empty;
@@ -61,8 +61,8 @@ namespace TowerBotLibCore
         public string AirplaneID { get; set; }
         public IconType Icon { get; set; }
 
-        private FilterAlertType alertType { get; set; }
-        public FilterAlertType AlertType
+        private PluginAlertType alertType { get; set; }
+        public PluginAlertType AlertType
         {
             get
             {
@@ -75,9 +75,9 @@ namespace TowerBotLibCore
                 #region falando ao avião qual tipo de alerta ele foi colocado
                 if (this.Airplane != null)
                 {
-                    if (value == FilterAlertType.High ||
-                        value == FilterAlertType.Medium && this.Airplane.LastAlertType != FilterAlertType.High ||
-                        value == FilterAlertType.Low && this.Airplane.LastAlertType != FilterAlertType.Medium && this.Airplane.LastAlertType != FilterAlertType.High)
+                    if (value == PluginAlertType.High ||
+                        value == PluginAlertType.Medium && this.Airplane.LastAlertType != PluginAlertType.High ||
+                        value == PluginAlertType.Low && this.Airplane.LastAlertType != PluginAlertType.Medium && this.Airplane.LastAlertType != PluginAlertType.High)
 
                         this.Airplane.LastAlertType = value;
                     
@@ -123,12 +123,12 @@ namespace TowerBotLibCore
         [IgnoreDataMemberAttribute]
         public AirplaneBasic Airplane { get; set; }
         [IgnoreDataMemberAttribute]
-        public string FilterName { get; set; }
+        public string PluginName { get; set; }
 
         public Radar Radar { get; set; }
         RatificationType RatificationType = RatificationType.NoRatification;
 
-        static AlertFilter()
+        static Alert()
         {
             string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
 #if DEBUG
@@ -136,12 +136,12 @@ namespace TowerBotLibCore
 #endif
             
             var lastAlertsRaw = LoadFile(strJSONPath, "lastAlerts.json");
-            AlertFilter.ListOfAlerts = JsonConvert.DeserializeObject<List<AlertFilter>>(lastAlertsRaw);
+            Alert.ListOfAlerts = JsonConvert.DeserializeObject<List<Alert>>(lastAlertsRaw);
 
-            if (AlertFilter.ListOfAlerts == null)
-                AlertFilter.ListOfAlerts = new List<AlertFilter>();
+            if (Alert.ListOfAlerts == null)
+                Alert.ListOfAlerts = new List<Alert>();
 
-            foreach (var item in AlertFilter.ListOfAlerts)
+            foreach (var item in Alert.ListOfAlerts)
             {
 
 
@@ -170,32 +170,32 @@ namespace TowerBotLibCore
 
             }
 
-            if (AlertFilter.ListOfAlerts != null)
-                Console.WriteLine("Messages rescued: {0}", AlertFilter.ListOfAlerts.Count);
+            if (Alert.ListOfAlerts != null)
+                Console.WriteLine("Messages rescued: {0}", Alert.ListOfAlerts.Count);
         }
 
-        public AlertFilter()
+        public Alert()
         {
 
         }
 
-        public AlertFilter(Radar radar, string filtername, string nameOrMessage, IconType iconType, MessageType messageType = MessageType.General)
+        public Alert(Radar radar, string Pluginname, string nameOrMessage, IconType iconType, MessageType messageType = MessageType.General)
         {
-            ID = radar.Name + filtername + nameOrMessage.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace(",", "").Replace(".", "");
+            ID = radar.Name + Pluginname + nameOrMessage.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace(",", "").Replace(".", "");
             ID = (ID.Length > 75) ? ID.Substring(0, 75) : ID;
-            this.FilterName = filtername;
+            this.PluginName = Pluginname;
             this.Radar = radar;
             TimeCreated = DateTime.Now;
             TimeToBeRemoved = DateTime.Now.AddHours(1);
             this.Icon = iconType;
         }
 
-        public AlertFilter(Radar radar, string filtername, AirplaneBasic airplane, IconType iconType, MessageType messageType = MessageType.General, RatificationType ratificationType = RatificationType.NoRatification)
+        public Alert(Radar radar, string Pluginname, AirplaneBasic airplane, IconType iconType, MessageType messageType = MessageType.General, RatificationType ratificationType = RatificationType.NoRatification)
         {
             this.Airplane = airplane;
             this.Justify = airplane.StateJustify;
-            this.FilterName = filtername;
-            ID = radar.Name + filtername + Airplane.ID;
+            this.PluginName = Pluginname;
+            ID = radar.Name + Pluginname + Airplane.ID;
             ID = ID.Replace(" ", "").Replace("-", "");
             ID = (ID.Length > 25) ? ID.Substring(0, 24) : ID;
 
@@ -240,12 +240,12 @@ namespace TowerBotLibCore
         {
             if (Airplane == null)
             {
-                ID = this.Radar.Name + this.FilterName + this.Message.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace(",", "").Replace(".", "");
+                ID = this.Radar.Name + this.PluginName + this.Message.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace(",", "").Replace(".", "");
                 ID = (ID.Length > 75) ? ID.Substring(0, 75) : ID;
 
             }
             else {
-                ID = this.Radar.Name + this.FilterName + Airplane.ID;
+                ID = this.Radar.Name + this.PluginName + Airplane.ID;
                 ID = ID.Replace(" ", "").Replace("-", "");
                 ID = (ID.Length > 25) ? ID.Substring(0, 24) : ID;
             }

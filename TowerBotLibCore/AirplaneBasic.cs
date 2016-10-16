@@ -18,7 +18,7 @@ namespace TowerBotLibCore
 
         public List<Radar> Radars { get; set; }
         public Chart FollowingChart { get; set; }
-        public FilterAlertType LastAlertType { get; set; }
+        public PluginAlertType LastAlertType { get; set; }
         public AirplaneBasic PreviousAirplane { get; set; }        
 
         private static Dictionary<string, string> ListSpecialPainitngs = new Dictionary<string, string>();
@@ -125,10 +125,10 @@ namespace TowerBotLibCore
                 this.PreviousAirplane = lastAirplanesFromRadars.Where(s => s.ID == this.ID).FirstOrDefault();
 
 
-                this.Weight = TowerBotLibCore.Filters.HelperFilter.ListWideAirplanes.Where(s => this.AircraftType.ICAO.StartsWith(s)).Count() > 0 ? AirplaneWeight.Heavy : AirplaneWeight.NotSet;
+                this.Weight = TowerBotLibCore.Plugins.HelperPlugin.ListWideAirplanes.Where(s => this.AircraftType.ICAO.StartsWith(s)).Count() > 0 ? AirplaneWeight.Heavy : AirplaneWeight.NotSet;
 
                 if (this.Weight == AirplaneWeight.NotSet)
-                    this.Weight = TowerBotLibCore.Filters.HelperFilter.ListCommonAirplanes.Where(s => this.AircraftType.ICAO.StartsWith(s)).Count() > 0 ? AirplaneWeight.Medium : AirplaneWeight.Light;
+                    this.Weight = TowerBotLibCore.Plugins.HelperPlugin.ListCommonAirplanes.Where(s => this.AircraftType.ICAO.StartsWith(s)).Count() > 0 ? AirplaneWeight.Medium : AirplaneWeight.Light;
             }
             catch (Exception e)
             {
@@ -283,7 +283,7 @@ N174AA;;Com a pintura One World|
 
                 double distance = 500;
 
-                foreach (var airportLoop in FiltersManager.ListMainAirports)
+                foreach (var airportLoop in PluginsManager.ListMainAirports)
                 {
                     var discanceLoop = MathHelper.GetGPSDistance(this.Latitude, airportLoop.Latitude, this.Longitude, airportLoop.Longitude);
 

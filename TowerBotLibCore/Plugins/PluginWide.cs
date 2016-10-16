@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TowerBotFoundationCore;
 using System.Linq;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    public class FilterWide : IFilter
+    public class PluginWide : IPlugin
     {
         public bool IsActive { get; set; }
         public bool IsTesting { get; set; }
@@ -13,136 +13,136 @@ namespace TowerBotLibCore.Filters
         public Radar Radar { get; set; }
 
 
-        public FilterWide()
+        public PluginWide()
         {
             Name = "Wide";
             IsActive = true;
             IsTesting = false;
         }
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
 
             List<AirplaneBasic> listAirplanes = (List<AirplaneBasic>)parameter;
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
             try
             {
                 if (IsActive)
                 {
 
 
-                    List<AirplaneBasic> listAirplanesFiltered = null;
+                    List<AirplaneBasic> listAirplanesPlugined = null;
 
-                    listAirplanesFiltered = listAirplanes.Where(s => s.AircraftType.Type == AircraftModel.AirplaneHeavy && (s.State == AirplaneStatus.TakingOff || s.State == AirplaneStatus.Landing || s.State == AirplaneStatus.Cruise)).ToList();
+                    listAirplanesPlugined = listAirplanes.Where(s => s.AircraftType.Type == AircraftModel.AirplaneHeavy && (s.State == AirplaneStatus.TakingOff || s.State == AirplaneStatus.Landing || s.State == AirplaneStatus.Cruise)).ToList();
 
-                    foreach (AirplaneBasic airplane in listAirplanesFiltered)
+                    foreach (AirplaneBasic airplane in listAirplanesPlugined)
                     {
 
                         foreach (var radar in airplane.Radars)
                         {
 
-                            AlertFilter filterAlert = new AlertFilter(radar, Name, airplane, IconType.NoIcon);
+                            Alert PluginAlert = new Alert(radar, Name, airplane, IconType.NoIcon);
                             string fromPlace = !String.IsNullOrEmpty(airplane.From.City) ? " vindo de " + airplane.From.City : "";
                             string toPlace = !String.IsNullOrEmpty(airplane.To.City) ? " com destino a " + airplane.To.City : "";
                             string fromPlaceShort = !String.IsNullOrEmpty(airplane.From.City) ? " de " + airplane.From.IATA : "";
                             string toPlaceShort = !String.IsNullOrEmpty(airplane.To.City) ? " para " + airplane.To.IATA : "";
-                            filterAlert.TimeToBeRemoved = DateTime.Now.AddHours(10);
+                            PluginAlert.TimeToBeRemoved = DateTime.Now.AddHours(10);
 
-                            filterAlert.Message = "Um " + airplane.AircraftType.Name + " (" + airplane.FlightName + "/" + airplane.Registration + ")";
+                            PluginAlert.Message = "Um " + airplane.AircraftType.Name + " (" + airplane.FlightName + "/" + airplane.Registration + ")";
 
                             // Se o filtro está pegando os aviaoes locais...
 
                             switch (airplane.State)
                             {
                                 case AirplaneStatus.Landing:
-                                    filterAlert.Icon = IconType.Landing;
+                                    PluginAlert.Icon = IconType.Landing;
 
-                                    filterAlert.Message += " parece que vai pousar em Brasília" + HelperFilter.GetForwardLocationsPhrase(airplane, true) + fromPlace;
-                                    filterAlert.Level = 1;
+                                    PluginAlert.Message += " parece que vai pousar em Brasília" + HelperPlugin.GetForwardLocationsPhrase(airplane, true) + fromPlace;
+                                    PluginAlert.Level = 1;
                                     if (airplane.IsSpecial)
                                     {
-                                        filterAlert.AlertType = FilterAlertType.High;
-                                        filterAlert.Justify += ". IsSpecial.";
+                                        PluginAlert.AlertType = PluginAlertType.High;
+                                        PluginAlert.Justify += ". IsSpecial.";
                                     }
                                     if ((radar.Name != "SAO" || radar.Name != "GRU") && airplane.Weight == AirplaneWeight.Heavy)
-                                        filterAlert.AlertType = FilterAlertType.High;
+                                        PluginAlert.AlertType = PluginAlertType.High;
                                     else
-                                        filterAlert.AlertType = FilterAlertType.Medium;
+                                        PluginAlert.AlertType = PluginAlertType.Medium;
 
                                     break;
 
                                 case AirplaneStatus.TakingOff:
-                                    filterAlert.Icon = IconType.TakingOff;
+                                    PluginAlert.Icon = IconType.TakingOff;
 
-                                    filterAlert.Level = 3;
-                                    filterAlert.Message += " parece estar decolando nesse momento" + HelperFilter.GetForwardLocationsPhrase(airplane, true) + toPlace;
+                                    PluginAlert.Level = 3;
+                                    PluginAlert.Message += " parece estar decolando nesse momento" + HelperPlugin.GetForwardLocationsPhrase(airplane, true) + toPlace;
                                     if (airplane.IsSpecial)
                                     {
-                                        filterAlert.AlertType = FilterAlertType.High;
-                                        filterAlert.Justify += ". IsSpecial.";
+                                        PluginAlert.AlertType = PluginAlertType.High;
+                                        PluginAlert.Justify += ". IsSpecial.";
                                     }
 
                                     if ((radar.Name != "SAO" || radar.Name != "GRU") && airplane.Weight == AirplaneWeight.Heavy)
-                                        filterAlert.AlertType = FilterAlertType.High;
+                                        PluginAlert.AlertType = PluginAlertType.High;
                                     else
-                                        filterAlert.AlertType = FilterAlertType.Medium;
+                                        PluginAlert.AlertType = PluginAlertType.Medium;
 
 
                                     break;
                                 case AirplaneStatus.Cruise:
-                                    filterAlert.Icon = IconType.Cruise;
+                                    PluginAlert.Icon = IconType.Cruise;
 
                                     if ((radar.Name == "SAO" || radar.Name == "GRU") && airplane.Weight != AirplaneWeight.Heavy)
                                         continue;
 
-                                        filterAlert.Message += " está em cruzeiro" + HelperFilter.GetForwardLocationsPhrase(airplane, true) + fromPlace;
-                                    if (HelperFilter.ListSuperHighAirplanes.Any(s => airplane.AircraftType.ICAO.StartsWith(s)))
+                                        PluginAlert.Message += " está em cruzeiro" + HelperPlugin.GetForwardLocationsPhrase(airplane, true) + fromPlace;
+                                    if (HelperPlugin.ListSuperHighAirplanes.Any(s => airplane.AircraftType.ICAO.StartsWith(s)))
                                     {
-                                        filterAlert.AlertType = FilterAlertType.High;
+                                        PluginAlert.AlertType = PluginAlertType.High;
                                     }
                                     else
                                     {
-                                        filterAlert.AlertType = FilterAlertType.Medium;
+                                        PluginAlert.AlertType = PluginAlertType.Medium;
                                     }
                                     if (airplane.IsSpecial)
                                     {
-                                        filterAlert.AlertType = FilterAlertType.High;
-                                        filterAlert.Justify += ". IsSpecial.";
+                                        PluginAlert.AlertType = PluginAlertType.High;
+                                        PluginAlert.Justify += ". IsSpecial.";
                                     }
                                     break;
                                 case AirplaneStatus.ParkingOrTaxing:
-                                    filterAlert.Icon = IconType.Taxing;
+                                    PluginAlert.Icon = IconType.Taxing;
 
-                                    string placeInAirport = HelperFilter.GetOverLocation(airplane);
+                                    string placeInAirport = HelperPlugin.GetOverLocation(airplane);
                                     placeInAirport = (!string.IsNullOrEmpty(placeInAirport)) ? " no " + placeInAirport : "";
-                                    filterAlert.Level = 2;
-                                    filterAlert.Message += " parece estar no aeroporto" + placeInAirport + fromPlace + toPlace;
+                                    PluginAlert.Level = 2;
+                                    PluginAlert.Message += " parece estar no aeroporto" + placeInAirport + fromPlace + toPlace;
 
-                                    if (HelperFilter.ListSuperHighAirplanes.Any(s => airplane.AircraftType.ICAO.StartsWith(s)))
+                                    if (HelperPlugin.ListSuperHighAirplanes.Any(s => airplane.AircraftType.ICAO.StartsWith(s)))
                                     {
-                                        filterAlert.AlertType = FilterAlertType.High;
+                                        PluginAlert.AlertType = PluginAlertType.High;
                                     }
                                     else
                                     {
-                                        filterAlert.AlertType = FilterAlertType.Medium;
+                                        PluginAlert.AlertType = PluginAlertType.Medium;
                                     }
 
                                     break;
 
                             }
 
-                            filterAlert.Message += ".";
+                            PluginAlert.Message += ".";
 
                             if (IsTesting)
                             {
-                                filterAlert.Message += " Nível:" + filterAlert.AlertType;
-                                filterAlert.AlertType = FilterAlertType.Test;
+                                PluginAlert.Message += " Nível:" + PluginAlert.AlertType;
+                                PluginAlert.AlertType = PluginAlertType.Test;
                             }
 
-                            if (filterAlert.AlertType != FilterAlertType.NoData)
+                            if (PluginAlert.AlertType != PluginAlertType.NoData)
                             {
-                                if (filterAlert.Airplane.State == AirplaneStatus.Cruise || (filterAlert.Airplane.State != AirplaneStatus.Cruise &&
-                                    filterAlert.Radar.IsWideAllowed))
-                                    listAlerts.Add(filterAlert);
+                                if (PluginAlert.Airplane.State == AirplaneStatus.Cruise || (PluginAlert.Airplane.State != AirplaneStatus.Cruise &&
+                                    PluginAlert.Radar.IsWideAllowed))
+                                    listAlerts.Add(PluginAlert);
                             }
                         }
 
@@ -151,7 +151,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter Wide");
+                ErrorManager.ThrowError(e, "Plugin Wide");
             }
 
             return listAlerts;

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using TowerBotFoundationCore;
 
-namespace TowerBotLibCore.Filters
+namespace TowerBotLibCore.Plugins
 {
-    public class FilterRatification : IFilter
+    public class PluginRatification : IPlugin
     {
         public string Name { get; set; }
         public bool IsActive { get; set; }
@@ -17,7 +17,7 @@ namespace TowerBotLibCore.Filters
         bool AnalyseChartHeavyAircraft = false;
         bool AnalyseOrbit = false;
 
-        public FilterRatification(bool analyseRunwayLowAircraft, bool analyseRunwayHeavyAircraft, bool analyseChartLowAircraft, bool analyseChartHeavyAircraft, bool analyseOrbit)
+        public PluginRatification(bool analyseRunwayLowAircraft, bool analyseRunwayHeavyAircraft, bool analyseChartLowAircraft, bool analyseChartHeavyAircraft, bool analyseOrbit)
         {
             Name = "Ratification";
             IsActive = true;
@@ -30,22 +30,22 @@ namespace TowerBotLibCore.Filters
             AnalyseOrbit = analyseOrbit;
         }
 
-        public List<AlertFilter> Analyser(object parameter)
+        public List<Alert> Analyser(object parameter)
         {
             List<AirplaneBasic> listAirplanes = (List<AirplaneBasic>)parameter;
 
-            List<AlertFilter> listAlerts = new List<AlertFilter>();
+            List<Alert> listAlerts = new List<Alert>();
 
             try
             {
                 if (IsActive)
                 {
 
-                    // TODO em modo testes, todos os aviaos vao passar. EXCLUIR ESSA LINHA ABAIXO e tirar os FilterAlertType.Test!
-                    var listAirplanesFiltered = listAirplanes;
+                    // TODO em modo testes, todos os aviaos vao passar. EXCLUIR ESSA LINHA ABAIXO e tirar os PluginAlertType.Test!
+                    var listAirplanesPlugined = listAirplanes;
 
 
-                    foreach (AirplaneBasic airplane in listAirplanesFiltered)
+                    foreach (AirplaneBasic airplane in listAirplanesPlugined)
                     {
                         if (airplane.PreviousAirplane != null)
                         {
@@ -56,14 +56,14 @@ namespace TowerBotLibCore.Filters
                                     if (airplane.FollowingChart != null && airplane.PreviousAirplane.FollowingChart == null
                                         && (radar.Name == "BSB" || radar.Name == "CWB"))
                                     {
-                                        AlertFilter filterAlert = new AlertFilter(radar, Name, airplane, IconType.Chart, MessageType.General, RatificationType.Chart);
-                                        filterAlert.Airplane = airplane;
-                                        filterAlert.Justify += ". Foi encontrado uma nova carta." + filterAlert.AlertType.ToString();
-                                        filterAlert.AlertType = airplane.PreviousAirplane.LastAlertType;
+                                        Alert PluginAlert = new Alert(radar, Name, airplane, IconType.Chart, MessageType.General, RatificationType.Chart);
+                                        PluginAlert.Airplane = airplane;
+                                        PluginAlert.Justify += ". Foi encontrado uma nova carta." + PluginAlert.AlertType.ToString();
+                                        PluginAlert.AlertType = airplane.PreviousAirplane.LastAlertType;
 
                                         if (AnalyseRunwayHeavyAircraft && airplane.Weight == AirplaneWeight.Heavy || AnalyseRunwayLowAircraft)
                                         {
-                                            listAlerts.Add(filterAlert);
+                                            listAlerts.Add(PluginAlert);
                                         }
 
                                     }
@@ -71,14 +71,14 @@ namespace TowerBotLibCore.Filters
                                     if (String.IsNullOrEmpty(airplane.PreviousAirplane.RunwayName) && !String.IsNullOrEmpty(airplane.RunwayName)
                                         && (radar.Name == "BSB" || radar.Name == "CWB" || radar.Name == "GRU" || radar.Name == "CGH"))
                                     {
-                                        AlertFilter filterAlert = new AlertFilter(radar, Name, airplane, IconType.Runway, MessageType.General, RatificationType.FinalRunway);
-                                        filterAlert.Airplane = airplane;
-                                        filterAlert.Justify += ". Foi detectado runway." + filterAlert.AlertType.ToString();
-                                        filterAlert.AlertType = airplane.PreviousAirplane.LastAlertType;
+                                        Alert PluginAlert = new Alert(radar, Name, airplane, IconType.Runway, MessageType.General, RatificationType.FinalRunway);
+                                        PluginAlert.Airplane = airplane;
+                                        PluginAlert.Justify += ". Foi detectado runway." + PluginAlert.AlertType.ToString();
+                                        PluginAlert.AlertType = airplane.PreviousAirplane.LastAlertType;
 
                                         if (AnalyseRunwayHeavyAircraft && airplane.Weight == AirplaneWeight.Heavy || AnalyseRunwayLowAircraft)
                                         {
-                                            listAlerts.Add(filterAlert);
+                                            listAlerts.Add(PluginAlert);
                                         }
 
                                     }
@@ -87,16 +87,16 @@ namespace TowerBotLibCore.Filters
                                     if (AnalyseOrbit && airplane.IsOrbiting)
                                     {
 
-                                        AlertFilter filterAlert = new AlertFilter(radar, Name, airplane, IconType.Orbit, MessageType.General, RatificationType.Orbit);
-                                        filterAlert.Justify += ". Foi detectado orbita.";
-                                        if (airplane.LastAlertType != FilterAlertType.High && airplane.LastAlertType != FilterAlertType.Medium && airplane.LastAlertType != FilterAlertType.Low)
-                                            filterAlert.AlertType = FilterAlertType.Test;
+                                        Alert PluginAlert = new Alert(radar, Name, airplane, IconType.Orbit, MessageType.General, RatificationType.Orbit);
+                                        PluginAlert.Justify += ". Foi detectado orbita.";
+                                        if (airplane.LastAlertType != PluginAlertType.High && airplane.LastAlertType != PluginAlertType.Medium && airplane.LastAlertType != PluginAlertType.Low)
+                                            PluginAlert.AlertType = PluginAlertType.Test;
                                         else
-                                            filterAlert.AlertType = FilterAlertType.Test;// airplane.LastAlertType;
+                                            PluginAlert.AlertType = PluginAlertType.Test;// airplane.LastAlertType;
 
-                                        filterAlert.AlertType = FilterAlertType.High;
+                                        PluginAlert.AlertType = PluginAlertType.High;
 
-                                        listAlerts.Add(filterAlert);
+                                        listAlerts.Add(PluginAlert);
 
                                     }
                                     #endregion
@@ -108,7 +108,7 @@ namespace TowerBotLibCore.Filters
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Filter " + this.Name);
+                ErrorManager.ThrowError(e, "Plugin " + this.Name);
             }
 
             if (listAlerts.Count > 0)

@@ -14,7 +14,7 @@ namespace TowerBotUniversalConsole
     static class ServerWriter
     {
         public static DateTime OpenDateTime;
-        //public static List<AlertFilter> listOldAlerts = new List<AlertFilter>();
+        //public static List<Alert> listOldAlerts = new List<Alert>();
 
         private static string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
 
@@ -48,7 +48,7 @@ namespace TowerBotUniversalConsole
 
 
 
-        public static void UpdatePages(List<AlertFilter> listNewAlerts)
+        public static void UpdatePages(List<Alert> listNewAlerts)
         {
 
 
@@ -56,24 +56,24 @@ namespace TowerBotUniversalConsole
 
 
             // Verificar se algum alerta antigo passou da data de validade e remove-lo.
-            List<AlertFilter> listOldBeyondValidationAlerts = AlertFilter.ListOfAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
+            List<Alert> listOldBeyondValidationAlerts = Alert.ListOfAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
             for (int i = 0; i < listOldBeyondValidationAlerts.Count; i++)
             {
-                AlertFilter.ListOfAlerts.Remove(listOldBeyondValidationAlerts[i]);
+                Alert.ListOfAlerts.Remove(listOldBeyondValidationAlerts[i]);
             }
 
             for (int i = 0; i < listNewAlerts.Count; i++)
             {
-                if (listNewAlerts[i].AlertType == FilterAlertType.NoAlert && listNewAlerts[i].Radar.Name == "BSB")                    
+                if (listNewAlerts[i].AlertType == PluginAlertType.NoAlert && listNewAlerts[i].Radar.Name == "BSB")                    
                     listNewAlerts[i].TimeToBeRemoved = DateTime.Now.AddDays(3);
 
             }
 
-            AlertFilter.ListOfAlerts.AddRange(listNewAlerts);
-            AlertFilter.ListOfRecentAlerts = AlertFilter.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddDays(-1)).ToList();
+            Alert.ListOfAlerts.AddRange(listNewAlerts);
+            Alert.ListOfRecentAlerts = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddDays(-1)).ToList();
 
 
-            var toJSON = JsonConvert.SerializeObject(AlertFilter.ListOfAlerts.Where(w => w.Icon != IconType.GoodNightAnnoucement).ToList());
+            var toJSON = JsonConvert.SerializeObject(Alert.ListOfAlerts.Where(w => w.Icon != IconType.GoodNightAnnoucement).ToList());
             toJSON = toJSON.Replace("TimeCreated", "@T").Replace("Icon", "@I").Replace("AlertType", "@A").Replace("2016", "$").Replace("-03:00", "%").Replace("BSB", "*").Replace("Message", "@M").Replace("Radar", "@R").Replace("Name", "@N").Replace("AirplaneID", "@U").Replace("TimeToBeDeleted", "@D");
 
             WriteFile(strJSONPath, "lastAlerts.json", toJSON);
@@ -101,7 +101,7 @@ namespace TowerBotUniversalConsole
                     string currentPath = strPath + @"\main\" + radar.Name;
 
                     WriteFile(currentPath, "index.html", IndividualRadar(radar));
-                    var listAlertByRadar = AlertFilter.ListOfAlerts.Where(s => s.Radar != null && s.Radar.Name == radar.Name && s.AlertType != FilterAlertType.NoAlert).ToList();
+                    var listAlertByRadar = Alert.ListOfAlerts.Where(s => s.Radar != null && s.Radar.Name == radar.Name && s.AlertType != PluginAlertType.NoAlert).ToList();
                     WriteFile(strPath + @"\data\", radar.Name + ".json", JsonConvert.SerializeObject(listAlertByRadar));
                     var listAlertByRadarFiveMinutes = listAlertByRadar.Where(s => s.TimeCreated > DateTime.Now.AddMinutes(-5)).ToList();
                     WriteFile(strPath + @"\data\", radar.Name + "fast.json", JsonConvert.SerializeObject(listAlertByRadarFiveMinutes));
@@ -112,7 +112,7 @@ namespace TowerBotUniversalConsole
                 }
             }
 
-            var listGeneralOnlyImportantAlert = AlertFilter.ListOfAlerts.Where(s => s.AlertType == FilterAlertType.High).Take(100).ToList();
+            var listGeneralOnlyImportantAlert = Alert.ListOfAlerts.Where(s => s.AlertType == PluginAlertType.High).Take(100).ToList();
             WriteFile(strPath + @"\data\", "general.json", JsonConvert.SerializeObject(listGeneralOnlyImportantAlert));
         }
 
@@ -148,11 +148,11 @@ namespace TowerBotUniversalConsole
 
         private static string IndividualRadar(Radar radar, bool showTestAlert = false)
         {
-            List<AlertFilter> listAlertByRadar = null;
+            List<Alert> listAlertByRadar = null;
             if (radar != null)
-                listAlertByRadar = AlertFilter.ListOfAlerts.Where(s => s.Radar != null && s.Radar.Name == radar.Name).ToList();
+                listAlertByRadar = Alert.ListOfAlerts.Where(s => s.Radar != null && s.Radar.Name == radar.Name).ToList();
             else
-                listAlertByRadar = AlertFilter.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddHours(-6) && w.Radar.Name != "BRA").ToList();
+                listAlertByRadar = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddHours(-6) && w.Radar.Name != "BRA").ToList();
 
             if(!showTestAlert)
                 listAlertByRadar = listAlertByRadar.Where(w => w.Icon != IconType.GoodNightAnnoucement).ToList();
@@ -186,21 +186,21 @@ namespace TowerBotUniversalConsole
 
                 try
                 {
-                    if (listAlertByRadar[i].AlertType != FilterAlertType.NoAlert)
+                    if (listAlertByRadar[i].AlertType != PluginAlertType.NoAlert)
                     {
-                        if (listAlertByRadar[i].AlertType == FilterAlertType.High)
+                        if (listAlertByRadar[i].AlertType == PluginAlertType.High)
                         {
                             strBuilder.Append("<font color=red>");
                         }
-                        else if (listAlertByRadar[i].AlertType == FilterAlertType.Medium)
+                        else if (listAlertByRadar[i].AlertType == PluginAlertType.Medium)
                         {
                             strBuilder.Append("<font color=darkorange>");
                         }
-                        else if (listAlertByRadar[i].AlertType == FilterAlertType.Low)
+                        else if (listAlertByRadar[i].AlertType == PluginAlertType.Low)
                         {
                             strBuilder.Append("<font color=green>");
                         }
-                        else if (listAlertByRadar[i].AlertType == FilterAlertType.Test)
+                        else if (listAlertByRadar[i].AlertType == PluginAlertType.Test)
                         {
                             strBuilder.Append("<font color=darkgray>");
                         }
@@ -212,7 +212,7 @@ namespace TowerBotUniversalConsole
                         }
                         else
                         {
-                            strBuilder.Append("<span><b class='visible-lg-inline visible-md-inline'> " + AlertFilter.ListOfAlerts[i].TimeCreated.ToString("dd/MM/yyyy ") + "</b></span>");
+                            strBuilder.Append("<span><b class='visible-lg-inline visible-md-inline'> " + Alert.ListOfAlerts[i].TimeCreated.ToString("dd/MM/yyyy ") + "</b></span>");
                             strBuilder.Append("<span><b>" + listAlertByRadar[i].TimeCreated.ToString("HH:mm") + "</b> - ");
                             strBuilder.Append("<span><b><a href='main/" + listAlertByRadar[i].Radar.Name + "/index.html'>" + listAlertByRadar[i].Radar.Description + "</a></b></span>");
 
@@ -261,7 +261,7 @@ namespace TowerBotUniversalConsole
         }
 
 
-        public static void UpdateAlerts(List<AlertFilter> listNewAlerts)
+        public static void UpdateAlerts(List<Alert> listNewAlerts)
         {
 
         }
