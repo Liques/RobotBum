@@ -23,6 +23,32 @@ namespace TowerBotLibCore
             UnitedStates,
         }
 
+
+        public enum MesssageCategory
+        {
+            NoIcon = 0,
+            Cruise = 1,
+            Landing = 2,
+            TakingOff = 3,
+            Taxing = 4,
+            Orbit = 5,
+            Chart = 6,
+            AirportWeather = 7,
+            Runway = 8,
+            TouchAndGo = 9,
+            FinalRunway = 8,
+        }
+
+        public enum MessageFormat
+        {
+            Normal,
+            OnlyAircraftModel,
+            SpecialDescrition,
+            AircraftModelFirst,
+            FlightAndModel,
+            AirplaneUndetified,
+        }
+
         public string Message { get; set; }
         public Radar Radar { get; set; }
         private AirplaneBasic Airplane;
@@ -81,7 +107,7 @@ namespace TowerBotLibCore
                     airplaneTypeLongPhrase = RandomListPhrases(listAirplaneTypeLongPhrase);
                     airplaneTypeShortPhrase = ", " + airplane.AircraftType.ICAO;
                 }
-                
+
                 if (!String.IsNullOrEmpty(this.Airplane.SpecialDescription))
                 {
                     if (this.Airplane.IsSpecial)
@@ -337,14 +363,14 @@ namespace TowerBotLibCore
                 "Está cruzando a região " + fullNameWithPrepositionMiddle + ";" +
                 "Está voando pela região " + fullNameWithPrepositionMiddle + ";" +
                 "Está voando pela região de " + this.Radar.Description.Replace(" - ", "|").Split('|').First() + " " + fullNameWithPrepositionMiddle + ";" +
-                "Está voando por " + this.Radar.Description.Replace(" - ","|").Split('|').First() + " " + fullNameWithPrepositionMiddle + ";" +
+                "Está voando por " + this.Radar.Description.Replace(" - ", "|").Split('|').First() + " " + fullNameWithPrepositionMiddle + ";" +
 
                 //"Está voando por aqui " + fullNameWithPrepositionMiddle + ";" +
                 "Na altitude de " + formatedAltitude + " está em cruzeiro " + fullNameWithPrepositionMiddle + ";" +
 
             "Voando a " + this.Airplane.Speed + " kts está cruzando " + fullNameWithPrepositionMiddle;
 
-                
+
 
 
 
@@ -428,7 +454,7 @@ namespace TowerBotLibCore
                  "Está em cruzeiro " + fullNameWithPrepositionMiddle;
             }
 
-           
+
 
             return RandomListPhrases(phrases);
 
@@ -456,8 +482,8 @@ namespace TowerBotLibCore
                 "Bem rapidinho está decolando " + fullNameWithPrepositionMiddle + ";" +
                 "Começando a missão, está decolando " + fullNameWithPrepositionMiddle + ";" +
                 "Hora de trabalhar! Está decolando " + fullNameWithPrepositionMiddle;// + ";" +
-                //"Levando o povo da conexão, está decolando " + fullNameWithPrepositionMiddle;
-                
+                                                                                     //"Levando o povo da conexão, está decolando " + fullNameWithPrepositionMiddle;
+
 
             if (this.Radar.Name == "BSB")
             {
@@ -478,7 +504,7 @@ namespace TowerBotLibCore
                 "Já na altitude de " + formatedAltitude + " está decolando de Curitiba " + fullNameWithPrepositionMiddle;
             }
 
-            if (IsFromOrToPlace(this.Airplane,Place.UnitedStates))
+            if (IsFromOrToPlace(this.Airplane, Place.UnitedStates))
             {
                 phrases += ";" +
                 fullNameWithPrepositionStarting + " está decolando ao Tio Sam" + ";" +
@@ -607,7 +633,7 @@ namespace TowerBotLibCore
                 "Está em aproximação " + fullNameWithPrepositionMiddle + ";" +
                 fullNameWithPrepositionStarting + " está na aproximação da região" + ";" +
                 "Está na aproximação da região " + fullNameWithPrepositionMiddle + ";" +
-               
+
              fullNameWithPrepositionStarting + " está pousando" + ";" +
              fullNameWithPrepositionStarting + " está pousando em " + this.Radar.Description.Replace(" - ", "|").Split('|').First() + " " + ";" +
             fullNameWithPrepositionStarting + " está parece estar pousando" + ";" +
@@ -643,7 +669,7 @@ namespace TowerBotLibCore
             "Cumprindo a missão, está pousando " + fullNameWithPrepositionMiddle + ";" +
             "Chegando a hora de descansar! Está pousando " + fullNameWithPrepositionMiddle + ";" +
             "Trazendo gente para conexão, está pousando " + fullNameWithPrepositionMiddle;
-            
+
             if (this.Radar.Name == "BSB")
             {
                 phrases += ";" +
@@ -720,7 +746,7 @@ namespace TowerBotLibCore
                 "Pensa num avião lotado de criança? Está pousando " + fullNameWithPrepositionMiddle + ";" +
                 "Com fotos dos fogos da Disney está pousando " + fullNameWithPrepositionMiddle + ";" +
                 "Viva o Mickey Mouse! Está pousando " + fullNameWithPrepositionMiddle + ";";
-            }           
+            }
             else if (IsFromOrToPlace(this.Airplane, Place.Portugal))
             {
                 phrases += ";" +
@@ -975,7 +1001,7 @@ namespace TowerBotLibCore
                 case Place.Miami:
                     if (airplane.FlightName.EndsWith("8042") ||
                         airplane.FlightName.EndsWith("8043") ||
-                        airplane.FlightName.EndsWith("AAL213", StringComparison.CurrentCultureIgnoreCase) || 
+                        airplane.FlightName.EndsWith("AAL213", StringComparison.CurrentCultureIgnoreCase) ||
                         airplane.FlightName.EndsWith("AAL214", StringComparison.CurrentCultureIgnoreCase))
                         return true;
                     break;
@@ -1002,6 +1028,254 @@ namespace TowerBotLibCore
 
             return false;
         }
+
+
+        private string MakeMessage(AirplaneBasic airplane, Radar radar, MesssageCategory category)
+        {
+            string newMessage = string.Empty;
+
+            try
+            {
+
+                MessageFormat messageFormat = MessageFormat.Normal;
+
+                newMessage = String.Empty;
+
+                isSuperHighAlert = HelperPlugin.ListSuperHighAirplanes.Where(s => airplane.AircraftType != null && airplane.AircraftType.ICAO.Contains(s)).Count() > 0;
+
+                formatedAltitude = (airplane.Altitude / 1000).ToString("##.##0ft");
+
+                #region Pegando o nome completo do avião e modelo
+
+                if (airplane.AircraftType.IsValid || !String.IsNullOrEmpty(airplane.AircraftType.Name))
+                {
+                    messageFormat = MessageFormat.OnlyAircraftModel;
+
+                    var listAirplaneTypeLongPhrase = " modelo " + airplane.AircraftType.Name + ";" +
+                                                          ", um " + airplane.AircraftType.Name + ";" +
+                                                          ", " + airplane.AircraftType.Name;
+
+                    airplaneTypeLongPhrase = RandomListPhrases(listAirplaneTypeLongPhrase);
+                    airplaneTypeShortPhrase = ", " + airplane.AircraftType.ICAO;
+                }
+
+                if (!String.IsNullOrEmpty(airplane.SpecialDescription))
+                {
+                    messageFormat = MessageFormat.SpecialDescrition;
+
+                    if (airplane.IsSpecial)
+                        fullName = airplane.SpecialDescription + ", o " + airplane.Registration.Name;
+                    else
+                        fullName = airplane.SpecialDescription + " (" + airplane.Registration.Name + ")";
+
+                    if (!String.IsNullOrEmpty(airplane.FlightName))
+                        fullName += ", " + airplane.FlightName;
+
+                    shortName = airplane.Registration.Name;
+
+                    fullNamePreposition = "";
+                }
+                else if (airplane.Registration.IsValid && airplane.AircraftType.Type == AircraftModel.AirplaneHeavy)
+                {
+                    messageFormat = MessageFormat.AircraftModelFirst;
+
+                    if (!String.IsNullOrEmpty(airplane.FlightName))
+                        fullName = airplane.AircraftType.Name + ", o " + airplane.FlightName + " (" + airplane.Registration.Name + ")";
+                    else
+                        fullName = airplane.AircraftType.Name + " (" + airplane.Registration.Name + ")";
+
+
+                    shortName = airplane.FlightName;
+                    airplaneTypeLongPhrase = "";
+                    airplaneTypeShortPhrase = "";
+
+                    fullNamePreposition = "O";
+
+                }
+                else if (!string.IsNullOrEmpty(airplane.FlightName) && airplane.Registration.IsValid && airplane.AircraftType.Type == AircraftModel.Helicopter)
+                {
+                    messageFormat = MessageFormat.AircraftModelFirst;
+
+                    fullName = airplane.AircraftType.Name + ", o " + airplane.FlightName + " (" + airplane.Registration.Name + ")";
+                    shortName = airplane.FlightName;
+
+                    fullNamePreposition = "Um";
+
+                }
+                else if (!string.IsNullOrEmpty(airplane.FlightName) && airplane.Registration.IsValid)
+                {
+                    messageFormat = MessageFormat.FlightAndModel;
+
+                    fullName = airplane.FlightName + " (" + airplane.Registration.Name + ")";
+                    shortName = airplane.FlightName;
+                    fullNamePreposition = "O";
+                }
+                else if (!string.IsNullOrEmpty(airplane.Registration.Name))
+                {
+                    messageFormat = MessageFormat.Normal;
+
+                    fullName = airplane.Registration.Name;
+                    shortName = airplane.Registration.Name;
+                    fullNamePreposition = "O";
+                }
+                else if (airplane.AircraftType.IsValid)
+                {
+                    messageFormat = MessageFormat.OnlyAircraftModel;
+
+                    fullName = airplane.AircraftType.Name;
+                    shortName = airplane.AircraftType.Name;
+                    fullNamePreposition = "Um";
+
+                    airplaneTypeLongPhrase = String.Empty;
+                    airplaneTypeShortPhrase = String.Empty;
+                }
+                else
+                {
+                    messageFormat = MessageFormat.AirplaneUndetified;
+
+                    fullName = "avião não identificado (Hex: " + airplane.ID + ")";
+                    shortName = "avião não identificado";
+                    fullNamePreposition = "Um";
+                }
+
+                // legacy all if
+                if (!String.IsNullOrEmpty(fullNamePreposition))
+                {
+                    fullNameWithPrepositionStarting = fullNamePreposition + " " + fullName;
+                    fullNameWithPrepositionMiddle = fullNamePreposition.ToLower() + " " + fullName;
+                    shortNameWithPrepositionStarting = fullNamePreposition + " " + shortName;
+                    shortNameWithPrepositionMiddle = fullNamePreposition.ToLower() + " " + shortName;
+                }
+                else
+                {
+                    fullNameWithPrepositionStarting = fullName;
+                    fullNameWithPrepositionMiddle = fullName[0].ToString().ToLower() + fullName.Substring(1);
+                    shortNameWithPrepositionStarting = fullNameWithPrepositionStarting;
+                    shortNameWithPrepositionMiddle = fullNameWithPrepositionMiddle;
+                }
+
+                switch (category)
+                {
+                    case MesssageCategory.Cruise:
+                    case MesssageCategory.TakingOff:
+                    case MesssageCategory.Landing:
+                    case MesssageCategory.Taxing:
+
+
+                        if (!airplane.IsKnowCountry)
+                        {
+                            fullNameWithPrepositionStarting += " - " + airplane.Registration.Country + " - ";
+                            fullNameWithPrepositionMiddle += "  - " + airplane.Registration.Country + " - ";
+                        }
+
+                        if (airplane.FollowingChart != null)
+                        {
+                            fullNameWithPrepositionStarting += ", seguindo " + airplane.FollowingChart.ChartType + " " + airplane.FollowingChart.Name + ",";
+                            fullNameWithPrepositionMiddle += ", seguindo " + airplane.FollowingChart.ChartType + " " + airplane.FollowingChart.Name + ",";
+                        }
+
+                        if (!String.IsNullOrEmpty(airplane.RunwayName) && (airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.TakingOff))
+                        {
+                            fullNameWithPrepositionStarting += ", pista " + airplane.RunwayName + ",";
+                            fullNameWithPrepositionMiddle += ", pista " + airplane.RunwayName + ",";
+                        }
+
+
+                        #endregion
+
+                        #region Criando a parte de From and To
+                        string fromPlace = !String.IsNullOrEmpty(airplane.From.City) ? " de " + airplane.From.City : "";
+                        string toPlace = !String.IsNullOrEmpty(airplane.To.City) ? " para " + airplane.To.City : "";
+                        string fromPlaceShort = !String.IsNullOrEmpty(airplane.From.City) ? " de " + airplane.From.IATA : "";
+                        string toPlaceShort = !String.IsNullOrEmpty(airplane.To.City) ? " para " + airplane.To.IATA : "";
+                        #endregion
+
+                        if (fullNameWithPrepositionStarting.Length >= 100 || fullNameWithPrepositionMiddle.Length >= 100)
+                            mustBeShort = true;
+
+                        if (airplane != null)
+                        {
+                            if (airplane.State == AirplaneStatus.TakingOff)
+                            {
+                                newMessage = GetTakingOffPhrase();
+
+                            }
+                            else if (airplane.State == AirplaneStatus.Landing)
+                            {
+                                newMessage = GetLandingPhrase();
+
+                            }
+                            else if (airplane.State == AirplaneStatus.Cruise)
+                            {
+                                newMessage = GetCruisePhrase();
+                            }
+                            else if (airplane.State == AirplaneStatus.ParkingOrTaxing)
+                            {
+                                newMessage = GetParkingTaxiPhrase();
+                            }
+
+
+                            if (newMessage.Length <= 50)
+                            {
+                                newMessage += airplaneTypeLongPhrase;
+                            }
+                            else
+                            {
+                                newMessage += airplaneTypeShortPhrase;
+                            }
+
+                            if (airplane.State == AirplaneStatus.Cruise || airplane.State == AirplaneStatus.Landing)
+                            {
+                                newMessage += fromPlaceShort;
+
+                            }
+                            if (airplane.State == AirplaneStatus.Cruise || airplane.State == AirplaneStatus.TakingOff)
+                            {
+                                newMessage += toPlaceShort;
+                            }
+
+                            if (airplane.State == AirplaneStatus.ParkingOrTaxing)
+                            {
+                                string overLocation = HelperPlugin.GetOverLocation(airplane);
+                                if (!String.IsNullOrEmpty(overLocation))
+                                    newMessage += " no " + overLocation;
+                            }
+                            else if (newMessage.Length <= 110)
+                            {
+                                newMessage += TowerBotLibCore.Plugins.HelperPlugin.GetForwardLocationsPhrase(airplane, true, 2);
+                            }
+                            else
+                            {
+                                newMessage += TowerBotLibCore.Plugins.HelperPlugin.GetForwardLocationsPhrase(airplane, true);
+                            }
+
+                        }
+
+                        newMessage += ".";
+
+                        break;
+                    case MesssageCategory.Chart:
+                        newMessage += GetChartPhrase();
+                        break;
+                    case MesssageCategory.FinalRunway:
+                        newMessage += GetRunwayPhrase();
+                        break;
+                    case MesssageCategory.Orbit:
+                        newMessage += GetOrbitPhrase();
+                        break;
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                ErrorManager.ThrowError(e, "newMessage Maker");
+
+            }
+
+            return newMessage;
+        }
+
 
     }
 }
