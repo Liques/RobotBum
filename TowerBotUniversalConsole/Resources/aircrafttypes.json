@@ -985,5 +985,10 @@
   "YS11": {
     "Name": "NAMC YS-11",
     "Type": "2"
+  },
+
+  "XXX": {
+    "Name": "Airboinger 24",
+    "Type": "1"
   }
 }
