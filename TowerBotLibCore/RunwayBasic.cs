@@ -8,6 +8,7 @@ using TowerBotLibCore.Map;
 
 namespace TowerBotLibCore
 {
+    [Serializable]
     public class RunwayBasic : Runway
     {
        

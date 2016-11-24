@@ -55,12 +55,7 @@ namespace TowerBotLibCore.Plugins
                                                 + TakeoffsPhrase(radar, listOfAlertByRadar, false) + " "
                                                 + LandingsPhrase(radar, listOfAlertByRadar) + " ";
 
-                            foreach (var radarBrother in radar.ListBrothersRadars)
-                            {
-                                alert.CustomMessage += TakeoffsPhrase(radarBrother, listOfAlertByRadar, true) + " "
-                                                    + LandingsPhrase(radarBrother, listOfAlertByRadar) + " ";
-                            }
-
+                           
                             alert.CustomMessage += OrbitPhrase(radar, listOfAlertByRadar) + " "
                                                 + AdsbPhrase(radar) + " "
                                                 + WeatherTomorrowPhrase(radar) + " "

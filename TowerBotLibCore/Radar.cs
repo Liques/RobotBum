@@ -9,6 +9,7 @@ using TowerBotLibCore.Plugins;
 
 namespace TowerBotLibCore
 {
+    [Serializable]
     public class Radar
     {
 
@@ -17,8 +18,7 @@ namespace TowerBotLibCore
         public string Description { get; set; }
         [IgnoreDataMemberAttribute]
         public string EndpointUrl { get; set; }
-        [IgnoreDataMemberAttribute]
-        public bool IsRaw { get; set; }
+      
         [IgnoreDataMemberAttribute]
         public int Port { get; set; }
         [IgnoreDataMemberAttribute]
@@ -29,9 +29,6 @@ namespace TowerBotLibCore
         public List<AirplaneBasic> LastAirplanes { get; set; }
         [IgnoreDataMemberAttribute]
         public List<RunwayBasic> ListRunways { get; set; }
-        [IgnoreDataMemberAttribute]
-
-        public bool IsActive { get; set; }
         [IgnoreDataMemberAttribute]
 
         public double LongitudeX { get; set; }
@@ -74,10 +71,7 @@ namespace TowerBotLibCore
                 return listRadars;
             }
         }
-
-        [IgnoreDataMemberAttribute]
-        public List<Radar> ListBrothersRadars = new List<Radar>();
-
+        
         [IgnoreDataMemberAttribute]
         public bool HasTwitter { get; set; }
 
@@ -198,8 +192,6 @@ namespace TowerBotLibCore
             {
                 Name = "BRA",
                 Description = "Brasil afora",
-                IsRaw = true,
-                IsActive = true,
                 EndpointUrl = "http://162.243.32.213:8088/json",
                 Plugins = new List<IPlugin>()
                 {
@@ -213,8 +205,6 @@ namespace TowerBotLibCore
             {
                 Name = "BSB",
                 Description = "Brasília - DF",
-                IsRaw = true,
-                IsActive = true,
                 MainAirport = Airport.GetAirportByIata("BSB"),
                 HasTwitter = true,
                 IsModeSEnabled = true,                
@@ -233,11 +223,6 @@ namespace TowerBotLibCore
                     new PluginRatification(false, false, false, false, true),
                     new PluginMetarDF(),
                     new PluginAlertAll(),
-                },
-                ListBrothersRadars = new List<Radar>()
-                {
-                    Radar.GetRadar("SWUZ"),
-                    Radar.GetRadar("GYN"),
                 },
                 ListRunways = new List<RunwayBasic>() {
                     new RunwayBasic()
@@ -265,8 +250,6 @@ namespace TowerBotLibCore
             {
                 Name = "CWB",
                 Description = "Curitiba - PR",
-                IsRaw = true,
-                IsActive = true,
                 EndpointUrl = "http://tmapicuritiba.no-ip.org:8088/json",
                 LongitudeX = -49.617468,
                 LatitudeX = -25.160087,
@@ -308,8 +291,6 @@ namespace TowerBotLibCore
             {
                 Name = "SAO",
                 Description = "Grande São Paulo - SP",
-                IsRaw = true,
-                IsActive = true,
                 EndpointUrl = "",
                 LongitudeX = -46.971893,
                 LatitudeX = -23.371846,
@@ -352,8 +333,6 @@ namespace TowerBotLibCore
             {
                 Name = "RIO",
                 Description = "Rio de Janeiro - RJ",
-                IsRaw = true,
-                IsActive = true,
                 EndpointUrl = "",
                 LongitudeX = -43.86997,
                 LatitudeX = -22.596812,
@@ -362,21 +341,7 @@ namespace TowerBotLibCore
                 RadarParent = Radar.GetRadar("BRA"),
 
             });
-            //listRadars.Add(new Radar()
-            //{
-            //    Name = "CWB2",
-            //    Description = "Curitiba2",
-            //    IsRaw = true,
-            //    IsActive = true,
-            //    EndpointUrl = "http://radartmacuritiba.dynu.com:8088/json",
-            //    LongitudeX = -49.617468,
-            //    LatitudeX = -25.160087,
-            //    LongitudeY = -48.826141,
-            //    LatitudeY = -25.758437,
-            //    RadarParent = Radar.GetRadar("BRA")
-
-            //});
-
+            
 
         }
 
@@ -475,8 +440,6 @@ namespace TowerBotLibCore
                 {
                     Name = radarName.ToUpper(),
                     Description = airport.City,
-                    IsRaw = true,
-                    IsActive = true,
                     EndpointUrl = "",
                     LongitudeX = airport.Longitude - radius,
                     LatitudeX = airport.Latitude - radius,
@@ -492,17 +455,6 @@ namespace TowerBotLibCore
 
             return radar;
         }
-
-        public static Radar MakeSpecialRadar(string url)
-        {
-            return new Radar()
-            {
-                Name = "Special-" + url.Replace("http", "").Replace(":", "").Replace("/", "").Replace(".", ""),
-                Port = 8083,
-                IsRaw = true,
-                IsActive = true,
-                EndpointUrl = url
-            };
-        }
+        
     }
 }
