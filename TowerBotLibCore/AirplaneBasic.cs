@@ -217,6 +217,8 @@ N174AA;;Com a pintura One World|
 0C2081;;Com a pintura Biomuseo|
 0C20A8;;Com a pintura Star Alliance|
 0C20BB;;Com a pintura ConnectMilles|
+AE20C4;PIU-PIU;O avião da galinha pintadinha (cócó!)|
+AE4F16;XU-XA;A nave espacial da Xuxa (êêêêê)|
 4951E8;;Com a pintura Star Alliance";
 
                     List<string> listSpecialPainitngsRaw = specialPaintings.Trim().Replace("\n", "").Replace("\r", "").Split('|').ToList();

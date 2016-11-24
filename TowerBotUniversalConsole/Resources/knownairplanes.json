@@ -19992,5 +19992,9 @@
   "80f4b69": {
     "reg": "",
     "model": "LJ40"
+  },
+  "AE20C4": {
+    "reg": "PIU-PIU",
+    "model": "XXX"
   }
 }

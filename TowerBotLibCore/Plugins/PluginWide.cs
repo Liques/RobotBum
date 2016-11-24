@@ -128,7 +128,11 @@ namespace TowerBotLibCore.Plugins
 
                                     break;
 
-                            }
+                            }  
+
+                            if(airplane.AircraftType.ICAO == "XXX")
+                                PluginAlert.AlertType = PluginAlertType.High;
+
 
                             PluginAlert.Message += ".";
 
