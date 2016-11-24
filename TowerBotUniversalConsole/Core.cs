@@ -33,11 +33,8 @@ namespace TowerBotUniversalConsole
         {
             if (isConsole)
             {
-                Console.Title = "Towerbot";
-                Console.WriteLine("Bot Iniciado\n");
-
-                //if (ApplicationDeployment.IsNetworkDeployed)
-                Console.WriteLine("Versão: {0}\n", "Unknow...");// ApplicationDeployment.CurrentDeployment.CurrentVersion);
+                Console.Title = "Towerbot\n";
+                Console.WriteLine("Starting...\n");
 
             }
 
@@ -62,101 +59,81 @@ namespace TowerBotUniversalConsole
             if (!exists)
                 System.IO.Directory.CreateDirectory(strPath);
 
-            
+            var autoEvent = new AutoResetEvent(false);
 
-            OnTimer(null, null);
+            var timer = new System.Threading.Timer(new TimerCallback(CheckStatus), null, new TimeSpan(0), new TimeSpan(0, 0, 10));
 
-            //#if DEBUG
-            Thread thread = new Thread(() =>
+            if (isConsole)
             {
-
-
-                if (isConsole)
+                while (true)
                 {
-                    while (true)
+                    switch (Console.ReadLine())
                     {
-                        switch (Console.ReadLine())
-                        {
-                            case "log on":
-                                showUpdates = true;
-                                nConsoleUpdates = 0;
-                                Console.WriteLine("Iniciando log...\n");
-                                break;
-                            case "log off":
-                                nConsoleUpdates = 0;
-                                showUpdates = false;
-                                Console.WriteLine("Log finalizado.\n");
-                                break;
-                            case "updateall":
-                                isToForceUpdateAll = true;
-                                Console.WriteLine("Forçando todos updates...\n");
-                                break;
-                            case "online":
-                                Console.WriteLine("Tempo online:{0}\n", DateTime.Now - startDateTime);
-                                break;
-                            case "twitter on":
-                                isTwitterActive = true;
-                                Console.WriteLine("Twitter ativado.\n");
-                                break;
-                            case "twitter off":
-                                isTwitterActive = false;
-                                Console.WriteLine("Twitter desativo.\n");
-                                break;
-                            case "twitter test":
-                                twitterManager.PostMessage(Radar.GetRadar("BSB"), "Atualização: Correção de vários bugs. #dev ");
-                                Console.WriteLine("Ok.\n");
-                                break;
-                            case "twitter postmedium":
-                                nextTimeTwitterMediumAlertPost = new DateTime();// DateTime.Now.AddHours(hoursToNextTwitterMediumAlertPost);
-                                Console.WriteLine("O próximo alerta médio será postado no Twitter.\n");
-                                break;
-                            case "twitter nextmedium":
-                                Console.WriteLine("O proximo twitter de nível médio será em: {0}\n", nextTimeTwitterMediumAlertPost.ToString());
-                                break;
-                            case "refresh":
-                                PluginsManager.RefreshAll();
-                                Console.WriteLine("Cache limpado.\n");
-                                break;
-                            case "Plugins":
-                                PluginsManager.AccessPluginCommandLine();
-                                break;
+                        case "log on":
+                            showUpdates = true;
+                            nConsoleUpdates = 0;
+                            Console.WriteLine("Starting log...\n");
+                            break;
+                        case "log off":
+                            nConsoleUpdates = 0;
+                            showUpdates = false;
+                            Console.WriteLine("Log done.\n");
+                            break;
+                        case "updateall":
+                            isToForceUpdateAll = true;
+                            Console.WriteLine("Forcing updates...\n");
+                            break;
+                        case "online":
+                            Console.WriteLine("Online time:{0}\n", DateTime.Now - startDateTime);
+                            break;
+                        case "twitter on":
+                            isTwitterActive = true;
+                            Console.WriteLine("Twitter actived.\n");
+                            break;
+                        case "twitter off":
+                            isTwitterActive = false;
+                            Console.WriteLine("Twitter desactived.\n");
+                            break;
+                        case "twitter test":
+                            twitterManager.PostMessage(Radar.GetAnyRadar(), "Twitter test");
+                            Console.WriteLine("Ok.\n");
+                            break;
+                        case "refresh":
+                            PluginsManager.RefreshAll();
+                            Console.WriteLine("Cache cleaned.\n");
+                            break;
+                        case "Plugins":
+                            PluginsManager.AccessPluginCommandLine();
+                            break;
 
-                            case "help":
-                                Console.WriteLine("- log on/off");
-                                Console.WriteLine("- updateall");
-                                Console.WriteLine("- online");
-                                Console.WriteLine("- twitter on/off/test/postmedium/nextmedium");
-                                Console.WriteLine("- refresh");
-                                Console.WriteLine("- Plugins");
+                        case "help":
+                            Console.WriteLine("- log on/off");
+                            Console.WriteLine("- updateall");
+                            Console.WriteLine("- online");
+                            Console.WriteLine("- twitter on/off/test");
+                            Console.WriteLine("- refresh");
+                            Console.WriteLine("- Plugins");
 
-                                break;
-                            case "exit":
-                                Environment.Exit(0);
+                            break;
+                        case "exit":
+                            Environment.Exit(0);
 
-                                break;
-                            default:
-                                Console.WriteLine("\nComando desconhecido.\n");
+                            break;
+                        default:
+                            Console.WriteLine("\nComando desconhecido.\n");
 
-                                break;
-                        }
+                            break;
                     }
                 }
-
-
-            });
-            thread.Start();
-
-            while (true)
-            {
-                OnTimer(null, null);
-                Thread.Sleep(10000);
             }
 
-        }
 
-        //private static void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
-        private static void OnTimer(object sender, object args)
+
+        }
+        
+        private static void CheckStatus(object stateInfo)
         {
+           
             TowerBotFoundationCore.AirportWeather.GetWeather("SB*");
 
             TowerBotLibCore.Alert currentAlert = null; // Para tratatamento de erro.
@@ -260,7 +237,7 @@ namespace TowerBotUniversalConsole
             Console.Title = "Robô Bum (Core) - " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 
 
-            if (isFirstTime)// && ApplicationDeployment.IsNetworkDeployed)
+            if (isFirstTime)
             {
 #if !DEBUG
                 isTwitterActive = true;
@@ -283,10 +260,8 @@ namespace TowerBotUniversalConsole
 
         private static void Log(string logMessage, TextWriter w)
         {
-            //w.Write("Log Entry : ");
             w.Write("{0}", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
             w.WriteLine(" ;{0};", logMessage);
-            //w.WriteLine(".", logMessage);
         }
 
         private static void DumpLog(StreamReader r)

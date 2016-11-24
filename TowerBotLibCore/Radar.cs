@@ -174,6 +174,11 @@ namespace TowerBotLibCore
             }
         }
 
+        public static Radar GetAnyRadar()
+        {
+            return Radar.ListRadars[new Random().Next(Radar.ListRadars.Count)];
+        }
+
         private Radar()
         {
             this.LastAirplaneListUpdate = new DateTime();
