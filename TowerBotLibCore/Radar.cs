@@ -14,12 +14,11 @@ namespace TowerBotLibCore
     {
 
         public string Name { get; set; }
-        [IgnoreDataMemberAttribute]
+        
         public string Description { get; set; }
-        [IgnoreDataMemberAttribute]
+        
         public string EndpointUrl { get; set; }
       
-        [IgnoreDataMemberAttribute]
         public int Port { get; set; }
         [IgnoreDataMemberAttribute]
         public List<AirplaneBasic> CurrentAirplanes { get; set; }
@@ -27,39 +26,36 @@ namespace TowerBotLibCore
         public List<Plugins.IPlugin> Plugins { get; set; }
         [IgnoreDataMemberAttribute]
         public List<AirplaneBasic> LastAirplanes { get; set; }
-        [IgnoreDataMemberAttribute]
+       
         public List<RunwayBasic> ListRunways { get; set; }
-        [IgnoreDataMemberAttribute]
-
+       
         public double LongitudeX { get; set; }
-        [IgnoreDataMemberAttribute]
-
+        
         public double LatitudeX { get; set; }
-        [IgnoreDataMemberAttribute]
-
+       
         public double LongitudeY { get; set; }
-        [IgnoreDataMemberAttribute]
-
+        
         public double LatitudeY { get; set; }
-        [IgnoreDataMemberAttribute]
 
-        public Radar RadarParent { get; set; }
+        public string RadarParentName { get; set; }
+
+        [IgnoreDataMemberAttribute]
+        public Radar RadarParent { get { return (Radar)RadarParentName; } }
+
         [IgnoreDataMemberAttribute]
         public DateTime LastAirplaneListUpdate { get; set; }
-        [IgnoreDataMemberAttribute]
-
-        public bool ModeSAllowed { get; set; }
 
         [IgnoreDataMemberAttribute]
-        public Airport MainAirport { get; set; }
-
-
-        [IgnoreDataMemberAttribute]
-        public bool IsModeSEnabled { get; set; }
+        public bool IsModeSAllowed { get { return this.RadarParent == null; } }
 
         [IgnoreDataMemberAttribute]
+        public Airport MainAirport { get { return Airport.GetAirportByICAO(MainAirportICAO); } }
 
+        public string MainAirportICAO { get; set; }
+
+        [IgnoreDataMemberAttribute]
         private static List<Radar> listRadars { get; set; }
+
         [IgnoreDataMemberAttribute]
         public static List<Radar> ListRadars
         {
@@ -75,8 +71,7 @@ namespace TowerBotLibCore
         [IgnoreDataMemberAttribute]
         public bool HasTwitter { get; set; }
 
-        [IgnoreDataMemberAttribute]
-        public int AltitudeOfTolerence
+        public int ApproximationMaxAltitude
         {
             get
             {
@@ -96,10 +91,8 @@ namespace TowerBotLibCore
                 }
             }
         }
-
-
-        [IgnoreDataMemberAttribute]
-        public bool IsWideAllowed
+        
+        public bool ShowApproximationHeavyWeightAirplanes
         {
             get
             {
@@ -121,8 +114,7 @@ namespace TowerBotLibCore
             }
         }
 
-        [IgnoreDataMemberAttribute]
-        public bool IsMediusNotAllowed
+        public bool ShowApproximationMediumWeightAirplanes
         {
             get
             {
@@ -131,9 +123,17 @@ namespace TowerBotLibCore
 
                             this.Name == "BFH"
                               )
-                    return true;
-                else
                     return false;
+                else
+                    return true;
+            }
+        }
+
+        public bool ShowApproximationLowWeightAirplanes
+        {
+            get
+            {
+                return true;
             }
         }
 
@@ -178,7 +178,6 @@ namespace TowerBotLibCore
             this.LastAirplaneListUpdate = new DateTime();
             CurrentAirplanes = new List<AirplaneBasic>();
             LastAirplanes = new List<AirplaneBasic>();
-            this.ModeSAllowed = true;
             ListRunways = new List<RunwayBasic>();
             Plugins = new List<IPlugin>();
             //CurrentAlerts = new List<Alert>();
@@ -205,15 +204,13 @@ namespace TowerBotLibCore
             {
                 Name = "BSB",
                 Description = "Brasília - DF",
-                MainAirport = Airport.GetAirportByIata("BSB"),
+                MainAirportICAO = "SBBR",
                 HasTwitter = true,
-                IsModeSEnabled = true,                
                 EndpointUrl = "http://bsbradar.ddns.net:8081/json",
                 LongitudeX = -48.336099,
                 LatitudeX = -15.364184,
                 LongitudeY = -47.256692,
                 LatitudeY = -16.194103,
-                RadarParent = Radar.GetRadar("BRA"),
                 Plugins = new List<IPlugin>()
                 {
                     new PluginLogAll(),
@@ -255,8 +252,8 @@ namespace TowerBotLibCore
                 LatitudeX = -25.160087,
                 LongitudeY = -48.826141,
                 LatitudeY = -25.758437,
-                RadarParent = Radar.GetRadar("BRA"),
-                MainAirport = Airport.GetAirportByIata("CWB"),
+                RadarParentName = "BRA",
+                MainAirportICAO = "SBCT",
                 ListRunways = new List<RunwayBasic>() {
                     new RunwayBasic()
                     {
@@ -296,8 +293,8 @@ namespace TowerBotLibCore
                 LatitudeX = -23.371846,
                 LongitudeY = -46.130631,
                 LatitudeY = -23.834366,
-                RadarParent = Radar.GetRadar("BRA"),
-                MainAirport = Airport.GetAirportByIata("GRU"),
+                RadarParentName = "BRA",
+                MainAirportICAO = "SBGR",
                 ListRunways = new List<RunwayBasic>() {
                     new RunwayBasic()
                     {
@@ -338,12 +335,23 @@ namespace TowerBotLibCore
                 LatitudeX = -22.596812,
                 LongitudeY = -42.618204,
                 LatitudeY = -23.221517,
-                RadarParent = Radar.GetRadar("BRA"),
+                RadarParentName = ("BRA"),
 
             });
             
 
         }
+
+        public static implicit operator Radar(string radarName)
+        {
+            return GetRadar(radarName);
+        }
+
+        public static explicit operator string(Radar radar)
+        {
+            return radar.Name;
+        }
+
 
         public static List<Radar> GetRadarList(string radarName)
         {
@@ -445,8 +453,8 @@ namespace TowerBotLibCore
                     LatitudeX = airport.Latitude - radius,
                     LongitudeY = airport.Longitude + radius,
                     LatitudeY = airport.Latitude - radius,
-                    RadarParent = Radar.GetRadar("BRA"),
-                    MainAirport = airport,
+                    RadarParentName = "BRA",
+                    MainAirportICAO = airport.ICAO,
 
                 };
                 ListRadars.Add(radar);

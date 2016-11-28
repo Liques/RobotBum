@@ -268,3 +268,13 @@ C# Message: An error occurred while sending the request.
 24/11/2016 11:39:20
 Code Place: Deserialize Radar BSB is out.
 C# Message: Object reference not set to an instance of an object.
+
+
+24/11/2016 15:35:28
+Code Place: Error on Special Painting
+C# Message: An item with the same key has already been added. Key: A3C880
+
+
+24/11/2016 15:41:57
+Code Place: Error on Special Painting
+C# Message: An item with the same key has already been added. Key: A3C880

@@ -9,9 +9,9 @@
 --optimize:True
 --emit-entry-point:True
 --output-name:TowerBotUniversalConsole
---file-version:1.0.0.0
---version:1.0.0.0
---informational-version:1.0.0
+--file-version:1.0.1.0
+--version:1.0.1.0
+--informational-version:1.0.1
 --target-framework:.NETCoreApp,Version=v1.0
 --reference:C:\Users\Administrator\.nuget\packages\Autofac\4.1.0\lib\netstandard1.1\Autofac.dll
 --reference:C:\Users\Administrator\.nuget\packages\Microsoft.CSharp\4.0.1\ref\netstandard1.0\Microsoft.CSharp.dll

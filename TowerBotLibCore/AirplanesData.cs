@@ -41,7 +41,6 @@ namespace TowerBotLibCore
                 {
                     response = httpClient.PostAsync(radar.EndpointUrl, new StringContent("{\"req\":\"getStats\",\"data\":{\"statsType\":\"flights\",\"id\":38209319}}", Encoding.UTF8, "application/x-www-form-urlencoded")).Result;
                     responseBodyAsText = response.Content.ReadAsStringAsync().Result;
-                    radar.ModeSAllowed = true;
                 }
                 else if (radar.RadarParent != null)
                 {
@@ -167,7 +166,6 @@ namespace TowerBotLibCore
                     s.Latitude < radar.LatitudeX &&
                     s.Latitude > radar.LatitudeY
                     ).ToList();
-                    radar.ModeSAllowed = false;
 
                 }
             }
