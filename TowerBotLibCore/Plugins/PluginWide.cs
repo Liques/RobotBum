@@ -145,7 +145,7 @@ namespace TowerBotLibCore.Plugins
                             if (PluginAlert.AlertType != PluginAlertType.NoData)
                             {
                                 if (PluginAlert.Airplane.State == AirplaneStatus.Cruise || (PluginAlert.Airplane.State != AirplaneStatus.Cruise &&
-                                    PluginAlert.Radar.IsWideAllowed))
+                                    PluginAlert.Radar.ShowApproximationHeavyWeightAirplanes))
                                     listAlerts.Add(PluginAlert);
                             }
                         }

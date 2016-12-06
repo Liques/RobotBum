@@ -102,7 +102,7 @@ namespace TowerBotUniversalConsole
                             PluginsManager.RefreshAll();
                             Console.WriteLine("Cache cleaned.\n");
                             break;
-                        case "Plugins":
+                        case "plugins":
                             PluginsManager.AccessPluginCommandLine();
                             break;
 

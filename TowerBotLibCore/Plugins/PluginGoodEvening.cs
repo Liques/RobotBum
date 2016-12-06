@@ -133,7 +133,7 @@ namespace TowerBotLibCore.Plugins
 
         private string AdsbPhrase(Radar radar)
         {
-            if (radar.IsModeSEnabled || radar.Name == "SWUZ" || radar.Name == "SBMT")
+            if (radar.IsModeSAllowed || radar.Name == "SWUZ" || radar.Name == "SBMT")
             {
                 return String.Empty;
             }

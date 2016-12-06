@@ -115,7 +115,7 @@ namespace TowerBotLibCore.Plugins
 
                                 case AirplaneStatus.Landing:
 
-                                    if (radar.AltitudeOfTolerence <= airplane.Altitude || airplane.Weight == AirplaneWeight.Medium && radar.IsMediusNotAllowed)
+                                    if (radar.ApproximationMaxAltitude <= airplane.Altitude || airplane.Weight == AirplaneWeight.Medium && !radar.ShowApproximationMediumWeightAirplanes)
                                         continue;
 
                                     PluginAlert.Icon = IconType.Landing;
@@ -171,7 +171,7 @@ namespace TowerBotLibCore.Plugins
 
                                 case AirplaneStatus.TakingOff:
 
-                                    if (radar.AltitudeOfTolerence <= airplane.Altitude || airplane.Weight == AirplaneWeight.Medium && radar.IsMediusNotAllowed)
+                                    if (radar.ApproximationMaxAltitude <= airplane.Altitude || airplane.Weight == AirplaneWeight.Medium && !radar.ShowApproximationMediumWeightAirplanes)
                                         continue;
 
                                     PluginAlert.Icon = IconType.TakingOff;

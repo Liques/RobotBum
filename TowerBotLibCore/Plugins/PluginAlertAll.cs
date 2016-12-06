@@ -47,7 +47,7 @@ namespace TowerBotLibCore.Plugins
                                 alert.Icon = IconType.Orbit;
                                 alert.Message = string.Format("{0} {1}", airplane.Latitude, airplane.Longitude);
 
-                                if (!IsDuplicated(listOfRecentAlerts, alert) && !(airplane.Weight == AirplaneWeight.Medium && radar.IsMediusNotAllowed))
+                                if (!IsDuplicated(listOfRecentAlerts, alert) && !(airplane.Weight == AirplaneWeight.Medium && !radar.ShowApproximationMediumWeightAirplanes))
                                     listAlerts.Add(alert);
                             }
 
@@ -87,7 +87,7 @@ namespace TowerBotLibCore.Plugins
                                     listAlerts.Add(alert);
                             }
 
-                            if (radar.IsWideAllowed && (airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.Landing))
+                            if (radar.ShowApproximationHeavyWeightAirplanes && (airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.Landing))
                                 continue;
 
                             switch (airplane.State)
