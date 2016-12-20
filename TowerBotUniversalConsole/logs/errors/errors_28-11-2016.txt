@@ -1,5 +1,0 @@
-
-
-28/11/2016 13:35:52
-Code Place: Error on Special Painting
-C# Message: An item with the same key has already been added. Key: A3C880
