@@ -208,147 +208,154 @@ namespace TowerBotFoundationCore
         /// <returns></returns>
         private static AirportWeather GetWeatherMetar(string ICAO, string xmlMetarResult, string xmTAFResult, bool loadFutureWeather)
         {
-            if (String.IsNullOrEmpty(ICAO))
-                throw new ArgumentException("You must to provide a valid ICAO code. For more information about what is ICAO code, see https://en.wikipedia.org/wiki/International_Civil_Aviation_Organization_airport_code.");
-            
-            if (listRecentWeather == null)
-                listRecentWeather = new List<AirportWeather>();
-
-            List<AirportWeather> listExpired = listRecentWeather.Where(s => s.DateExperition <= DateTime.Now).ToList();
-            for (int i = 0; i < listExpired.Count; i++)
+            try
             {
-                listRecentWeather.Remove(listExpired[i]);
-            }
+                if (String.IsNullOrEmpty(ICAO))
+                    throw new ArgumentException("You must to provide a valid ICAO code. For more information about what is ICAO code, see https://en.wikipedia.org/wiki/International_Civil_Aviation_Organization_airport_code.");
 
-            AirportWeather airportWeather = listRecentWeather.Where(s => s.ICAO == ICAO).FirstOrDefault();
+                if (listRecentWeather == null)
+                    listRecentWeather = new List<AirportWeather>();
 
-            if (airportWeather != null)
-            {
-                // If the user wants an airport with TAF, the airport data is cached and it tries to load the TAF, it blocks to try to load the TAF again                    
-                if (loadFutureWeather && airportWeather.ListFutureWeather == null && airportWeather.LastTAFAttempet < DateTime.Now)
+                List<AirportWeather> listExpired = listRecentWeather.Where(s => s.DateExperition <= DateTime.Now).ToList();
+                for (int i = 0; i < listExpired.Count; i++)
                 {
-                    airportWeather.ListFutureWeather = GetWeatherTAF(ICAO);
+                    listRecentWeather.Remove(listExpired[i]);
+                }
 
-                    // If there is no TAF data yet, it tries to load in one hour again
+                AirportWeather airportWeather = listRecentWeather.Where(s => s.ICAO == ICAO).FirstOrDefault();
+
+                if (airportWeather != null)
+                {
+                    // If the user wants an airport with TAF, the airport data is cached and it tries to load the TAF, it blocks to try to load the TAF again                    
+                    if (loadFutureWeather && airportWeather.ListFutureWeather == null && airportWeather.LastTAFAttempet < DateTime.Now)
+                    {
+                        airportWeather.ListFutureWeather = GetWeatherTAF(ICAO);
+
+                        // If there is no TAF data yet, it tries to load in one hour again
+                        if (airportWeather.ListFutureWeather == null)
+                            airportWeather.LastTAFAttempet = DateTime.Now.AddHours(1);
+                    }
+                    return airportWeather;
+                }
+
+                // If the airport data is not cached, so let's get the data!
+                airportWeather = new AirportWeather();
+                airportWeather.ICAO = ICAO;
+                airportWeather.DateExperition = NextTimeToLoadUrl();
+                airportWeather.DateBegin = DateTime.Now;
+                airportWeather.DateEnd = airportWeather.DateExperition;
+
+                Dictionary<string, object> listWeatherLines = null;
+
+                if (String.IsNullOrEmpty(xmlMetarResult))
+                    listWeatherLines = LoadMetarAPI(ICAO, loadFutureWeather).Result;
+                else
+                    listWeatherLines = MetarToDictionary(ICAO, xmlMetarResult).Result;
+
+                // If there is no data from airport...
+                if (listWeatherLines == null)
+                {
+                    // If there is not TAF data yet, try again in 6 hours
+                    airportWeather.DateExperition = DateTime.Now.AddHours(6);
+                    listRecentWeather.Add(airportWeather);
+                    return airportWeather;
+                }
+
+                if (loadFutureWeather && !String.IsNullOrEmpty(xmTAFResult))
+                {
+                    airportWeather.ListFutureWeather = GetWeatherTAF(ICAO, xmTAFResult);
+
+                    // If there is not TAF data yet, try again in one hours
                     if (airportWeather.ListFutureWeather == null)
                         airportWeather.LastTAFAttempet = DateTime.Now.AddHours(1);
                 }
-                return airportWeather;
-            }
 
-            // If the airport data is not cached, so let's get the data!
-            airportWeather = new AirportWeather();
-            airportWeather.ICAO = ICAO;
-            airportWeather.DateExperition = NextTimeToLoadUrl();
-            airportWeather.DateBegin = DateTime.Now;
-            airportWeather.DateEnd = airportWeather.DateExperition;
+                string MetarRaw = listWeatherLines["RawMetar"].ToString();
 
-            Dictionary<string, object> listWeatherLines = null;
-
-            if (String.IsNullOrEmpty(xmlMetarResult))
-                listWeatherLines = LoadMetarAPI(ICAO, loadFutureWeather).Result;
-            else
-                listWeatherLines = MetarToDictionary(ICAO, xmlMetarResult).Result;
-
-            // If there is no data from airport...
-            if (listWeatherLines == null)
-            {
-                // If there is not TAF data yet, try again in 6 hours
-                airportWeather.DateExperition = DateTime.Now.AddHours(6);
-                listRecentWeather.Add(airportWeather);
-                return airportWeather;
-            }
-
-            if (loadFutureWeather && !String.IsNullOrEmpty(xmTAFResult))
-            {
-                airportWeather.ListFutureWeather = GetWeatherTAF(ICAO, xmTAFResult);
-
-                // If there is not TAF data yet, try again in one hours
-                if (airportWeather.ListFutureWeather == null)
-                    airportWeather.LastTAFAttempet = DateTime.Now.AddHours(1);
-            }
-
-            string MetarRaw = listWeatherLines["RawMetar"].ToString();
-
-            if (listWeatherLines.ContainsKey("WindSpeed"))
-            {
-                airportWeather.WindDirection = Convert.ToDouble(listWeatherLines["WindDirection"]);
-                airportWeather.WindSpeed = Convert.ToDouble(listWeatherLines["WindSpeed"]);
-            }
-
-            if (!String.IsNullOrEmpty(MetarRaw))
-            {
-                airportWeather.Metar = MetarRaw;
-
-                double visibilityNumber = -1;
-
-                if (listWeatherLines.ContainsKey("Visibility"))
+                if (listWeatherLines.ContainsKey("WindSpeed"))
                 {
-                    string visibilityString = listWeatherLines["Visibility"].ToString();
-                    bool isInMiles = true;
-
-                    double.TryParse(visibilityString, out visibilityNumber);
-                    visibilityNumber *= 1000;
-                    visibilityNumber = (isInMiles) ? visibilityNumber * 1.6 : visibilityNumber;
+                    airportWeather.WindDirection = Convert.ToDouble(listWeatherLines["WindDirection"]);
+                    airportWeather.WindSpeed = Convert.ToDouble(listWeatherLines["WindSpeed"]);
                 }
-                airportWeather.Visibility = visibilityNumber;
 
-                IEnumerable<dynamic> skyConditions = (IEnumerable<dynamic>)listWeatherLines["SkyConditions"];
+                if (!String.IsNullOrEmpty(MetarRaw))
+                {
+                    airportWeather.Metar = MetarRaw;
 
-                if (skyConditions.Any(s => s.SkyCover == "CAVOK") || skyConditions.Any(s => s.SkyCover == "NSC"))
-                    airportWeather.Sky = SkyType.Clear;
-                else if (skyConditions.Any(s => s.SkyCover == "OVC"))
-                    airportWeather.Sky = SkyType.Overcast;
-                else if (skyConditions.Any(s => s.SkyCover == "BKN"))
-                    airportWeather.Sky = SkyType.VeryCloudy;
-                else if (skyConditions.Any(s => s.SkyCover == "SCT"))
-                    airportWeather.Sky = SkyType.SomeCloud;
-                else if (skyConditions.Any(s => s.SkyCover == "FEW"))
-                    airportWeather.Sky = SkyType.FewClouds;
+                    double visibilityNumber = -1;
 
-            }
-            if (listWeatherLines.ContainsKey("Temperature"))
-            {
-                airportWeather.Temperature = Convert.ToDouble(listWeatherLines["Temperature"]);
-            }
+                    if (listWeatherLines.ContainsKey("Visibility"))
+                    {
+                        string visibilityString = listWeatherLines["Visibility"].ToString();
+                        bool isInMiles = true;
 
-            if (listWeatherLines.ContainsKey("FlightCategory"))
-            {
+                        double.TryParse(visibilityString, out visibilityNumber);
+                        visibilityNumber *= 1000;
+                        visibilityNumber = (isInMiles) ? visibilityNumber * 1.6 : visibilityNumber;
+                    }
+                    airportWeather.Visibility = visibilityNumber;
 
-                if (listWeatherLines["FlightCategory"].ToString().Contains("VFR"))
+                    IEnumerable<dynamic> skyConditions = (IEnumerable<dynamic>)listWeatherLines["SkyConditions"];
+
+                    if (skyConditions.Any(s => s.SkyCover == "CAVOK") || skyConditions.Any(s => s.SkyCover == "NSC"))
+                        airportWeather.Sky = SkyType.Clear;
+                    else if (skyConditions.Any(s => s.SkyCover == "OVC"))
+                        airportWeather.Sky = SkyType.Overcast;
+                    else if (skyConditions.Any(s => s.SkyCover == "BKN"))
+                        airportWeather.Sky = SkyType.VeryCloudy;
+                    else if (skyConditions.Any(s => s.SkyCover == "SCT"))
+                        airportWeather.Sky = SkyType.SomeCloud;
+                    else if (skyConditions.Any(s => s.SkyCover == "FEW"))
+                        airportWeather.Sky = SkyType.FewClouds;
+
+                }
+                if (listWeatherLines.ContainsKey("Temperature"))
+                {
+                    airportWeather.Temperature = Convert.ToDouble(listWeatherLines["Temperature"]);
+                }
+
+                if (listWeatherLines.ContainsKey("FlightCategory"))
+                {
+
+                    if (listWeatherLines["FlightCategory"].ToString().Contains("VFR"))
+                    {
+                        airportWeather.IsIFR = true;
+                        airportWeather.IsVFR = true;
+                    }
+                    else if (listWeatherLines["FlightCategory"].ToString() == "IFR")
+                    {
+                        airportWeather.IsIFR = true;
+                    }
+
+                }
+                else
                 {
                     airportWeather.IsIFR = true;
                     airportWeather.IsVFR = true;
                 }
-                else if (listWeatherLines["FlightCategory"].ToString() == "IFR")
+
+                if (listWeatherLines.ContainsKey("AdditionalInfo"))
                 {
-                    airportWeather.IsIFR = true;
+                    string additionalInfo = listWeatherLines["AdditionalInfo"].ToString();
+
+                    airportWeather.Metar = (!String.IsNullOrEmpty(airportWeather.Metar)) ? airportWeather.Metar : "";
+
+                    airportWeather.WeatherType = GetWeatherType(additionalInfo);
+
+                    airportWeather.ChangeType = WeatherChangeType.Tempo;
+                    airportWeather.Probability = 100;
                 }
 
-            }
-            else
+                listRecentWeather.Add(airportWeather);
+
+
+
+                return airportWeather;
+
+            } catch (Exception e)
             {
-                airportWeather.IsIFR = true;
-                airportWeather.IsVFR = true;
+                throw e;
             }
-
-            if (listWeatherLines.ContainsKey("AdditionalInfo"))
-            {
-                string additionalInfo = listWeatherLines["AdditionalInfo"].ToString();
-
-                airportWeather.Metar = (!String.IsNullOrEmpty(airportWeather.Metar)) ? airportWeather.Metar : "";
-
-                airportWeather.WeatherType = GetWeatherType(additionalInfo);
-
-                airportWeather.ChangeType = WeatherChangeType.Tempo;
-                airportWeather.Probability = 100;
-            }
-
-            listRecentWeather.Add(airportWeather);
-
-
-
-            return airportWeather;
 
         }
 

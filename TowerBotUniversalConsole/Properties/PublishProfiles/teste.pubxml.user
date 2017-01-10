@@ -5,6 +5,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Projetos\Git\TowerBotUniversalConsole\.\bin\Release\PublishOutput</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Projetos\Robotbum\TowerBotUniversalConsole\.\bin\Release\PublishOutput</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

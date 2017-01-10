@@ -24,7 +24,7 @@ namespace TowerBotUniversalConsole
         static TwitterManager twitterManager;
         static DateTime nextTimeTwitterMediumAlertPost;
         static int hoursToNextTwitterMediumAlertPost;
-
+         
         /// <summary>
         /// Start App
         /// </summary>
