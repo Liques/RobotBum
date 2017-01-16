@@ -5,13 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TowerBotUniversalConsole
+namespace TowerBotConsole
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.Unicode;
+
+            Console.WriteLine(Directory.GetCurrentDirectory());
 #if DEBUG
             Console.WriteLine("Modo debug.\n");
 
@@ -19,4 +21,5 @@ namespace TowerBotUniversalConsole
             Core.Start(true);
         }
     }
+    
 }

@@ -33,38 +33,46 @@ namespace TowerBotFoundationCore
 
         public static AircraftType GetAircraftType(string icao)
         {
-            StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\aircrafttypes.json");
-
-            string jsonstring = file.ReadToEnd();
-
-            var listNames = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, string>>>(jsonstring);
-
-            string name = String.Empty;
-
-            if (icao == null)
-                icao = string.Empty;
-
-            var nameReg = listNames.Keys.Where(s => icao.StartsWith(s)).FirstOrDefault();
-            nameReg = (String.IsNullOrEmpty(nameReg)) ? "" : nameReg;
-
-            AircraftType aircraftType = new AircraftType();
-            aircraftType.ICAO = icao;
-            aircraftType.IsValid = false;
-
-            if (listNames.ContainsKey(nameReg))
+            try
             {
-                aircraftType.Name = listNames[nameReg]["Name"];
-                aircraftType.Type = (AircraftModel)Enum.Parse(typeof(AircraftModel), listNames[nameReg]["Type"]);// listNames[nameReg]["Name"];
-                aircraftType.IsValid = true;
+                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\aircrafttypes.json");
 
-                if (aircraftType.Type == AircraftModel.NoModel)
-                    aircraftType.Type = AircraftModel.AirplaneLow;
-            }else
-            {
-                aircraftType.Name = aircraftType.ICAO;
+                string jsonstring = file.ReadToEnd();
+
+                var listNames = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, string>>>(jsonstring);
+
+                string name = String.Empty;
+
+                if (icao == null)
+                    icao = string.Empty;
+
+                var nameReg = listNames.Keys.Where(s => icao.StartsWith(s)).FirstOrDefault();
+                nameReg = (String.IsNullOrEmpty(nameReg)) ? "" : nameReg;
+
+                AircraftType aircraftType = new AircraftType();
+                aircraftType.ICAO = icao;
+                aircraftType.IsValid = false;
+
+                if (listNames.ContainsKey(nameReg))
+                {
+                    aircraftType.Name = listNames[nameReg]["Name"];
+                    aircraftType.Type = (AircraftModel)Enum.Parse(typeof(AircraftModel), listNames[nameReg]["Type"]);// listNames[nameReg]["Name"];
+                    aircraftType.IsValid = true;
+
+                    if (aircraftType.Type == AircraftModel.NoModel)
+                        aircraftType.Type = AircraftModel.AirplaneLow;
+                }
+                else
+                {
+                    aircraftType.Name = aircraftType.ICAO;
+                }
+
+                return aircraftType;
             }
-
-            return aircraftType;
+            catch (Exception e)
+            {
+                throw new ArgumentException(@"\Resources\aircrafttypes.jsonr");
+            }
 
         }
 

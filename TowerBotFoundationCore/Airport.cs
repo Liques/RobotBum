@@ -63,13 +63,19 @@ namespace TowerBotFoundationCore
         {
             if (ListAirports == null)
             {
-                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\airports.json");
+                try
+                {
+                    StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\airports.json");
 
 
-                string jsonstring = file.ReadToEnd();
+                    string jsonstring = file.ReadToEnd();
 
-                ListAirports = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, object>>>(jsonstring);
-
+                    ListAirports = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, object>>>(jsonstring);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException(@"\Resources\airports.jsonr");
+                }
 
             }
 

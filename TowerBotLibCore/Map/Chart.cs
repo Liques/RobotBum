@@ -50,54 +50,60 @@ namespace TowerBotLibCore.Map
 
         public static void LoadCharts()
         {
-            listCharts = new List<Chart>();
-
-            var logPath = System.IO.Directory.GetCurrentDirectory();
-            //var logFile = System.IO.File.Create(logPath);
-
-            StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\charts.json");
-
-            StringBuilder jsonstring = new StringBuilder();
-
-            while (file.Peek() >= 0)
+            try
             {
+                listCharts = new List<Chart>();
 
-                jsonstring.Append(file.ReadLine());
-            }
+                var logPath = System.IO.Directory.GetCurrentDirectory();
+                //var logFile = System.IO.File.Create(logPath);
 
-            var listCountires = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, string>>>(jsonstring.ToString());
+                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\charts.json");
 
-            foreach (var item in listCountires)
-            {
-                var chart = new Chart()
+                StringBuilder jsonstring = new StringBuilder();
+
+                while (file.Peek() >= 0)
                 {
-                    Name = item.Key,
-                    Region = item.Value["Region"],
-                    ChartType = (item.Value["Type"] == "STAR")? ChartType.Star : ChartType.SID,
-                    CheckPoints = new List<CheckPoint>(),
-                    Doors = new List<CheckPoint>()
-                };
 
-                List<string> doors = item.Value["Doors"].Split(';').ToList();
-                List<string> checkpoints = item.Value["CheckPoints"].Split(';').ToList();
-
-                for (int i = 0; i < doors.Count; i++)
-                {
-                    var chk = CheckPoint.GetCheckPoint(doors[i]);
-                    if (chk != null)
-                        chart.Doors.Add(chk);
+                    jsonstring.Append(file.ReadLine());
                 }
 
-                for (int i = 0; i < checkpoints.Count; i++)
+                var listCountires = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, string>>>(jsonstring.ToString());
+
+                foreach (var item in listCountires)
                 {
-                    var chk = CheckPoint.GetCheckPoint(checkpoints[i]);
-                    if (chk != null)
-                        chart.CheckPoints.Add(chk);
+                    var chart = new Chart()
+                    {
+                        Name = item.Key,
+                        Region = item.Value["Region"],
+                        ChartType = (item.Value["Type"] == "STAR") ? ChartType.Star : ChartType.SID,
+                        CheckPoints = new List<CheckPoint>(),
+                        Doors = new List<CheckPoint>()
+                    };
+
+                    List<string> doors = item.Value["Doors"].Split(';').ToList();
+                    List<string> checkpoints = item.Value["CheckPoints"].Split(';').ToList();
+
+                    for (int i = 0; i < doors.Count; i++)
+                    {
+                        var chk = CheckPoint.GetCheckPoint(doors[i]);
+                        if (chk != null)
+                            chart.Doors.Add(chk);
+                    }
+
+                    for (int i = 0; i < checkpoints.Count; i++)
+                    {
+                        var chk = CheckPoint.GetCheckPoint(checkpoints[i]);
+                        if (chk != null)
+                            chart.CheckPoints.Add(chk);
+                    }
+
+                    listCharts.Add(chart);
                 }
-
-                listCharts.Add(chart);
             }
-
+            catch (Exception e)
+            {
+                throw new ArgumentException(@"\Resources\charts.jsonr");
+            }
 
         }
 

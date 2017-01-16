@@ -2,17 +2,23 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "Microsoft.CSharp": "4.0.1",
-    "NETStandard.Library": "1.6.0",
+    "Microsoft.CSharp": "4.3.0",
+    "NETStandard.Library": "1.6.1",
     "Newtonsoft.Json": "9.0.1",
     "TowerBotFoundationCore": "1.0.0-*",
     "Microsoft.NETCore.Portable.Compatibility": "1.0.1-rc2-24027",
-    "TweetinviAPI": "1.1.1",
+    "TweetinviAPI": "1.1.1"
   },
 
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50",
+    "netcoreapp1.1": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.1.0"
+        }
+      },
+      "imports": "dnxcore50"
     }
-  }
+  },
 }

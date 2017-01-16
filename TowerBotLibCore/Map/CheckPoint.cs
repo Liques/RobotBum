@@ -37,32 +37,38 @@ namespace TowerBotLibCore.Map
 
         public static void LoadCheckPoints()
         {
-            listCheckPoints = new List<CheckPoint>();
-
-            StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\checkpoints.json");
-
-            StringBuilder jsonstring = new StringBuilder();
-
-            while (file.Peek() >= 0)
+            try
             {
+                listCheckPoints = new List<CheckPoint>();
 
-                jsonstring.Append(file.ReadLine());
-            }
+                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\checkpoints.json");
 
-            var listCountires = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, string>>>(jsonstring.ToString());
+                StringBuilder jsonstring = new StringBuilder();
 
-            foreach (var item in listCountires)
-            {
-                listCheckPoints.Add(new CheckPoint()
+                while (file.Peek() >= 0)
                 {
-                    Name = item.Key,
-                    Latitude = Convert.ToDouble(item.Value["Latitude"]),
-                    Longitude = Convert.ToDouble(item.Value["Longitude"]),
-                    Region = item.Value["Region"],
-                });
+
+                    jsonstring.Append(file.ReadLine());
+                }
+
+                var listCountires = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, string>>>(jsonstring.ToString());
+
+                foreach (var item in listCountires)
+                {
+                    listCheckPoints.Add(new CheckPoint()
+                    {
+                        Name = item.Key,
+                        Latitude = Convert.ToDouble(item.Value["Latitude"]),
+                        Longitude = Convert.ToDouble(item.Value["Longitude"]),
+                        Region = item.Value["Region"],
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(@"\Resources\checkpoints.jsonr");
             }
 
-         
         }
 
         public override string ToString()

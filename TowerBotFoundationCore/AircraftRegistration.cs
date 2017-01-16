@@ -36,21 +36,28 @@ namespace TowerBotFoundationCore
         /// <returns></returns>
         private static string GetCountryRegistration(string registration)
         {
-            StreamReader file = File.OpenText(Directory.GetCurrentDirectory() + @"\Resources\aircraftregistration.json");
-            
-            var listCountires = JsonConvert.DeserializeObject<IDictionary<string, string>>(file.ReadToEnd());
-
-            string country = String.Empty;
-            var countryReg = listCountires.Keys.Where(s => registration.StartsWith(s)).FirstOrDefault();
-            countryReg = (String.IsNullOrEmpty(countryReg)) ? "" : countryReg;
-
-            if (listCountires.ContainsKey(countryReg))
+            try
             {
-                country = listCountires[countryReg];
+                StreamReader file = File.OpenText(Directory.GetCurrentDirectory() + @"\Resources\aircraftregistration.json");
+
+
+                var listCountires = JsonConvert.DeserializeObject<IDictionary<string, string>>(file.ReadToEnd());
+
+                string country = String.Empty;
+                var countryReg = listCountires.Keys.Where(s => registration.StartsWith(s)).FirstOrDefault();
+                countryReg = (String.IsNullOrEmpty(countryReg)) ? "" : countryReg;
+
+                if (listCountires.ContainsKey(countryReg))
+                {
+                    country = listCountires[countryReg];
+                }
+
+                return country;
             }
-
-            return country;
-
+            catch (Exception e)
+            {
+                throw new ArgumentException(@"\Resources\aircraftregistration.jsonr");
+            }
         }
 
         public override string ToString()
@@ -60,5 +67,5 @@ namespace TowerBotFoundationCore
 
     }
 
-    
+
 }

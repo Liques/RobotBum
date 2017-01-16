@@ -21,13 +21,19 @@ namespace TowerBotFoundationCore
             string iata = (!String.IsNullOrEmpty(flight) && flight.Length >=4) ? flight.Substring(0, 3) : flight;
             if (listAirlines == null)
             {
+                try
+                {
+                    StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\airlines.json");
 
-                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\airlines.json");
+                    string jsonstring = file.ReadToEnd();
 
-                string jsonstring = file.ReadToEnd();
-                
-                listAirlines = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, object>>>(jsonstring);
+                    listAirlines = JsonConvert.DeserializeObject<IDictionary<string, IDictionary<string, object>>>(jsonstring);
 
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException(@"\Resources\airlines.jsonr");
+                }
 
             }
 

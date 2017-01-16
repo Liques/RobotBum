@@ -9,13 +9,20 @@ namespace TowerBotLibCore
         public static string LastRowData { get; set; }
         static ErrorManager()
         {
-            strPath = System.IO.Directory.GetCurrentDirectory() + "\\logs\\errors";
+            try
+            {
+                strPath = System.IO.Directory.GetCurrentDirectory() + "\\logs\\errors";
 
-            bool exists = System.IO.Directory.Exists(strPath);
+                bool exists = System.IO.Directory.Exists(strPath);
 
 
-            if (!exists)
-                System.IO.Directory.CreateDirectory(strPath);
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(strPath);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(@"\\logs\\errors");
+            }
         }
 
         public static void ThrowError(string codePlace)

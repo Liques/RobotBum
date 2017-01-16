@@ -130,48 +130,56 @@ namespace TowerBotLibCore
 
         static Alert()
         {
-            string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
-#if DEBUG
-            strJSONPath += "\\debug";
-#endif
-            
-            var lastAlertsRaw = LoadFile(strJSONPath, "lastAlerts.json");
-            Alert.ListOfAlerts = JsonConvert.DeserializeObject<List<Alert>>(lastAlertsRaw);
-
-            if (Alert.ListOfAlerts == null)
-                Alert.ListOfAlerts = new List<Alert>();
-
-            foreach (var item in Alert.ListOfAlerts)
+            try
             {
+                string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
+#if DEBUG
+                strJSONPath += "\\debug";
+#endif
 
+                var lastAlertsRaw = LoadFile(strJSONPath, "lastAlerts.json");
+                Alert.ListOfAlerts = JsonConvert.DeserializeObject<List<Alert>>(lastAlertsRaw);
 
-                if (item.TimeToBeRemoved.Year < 2000)
-                    item.TimeToBeRemoved = item.TimeCreated.AddDays(3);
+                if (Alert.ListOfAlerts == null)
+                    Alert.ListOfAlerts = new List<Alert>();
 
-                item.Radar = Radar.GetRadar(item.Radar.Name);
-
-                if (item.Icon == IconType.Landing || item.Icon == IconType.TakingOff || item.Icon == IconType.Cruise)
+                foreach (var item in Alert.ListOfAlerts)
                 {
-                    // irplane.ID + "|" + airplane.Registration.Name + "|" + airplane.AircraftType.ICAO + "|" + ((int)airplane.Weight);
-                    var objs = item.Message.Split('|');
 
-                    if (objs.Length == 4)
+
+                    if (item.TimeToBeRemoved.Year < 2000)
+                        item.TimeToBeRemoved = item.TimeCreated.AddDays(3);
+
+                    item.Radar = Radar.GetRadar(item.Radar.Name);
+
+                    if (item.Icon == IconType.Landing || item.Icon == IconType.TakingOff || item.Icon == IconType.Cruise)
                     {
+                        // irplane.ID + "|" + airplane.Registration.Name + "|" + airplane.AircraftType.ICAO + "|" + ((int)airplane.Weight);
+                        var objs = item.Message.Split('|');
 
-                        var airplane = new AirplaneBasic();
-                        airplane.ID = objs[0];
-                        airplane.Registration = new AircraftRegistration(objs[1]);
-                        airplane.AircraftType = AircraftType.GetAircraftType(objs[2]);
-                        airplane.Weight = (AirplaneWeight)Convert.ToInt32(objs[3]);
+                        if (objs.Length == 4)
+                        {
 
-                        item.Airplane = airplane;
+                            var airplane = new AirplaneBasic();
+                            airplane.ID = objs[0];
+                            airplane.Registration = new AircraftRegistration(objs[1]);
+                            airplane.AircraftType = AircraftType.GetAircraftType(objs[2]);
+                            airplane.Weight = (AirplaneWeight)Convert.ToInt32(objs[3]);
+
+                            item.Airplane = airplane;
+                        }
                     }
+
                 }
 
-            }
+                if (Alert.ListOfAlerts != null)
+                    Console.WriteLine("Messages rescued: {0}", Alert.ListOfAlerts.Count);
 
-            if (Alert.ListOfAlerts != null)
-                Console.WriteLine("Messages rescued: {0}", Alert.ListOfAlerts.Count);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(@"lastAlerts.json");
+            }
         }
 
         public Alert()
