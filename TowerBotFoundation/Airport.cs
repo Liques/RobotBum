@@ -63,7 +63,8 @@ namespace TowerBotFoundation
         {
             if (ListAirports == null)
             {
-                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\airports.json");
+
+                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"/Resources/airports.json");
 
 
                 string jsonstring = file.ReadToEnd();

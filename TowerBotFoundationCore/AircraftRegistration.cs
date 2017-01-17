@@ -20,7 +20,7 @@ namespace TowerBotFoundationCore
             try
             {
                 this.Name = registration;
-                this.Country = GetCountryRegistration(registration);
+                //this.Country = GetCountryRegistration(registration);
                 this.IsValid = !String.IsNullOrEmpty(registration);
             }
             catch (Exception e)
@@ -56,7 +56,7 @@ namespace TowerBotFoundationCore
             }
             catch (Exception e)
             {
-                throw new ArgumentException(@"\Resources\aircraftregistration.jsonr");
+                throw new ArgumentException(@"/Resources/aircraftregistration.json");
             }
         }
 

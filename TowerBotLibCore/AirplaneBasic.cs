@@ -62,7 +62,7 @@ namespace TowerBotLibCore
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Airplane Conversion from JSON");
+                ErrorManager.ThrowError(e, String.Format("{0} - {1} - {2}", @"Airplane Conversion from JSON\r", jsonData, e));
                 return null;
             }
 

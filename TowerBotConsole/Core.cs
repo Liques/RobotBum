@@ -138,10 +138,12 @@ namespace TowerBotConsole
 
             TowerBotLibCore.Alert currentAlert = null; // Para tratatamento de erro.
             string messageFlow = "No Flow";
+/*
 #if !DEBUG
             try
             {
 #endif
+*/
             var alerts = PluginsManager.GetAlerts(isToForceUpdateAll);
             isToForceUpdateAll = false;
 
@@ -225,6 +227,7 @@ namespace TowerBotConsole
             }
 
             ServerWriter.UpdatePages(alerts);
+/*
 #if !DEBUG
             }
             catch (Exception e)
@@ -232,6 +235,7 @@ namespace TowerBotConsole
                 ErrorManager.ThrowError(e, "Core Geral");
             }
 #endif
+*/
             Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.Title = "Robô Bum (Core) - " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");

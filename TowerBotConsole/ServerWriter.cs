@@ -16,7 +16,7 @@ namespace TowerBotConsole
         public static DateTime OpenDateTime;
         //public static List<Alert> listOldAlerts = new List<Alert>();
 
-        private static string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
+        private static string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "/logs";
 
         /// <summary>
         /// A string abaixo eh para testes, se tiver preenchido, favor retirar
@@ -27,11 +27,11 @@ namespace TowerBotConsole
         {
 
            
-
+/*
 #if DEBUG
-            strJSONPath += "\\debug";
+            strJSONPath += "/debug";
 #endif
-
+*/
             OpenDateTime = DateTime.Now;
            
         }
@@ -62,32 +62,32 @@ namespace TowerBotConsole
             WriteFile(strJSONPath, "lastAlerts.json", toJSON);
 
 
-            var strPath = @"c:\inetpub\wwwroot\aeroradartk" + specialFolderName;
-
+            var strPath = @"/var/www/html/" + specialFolderName;
+/*
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
-                strPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
+                strPath = System.IO.Directory.GetCurrentDirectory() + "/logs";
 
 #if DEBUG
-            strPath += @"\debug";
-#endif
+            strPath += @"/debug";
+#endif*/
             WriteFile(strPath, "index2.html", IndividualRadar(null, true));
             WriteFile(strPath, "index.html", IndividualRadar(null));
 
-            bool exists = System.IO.Directory.Exists(strPath + @"\data\");
+            bool exists = System.IO.Directory.Exists(strPath + @"/data/");
             if (!exists)
-                System.IO.Directory.CreateDirectory(strPath + @"\data\");
+                System.IO.Directory.CreateDirectory(strPath + @"/data/");
 
             foreach (Radar radar in Radar.ListRadars)
             {
                 try
                 {
-                    string currentPath = strPath + @"\main\" + radar.Name;
+                    string currentPath = strPath + @"/main/" + radar.Name;
 
                     WriteFile(currentPath, "index.html", IndividualRadar(radar));
                     var listAlertByRadar = Alert.ListOfAlerts.Where(s => s.Radar != null && s.Radar.Name == radar.Name && s.AlertType != PluginAlertType.NoAlert).ToList();
-                    WriteFile(strPath + @"\data\", radar.Name + ".json", JsonConvert.SerializeObject(listAlertByRadar));
+                    WriteFile(strPath + @"/data/", radar.Name + ".json", JsonConvert.SerializeObject(listAlertByRadar));
                     var listAlertByRadarFiveMinutes = listAlertByRadar.Where(s => s.TimeCreated > DateTime.Now.AddMinutes(-5)).ToList();
-                    WriteFile(strPath + @"\data\", radar.Name + "fast.json", JsonConvert.SerializeObject(listAlertByRadarFiveMinutes));
+                    WriteFile(strPath + @"/data/", radar.Name + "fast.json", JsonConvert.SerializeObject(listAlertByRadarFiveMinutes));
                 }
                 catch (Exception e)
                 {
@@ -96,7 +96,7 @@ namespace TowerBotConsole
             }
 
             var listGeneralOnlyImportantAlert = Alert.ListOfAlerts.Where(s => s.AlertType == PluginAlertType.High).Take(100).ToList();
-            WriteFile(strPath + @"\data\", "general.json", JsonConvert.SerializeObject(listGeneralOnlyImportantAlert));
+            WriteFile(strPath + @"/data/", "general.json", JsonConvert.SerializeObject(listGeneralOnlyImportantAlert));
         }
 
         private static void WriteFile(string currentPath, string fileName, string content)
@@ -106,12 +106,14 @@ namespace TowerBotConsole
             if (!exists)
                 System.IO.Directory.CreateDirectory(currentPath);
 
-            currentPath += @"\" + fileName;
+            currentPath += @"/" + fileName;
 
             if (File.Exists(currentPath))
                 File.Delete(currentPath);
 
             File.AppendAllText(currentPath, content, Encoding.UTF8);
+
+//Console.WriteLine("Writing HTML in " + currentPath);
         }
 
         private static string LoadFile(string currentPath, string fileName)
@@ -121,7 +123,7 @@ namespace TowerBotConsole
             if (!exists)
                 return String.Empty;
 
-            currentPath += @"\" + fileName;
+            currentPath += @"/" + fileName;
 
             if (!File.Exists(currentPath))
                 return String.Empty;

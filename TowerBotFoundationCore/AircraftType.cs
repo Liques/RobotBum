@@ -35,7 +35,7 @@ namespace TowerBotFoundationCore
         {
             try
             {
-                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\aircrafttypes.json");
+                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"/Resources/aircrafttypes.json");
 
                 string jsonstring = file.ReadToEnd();
 
