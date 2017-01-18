@@ -74,7 +74,7 @@ namespace TowerBotFoundationCore
                 }
                 catch (Exception e)
                 {
-                    throw new ArgumentException(@"\Resources\airports.jsonr");
+                    throw new ArgumentException(@"\Resources\airports.json");
                 }
 
             }
