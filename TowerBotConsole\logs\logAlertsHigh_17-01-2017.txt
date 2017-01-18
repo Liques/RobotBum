@@ -1,3 +1,0 @@
-17/01/2017 07:03:37 ;Voando a 511 kts está cruzando um Boeing 747-400, o MPH6912 (PH-CKB)  -  - . #Avião #RobôBum;BRAWide4841C4;High;Velocidade (speed) abaixo de 200:511kts e altude maior que 28000:35950, Hex:4841C4, ;
-17/01/2017 07:03:37 ;Dando uma passada rápida pelos céus do Curitiba está um Boeing 747-400, o MPH6912 (PH-CKB)  -  - . #Avião #RobôBum;CWBWide4841C4;High;Velocidade (speed) abaixo de 200:511kts e altude maior que 28000:35950, Hex:4841C4, ;
-17/01/2017 07:03:37 ;As pistas em operação são agora as pistas 11L e 11R. Há muita nuvem no céu da capital. (SBBR 171200Z 07004KT 9999 SCT015 BKN100 21/16 Q1017);BSBPluginMetarDFRwy11;High;;

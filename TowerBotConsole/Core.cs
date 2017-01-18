@@ -243,10 +243,11 @@ namespace TowerBotConsole
 
             if (isFirstTime)
             {
-#if !DEBUG
+
+//#if !DEBUG
                 isTwitterActive = true;
                 Console.WriteLine("> Twitter ativado automaticamente.");
-#endif
+//#endif
             }
 
             isFirstTime = false;
