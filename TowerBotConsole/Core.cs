@@ -142,9 +142,6 @@ namespace TowerBotConsole
             var alerts = PluginsManager.GetAlerts(isToForceUpdateAll);
             isToForceUpdateAll = false;
 
-            if (showUpdates)
-                Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " - Alertas:" + alerts.Count + " - Twitter:" + isTwitterActive);
-
             for (int i = 0; i < alerts.Count; i++)
             {
 
@@ -174,9 +171,9 @@ namespace TowerBotConsole
                     {
                         Log(alerts[i].ToString() + ";" + alerts[i].Justify, w);
                         Console.ForegroundColor = ConsoleColor.White;
-                        Console.Write(alerts[i].Radar.Name);
+                        //Console.Write(alerts[i].Radar.Name);
                         Console.ForegroundColor = color;
-                        Console.WriteLine(" " + DateTime.Now.ToString("HH:mm:ss") + " - " + (alerts[i].ToString().Length < 64 ? alerts[i].ToString() : alerts[i].ToString().Substring(0, 61) + "..."));
+                        //Console.WriteLine(" " + DateTime.Now.ToString("HH:mm:ss") + " - " + (alerts[i].ToString().Length < 64 ? alerts[i].ToString() : alerts[i].ToString().Substring(0, 61) + "..."));
 
                     }
                 }
@@ -188,25 +185,14 @@ namespace TowerBotConsole
                     messageFlow += ">Alerta High ";
 
                     using (StreamWriter w = File.AppendText(strPath + "\\logAlertsHigh_" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt"))
-                    {
-                        if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.Medium)
-                        {
-                            messageFlow += ">Alerta Medium convertido em High ";
-                            alerts[i].Message = "Curiosidade: " + alerts[i].Message;
-                            alerts[i].AlertType = TowerBotLibCore.PluginAlertType.High;
-                        }
-
+                    {                        
                         if (isTwitterActive && !isFirstTime)
                         {
-                            messageFlow += ">Enviado ao twitter ";
                             twitterManager.PostMessage(alerts[i].Radar, alerts[i].Message);
-                            Console.WriteLine("> Um alerta foi postado no Twitter.");
-                        }
+                        };
 
-                        messageFlow += ">Terminando o high ";
                         Log(alerts[i].ToString(), w);
-                        nextTimeTwitterMediumAlertPost = DateTime.Now.AddHours(hoursToNextTwitterMediumAlertPost);
-
+                        
                     }
                 }
                 if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.NoAlert)
@@ -221,6 +207,10 @@ namespace TowerBotConsole
 
             }
 
+            if(alerts != null && alerts.Count > 0) {
+                Console.WriteLine(String.Format("{0} - {1} issued alert(s).",DateTime.Now.ToString(), alerts.Count));
+            }
+
             ServerWriter.UpdatePages(alerts);
 /*
 #if !DEBUG
@@ -233,7 +223,7 @@ namespace TowerBotConsole
 */
             Console.ForegroundColor = ConsoleColor.Gray;
 
-            Console.Title = "Robô Bum (Core) - " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            Console.Title = "Robot Bum (Core) - " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
 
 
             if (isFirstTime)
@@ -247,15 +237,6 @@ namespace TowerBotConsole
 
             isFirstTime = false;
 
-            if (nConsoleUpdates > 5 && showUpdates)
-            {
-                Console.WriteLine(" > Logs de update desligados automaticamente.");
-                showUpdates = false;
-            }
-            else if (showUpdates)
-            {
-                nConsoleUpdates++;
-            }
         }
 
         private static void Log(string logMessage, TextWriter w)
@@ -264,13 +245,5 @@ namespace TowerBotConsole
             w.WriteLine(" ;{0};", logMessage);
         }
 
-        private static void DumpLog(StreamReader r)
-        {
-            string line;
-            while ((line = r.ReadLine()) != null)
-            {
-                Console.WriteLine(line);
-            }
-        }
     }
 }

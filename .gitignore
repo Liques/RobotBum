@@ -12,6 +12,8 @@
 *.sln.docstates
 *.lock.json
 .vscode/
+logs/
+errors/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
