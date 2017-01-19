@@ -71,6 +71,8 @@ namespace TowerBotLibCore
         [IgnoreDataMemberAttribute]
         public bool HasTwitter { get; set; }
 
+        public string HTMLServerFolder { get; set; }
+
         public int ApproximationMaxAltitude
         {
             get

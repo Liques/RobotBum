@@ -88,7 +88,7 @@ namespace TowerBotFoundationCore
 
             public HexCodeAirplane(string _hexcode)
             {
-                hexCodesString = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"/Resources/knownairplanes.json").ReadToEnd();
+                hexCodesString = File.OpenText(MultiOSFileSupport.ResourcesFolder + "knownairplanes.json").ReadToEnd();
 
                 if (ListHexCodes.Count <= 0)
                 {

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TowerBotFoundationCore;
 
 namespace TowerBotLibCore.Map
 {
@@ -54,10 +55,7 @@ namespace TowerBotLibCore.Map
             {
                 listCharts = new List<Chart>();
 
-                var logPath = System.IO.Directory.GetCurrentDirectory();
-                //var logFile = System.IO.File.Create(logPath);
-
-                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\charts.json");
+                StreamReader file = File.OpenText(MultiOSFileSupport.ResourcesFolder + "charts.json");
 
                 StringBuilder jsonstring = new StringBuilder();
 

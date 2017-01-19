@@ -36,9 +36,7 @@ namespace TowerBotFoundationCore
         /// <returns></returns>
         private static string GetCountryRegistration(string registration)
         {
-            try
-            {
-                StreamReader file = File.OpenText(Directory.GetCurrentDirectory() + @"\Resources\aircraftregistration.json");
+                StreamReader file = File.OpenText(MultiOSFileSupport.ResourcesFolder + "aircraftregistration.json");
 
 
                 var listCountires = JsonConvert.DeserializeObject<IDictionary<string, string>>(file.ReadToEnd());
@@ -53,11 +51,7 @@ namespace TowerBotFoundationCore
                 }
 
                 return country;
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException(@"/Resources/aircraftregistration.json");
-            }
+           
         }
 
         public override string ToString()

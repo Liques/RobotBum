@@ -16,7 +16,7 @@ namespace TowerBotConsole
         public static DateTime OpenDateTime;
         //public static List<Alert> listOldAlerts = new List<Alert>();
 
-        private static string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "/logs";
+        private static string strJSONPath = "logs";
 
         /// <summary>
         /// A string abaixo eh para testes, se tiver preenchido, favor retirar
@@ -63,9 +63,9 @@ namespace TowerBotConsole
 
 
             var strPath = @"/var/www/html/" + specialFolderName;
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                return;
 /*
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
-                strPath = System.IO.Directory.GetCurrentDirectory() + "/logs";
 
 #if DEBUG
             strPath += @"/debug";

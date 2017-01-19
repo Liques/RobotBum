@@ -11,10 +11,6 @@ namespace TowerBotConsole
     {
         public static void Main(string[] args)
         {
-//Console.WriteLine(File.OpenText(System.IO.Directory.GetCurrentDirectory());
-            Console.OutputEncoding = Encoding.Unicode;
-
-            Console.WriteLine(Directory.GetCurrentDirectory());
 #if DEBUG
             Console.WriteLine("Modo debug.\n");
 

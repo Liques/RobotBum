@@ -32,6 +32,7 @@ namespace TowerBotLibCore
 
         public static void ThrowError(Exception e, string codePlace, bool throwException = true)
         {
+            /*
             using (StreamWriter w = File.AppendText(strPath + "\\errors_" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt"))
             {
                 w.WriteLine("");
@@ -49,6 +50,7 @@ namespace TowerBotLibCore
             if (throwException) { }
                 //throw new ArgumentException(codePlace,e);
 #endif
+*/
         }
     }
 }

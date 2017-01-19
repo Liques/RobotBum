@@ -46,12 +46,7 @@ namespace TowerBotConsole
             twitterManager = new TwitterManager();
 
 
-            strPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
-
-#if DEBUG
-            strPath += "\\debug";
-#endif
-
+            strPath = "logs";
 
             bool exists = System.IO.Directory.Exists(strPath);
 

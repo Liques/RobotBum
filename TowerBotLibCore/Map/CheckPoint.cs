@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TowerBotFoundationCore;
 
 namespace TowerBotLibCore.Map
 {
@@ -41,7 +42,7 @@ namespace TowerBotLibCore.Map
             {
                 listCheckPoints = new List<CheckPoint>();
 
-                StreamReader file = File.OpenText(System.IO.Directory.GetCurrentDirectory() + @"\Resources\checkpoints.json");
+                StreamReader file = File.OpenText(MultiOSFileSupport.ResourcesFolder + "checkpoints.json");
 
                 StringBuilder jsonstring = new StringBuilder();
 

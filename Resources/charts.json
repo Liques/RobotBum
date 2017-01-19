@@ -1,0 +1,156 @@
+﻿/*
+
+ INFORMATION ABOUT CHARTS DETECTION
+
+ This JSON provides information about charts. You can fill this file with information of your region,
+ but before you must to register every single point in checkpoints.json file.
+
+
+ PROVE': {                                                   -- Name of the chart
+     "Type": "STAR",                                         -- Type of the chat (SID or STAR)
+     "Doors": "REINA;DOKBA;PUGNU",                           -- Doors are the first point that connects to the first checkpoint. Example: REINA, DOKBA and PUGNU are connecting directly to PROVE, because it's the first checkpoint in the list.
+     "CheckPoints": "PROVE;MOLTI;OPROK;MOPDA;BR046;LUVLA",   -- List of checkpoint
+     "Region": "BSB"                                         -- Region must be the same name of your Radar
+ }
+
+ Don't forget to follow the JSON standards.
+
+*/
+
+{
+  "PROVE": {
+    "Type": "STAR",
+    "Doors": "REINA;DOKBA;PUGNU",
+    "CheckPoints": "PROVE;MOLTI;OPROK;MOPDA;BR046;LUVLA",
+    "Region": "BSB"
+  },
+  "MOLMO": {
+    "Type": "STAR",
+    "Doors": "NIMTI;PAROL",
+    "CheckPoints": "MOLMO;BR034;BR073;BR032;EDIVIV",
+    "Region": "BSB"
+  },
+  "OBDOG": {
+    "Type": "STAR",
+    "Doors": "MUDPA;IRULI;PAPES;MOSNA",
+    "CheckPoints": "MOLMO;MILIX;KOGNO",
+    "Region": "BSB"
+  },
+  "OCELO": {
+    "Type": "STAR",
+    "Doors": "PEDAL;OCELO",
+    "CheckPoints": "BR073;BR032;EDVIV",
+    "Region": "BSB"
+  },
+  "PAJEM": {
+    "Type": "STAR",
+    "Doors": "GNV;APO",
+    "CheckPoints": "PAJEM;BR033;LUVLA",
+    "Region": "BSB"
+  },
+  "WELIN": {
+    "Type": "STAR",
+    "Doors": "WELIN",
+    "CheckPoints": "BR022;BR033;LUVLA",
+    "Region": "BSB"
+  },
+
+
+
+
+
+
+
+  "ALVOXRWY15": {
+    "Type": "STAR",
+    "Doors": "ALVOX;AMERO;NITGO;PERNA",
+    "CheckPoints": "CT034;CT002",
+    "Region": "CWB"
+  },
+
+  "BROCK1RWY33": {
+    "Type": "STAR",
+    "Doors": "BROCK;ORANA",
+    "CheckPoints": "CLARO;CT041;CT008",
+    "Region": "CWB"
+  },
+
+  "MORLU1RWY33": {
+    "Type": "STAR",
+    "Doors": "MORLU",
+    "CheckPoints": "CT041;CT008",
+    "Region": "CWB"
+  },
+
+  "ORANA1RWY15": {
+    "Type": "STAR",
+    "Doors": "ORANA;BROCK",
+    "CheckPoints": "LUCAS;CT039;CT003",
+    "Region": "CWB"
+  },
+
+  "GARCI1RWY15": {
+    "Type": "STAR",
+    "Doors": "MORLU;GARCI;PUNTO",
+    "CheckPoints": "CT024;CT003",
+    "Region": "CWB"
+  },
+
+  "MALEV1RWY33": {
+    "Type": "STAR",
+    "Doors": "MALEV;PUNTO;PERNA",
+    "CheckPoints": "CT027;CT009",
+    "Region": "CWB"
+  },
+
+  "ALVOX1RWY15": {
+    "Type": "STAR",
+    "Doors": "ALVOX",
+    "CheckPoints": "CT036;CT034;CT002",
+    "Region": "CWB"
+  },
+
+  "PAKOV1RWY15": {
+    "Type": "STAR",
+    "Doors": "PAKOV",
+    "CheckPoints": "CT036;CT034;CT002",
+    "Region": "CWB"
+  },
+
+  "AMERO1RWY15": {
+    "Type": "STAR",
+    "Doors": "AMERO;NITGO;PERNA",
+    "CheckPoints": "CT034;CT002",
+    "Region": "CWB"
+  },
+
+  "SIDOX1RWY15": {
+    "Type": "STAR",
+    "Doors": "SIDOX",
+    "CheckPoints": "PAKOV;CT036;CT034;CT002",
+    "Region": "CWB"
+  },
+
+  "ALVOX1RWY33": {
+    "Type": "STAR",
+    "Doors": "ALVOX;AMERO;NITGO",
+    "CheckPoints": "CT023;CT007",
+    "Region": "CWB"
+  },
+
+  "SIDOX1RWY33": {
+    "Type": "STAR",
+    "Doors": "SIDOX",
+    "CheckPoints": "PAKOV;CT023;CT007",
+    "Region": "CWB"
+  },
+
+  "PAKOV1RWY33": {
+    "Type": "STAR",
+    "Doors": "PAKOV",
+    "CheckPoints": "CT023;CT007",
+    "Region": "CWB"
+  }
+
+
+}
