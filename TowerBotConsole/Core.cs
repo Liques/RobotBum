@@ -84,7 +84,11 @@ namespace TowerBotConsole
                         LatitudeSideTwo = -15.8765,
                         LongitudeSideTwo = -47.9085,
                     }
-                }
+                },
+                 TwitterConsumerKey = "3r8wBciRbW7wniT7DYIofy60G",
+        TwitterConsumerSecret  = "ozfqugyE2hihws5AkGw8yXVvuZMqY5u9rpIOjdKxxHjqo3KM5T",
+       TwitterAccessToken  = "3087708189-bkr12ClOMZyBeiHmw7i9EZeXlnSNAjx3QjKnxe4",
+        TwitterAccessTokenSecret  = "cVL2s1kCzJl3nAydDXkIz1fVY07g1XWnUGByjb92ZO8wj",
 
             };
 
@@ -160,9 +164,6 @@ namespace TowerBotConsole
         
         private static void CheckStatus(object stateInfo)
         {
-           
-            TowerBotFoundationCore.AirportWeather.GetWeather("SB*");
-
             TowerBotLibCore.Alert currentAlert = null; // Para tratatamento de erro.
             string messageFlow = "No Flow";
 
@@ -238,7 +239,13 @@ namespace TowerBotConsole
                 Console.WriteLine(String.Format("{0} - {1} issued alert(s).",DateTime.Now.ToString(), alerts.Count));
             }
 
-            ServerWriter.UpdatePages(alerts);
+            var htmlFolder = "/var/www/html/";
+
+            if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)) {
+                htmlFolder = @"server";
+            }
+
+            ServerWriter.UpdatePages(alerts, htmlFolder);
 /*
 #if !DEBUG
             }

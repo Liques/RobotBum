@@ -66,6 +66,24 @@ namespace TowerBotLibCore
         }
 
         public static void AddRadar(Radar radar) {
+           
+            radar.Plugins = new List<IPlugin>()
+                {
+                    new PluginLogAll(),
+                    new PluginUnknowAirplanes(false, false),
+                    new PluginWide(),
+                    new PluginBackingOrGo(),
+                    new PluginRatification(false, false, false, false, true),
+                    new PluginMetarDF(),
+                    new PluginAlertAll(),
+                };
+
+                 radar.Plugins.ForEach(item => {
+                item.Radar = radar;
+            });
+
+
+
             listRadars.Add(radar);
         }
         
@@ -82,7 +100,12 @@ namespace TowerBotLibCore
 
         [IgnoreDataMemberAttribute]
         public bool AvoidCommonTraffic { get; set; }
-        
+
+        public string TwitterConsumerKey { get; set; }
+        public string TwitterConsumerSecret { get; set; }
+        public string TwitterAccessToken { get; set; }
+        public string TwitterAccessTokenSecret { get; set; }
+
         public Radar()
         {
             this.LastAirplaneListUpdate = new DateTime();

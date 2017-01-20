@@ -36,7 +36,7 @@ namespace TowerBotConsole
            
         }
         
-        public static void UpdatePages(List<Alert> listNewAlerts)
+        public static void UpdatePages(List<Alert> listNewAlerts, string HTMLServerFolder)
         {
             // Verify if any old alert is older than it's time to be removed 
             List<Alert> listOldBeyondValidationAlerts = Alert.ListOfAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
@@ -62,15 +62,8 @@ namespace TowerBotConsole
             WriteFile(strJSONPath, "lastAlerts.json", toJSON);
 
 
-            var strPath = @"/var/www/html/" + specialFolderName;
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
-                return;
-/*
-
-#if DEBUG
-            strPath += @"/debug";
-#endif*/
-            WriteFile(strPath, "index2.html", IndividualRadar(null, true));
+            var strPath = HTMLServerFolder + specialFolderName;
+                        
             WriteFile(strPath, "index.html", IndividualRadar(null));
 
             bool exists = System.IO.Directory.Exists(strPath + @"/data/");
@@ -86,8 +79,6 @@ namespace TowerBotConsole
                     WriteFile(currentPath, "index.html", IndividualRadar(radar));
                     var listAlertByRadar = Alert.ListOfAlerts.Where(s => s.Radar != null && s.Radar.Name == radar.Name && s.AlertType != PluginAlertType.NoAlert).ToList();
                     WriteFile(strPath + @"/data/", radar.Name + ".json", JsonConvert.SerializeObject(listAlertByRadar));
-                    var listAlertByRadarFiveMinutes = listAlertByRadar.Where(s => s.TimeCreated > DateTime.Now.AddMinutes(-5)).ToList();
-                    WriteFile(strPath + @"/data/", radar.Name + "fast.json", JsonConvert.SerializeObject(listAlertByRadarFiveMinutes));
                 }
                 catch (Exception e)
                 {
@@ -112,8 +103,7 @@ namespace TowerBotConsole
                 File.Delete(currentPath);
 
             File.AppendAllText(currentPath, content, Encoding.UTF8);
-
-//Console.WriteLine("Writing HTML in " + currentPath);
+           
         }
 
         private static string LoadFile(string currentPath, string fileName)
@@ -143,27 +133,27 @@ namespace TowerBotConsole
                 listAlertByRadar = listAlertByRadar.Where(w => w.Icon != IconType.GoodNightAnnoucement).ToList();
 
             StringBuilder strBuilder = new StringBuilder();
-            strBuilder.Append("<link rel='shortcut icon' href='http://d1odq4u5rh2864.cloudfront.net/images/favicon.png' />");
+            strBuilder.Append(@"<link rel='icon' type='image/png' href='data:image/png;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAA
+AAAAAAAoqwAAT09PAP///wApKSkAgoKCAB6AAAAdegAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAZmZmZmZmZmZlVVVVVVVVVmUAAAAAAABWZQAzMzMzAFZlADAGYAMAVmAAAAZg
+AAAGYFUABmAAVQZgVQAGYABVBmAAAAZgAAAGYAIiJmIiIAZgAjEmYjEgBmACMyZiMyAGYAJCJmJC
+IAZgAAAAAAAABmUAAAAAAABWZmZmZmZmZmYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
             strBuilder.Append("<meta name=viewport content='width=device-width, initial-scale=1'>");
             strBuilder.Append("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css'>");
-            strBuilder.Append("<title>Robô Bum</title>");
+            strBuilder.Append("<title>Robot Bum </title>");
             strBuilder.Append("<meta http-equiv='refresh' content='30' >");
-            strBuilder.Append("<h3><b>Robô Bum (");
+            strBuilder.Append("<h3><b>Robot Bum (");
             if (radar != null)
                 strBuilder.Append(listAlertByRadar.FirstOrDefault() != null ? listAlertByRadar.FirstOrDefault().Radar.Description : "Não definido");
             else
-                strBuilder.Append("Brasil");
+                strBuilder.Append("General");
 
 
             strBuilder.Append(")</b></h3>");
-#if DEBUG
-            strBuilder.Append(" (Debug)<br/>");
-#endif
 
-            if (DateTime.UtcNow < new DateTime(2016, 5, 3, 7, 15, 0))
-                strBuilder.Append("<span class='success hidden-lg hidden-md'><b>Psiu, o bum agora foi otimizado para o celular! Assim você vai poder acompanhar a tocha chegar melhor. ;-)</b><br></span>");
 
-            strBuilder.Append("<span class='visible-lg-inline visible-md-inline'><b>Tempo online: " + (DateTime.Now - OpenDateTime).ToString(@"dd\ hh\:mm\:ss") + "</b></span><hr/>");
+            strBuilder.Append("<span class='visible-lg-inline visible-md-inline'><b>Online time: " + (DateTime.Now - OpenDateTime).ToString(@"dd\ hh\:mm\:ss") + "</b></span><hr/>");
 
             for (int i = listAlertByRadar.Count - 1; i >= 0; i--)
             {
@@ -233,12 +223,9 @@ namespace TowerBotConsole
                 }
             }
             strBuilder.Append("<hr/>");
-            strBuilder.Append("<font color=red>Alertas de importância alta (postados no Twitter).</font><br/>");
-            strBuilder.Append("<font color=darkorange>Alertas de importância média.</font><br/>");
-            strBuilder.Append("<font color=green>Alertas de importância baixa.</font><br/>");
-            strBuilder.Append("<font color=darkgray>Alertas em testes.</font><br/>");
+           
             strBuilder.Append("<hr/>");
-            strBuilder.Append("<h5>Obs.: Esse é um site de testes, mantido pela comunidade de spotting de Brasília. Os alertas de Brasília são publicado no twitter @aeroradardf, os alertas de outros locais ainda estão em testes. Contato: aeroradardf@outlook.com.</h5>");
+            strBuilder.Append("<h5>Robot Bum</h5>");
 
 
 
