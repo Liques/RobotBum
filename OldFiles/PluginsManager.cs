@@ -16,14 +16,33 @@ namespace TowerBotLibCore
         public static TimeSpan Period { get; set; }
         public static List<Alert> listOldAlerts { get; set; }
 
+        private static List<Radar> listRadars { get; set; }
+
         static PluginsManager()
-        {            
+        {
+
+            listMainAirports = Airport.ListAirports.Where(s => s.Value["ICAO"].ToString().StartsWith("SB")).Select(s => Airport.GetAirportByIata(s.Key)).ToList();
+            listMainAirports.Add(Airport.GetAirportByIata("SWUZ"));
+
             ListOldAirplanes = new List<AirplaneBasic>();
             Period = new TimeSpan(0, 0, 15);
             listOldAlerts = new List<Alert>();
 
+            listRadars = new List<Radar>()
+            {
+                Radar.GetRadar("BRA"),
+                Radar.GetRadar("BSB"),
+            };
+
+            foreach (var radar in listRadars)
+            {
+                foreach (var Plugin in radar.Plugins)
+                {
+                    Plugin.Radar = radar;
+                }
+            }
         }
-        
+
         public static List<Alert> GetAlerts(bool updateAll)
         {
             List<Alert> listAlerts = new List<Alert>();
@@ -31,9 +50,9 @@ namespace TowerBotLibCore
             if (TimeNext == null || TimeNext <= DateTime.Now || updateAll)
             {
 
-                for (int i = 0; i < Radar.ListRadars.Count; i++)
+                for (int i = 0; i < listRadars.Count; i++)
                 {
-                    var radar = Radar.ListRadars[i];
+                    var radar = listRadars[i];
 
                     List<AirplaneBasic> listAirplanes = null;
                     if (radar != null)
@@ -44,11 +63,43 @@ namespace TowerBotLibCore
 
                         var listToDelete = new List<Alert>();
 
+
+                        if (radar.Name == "BRA")
+                        {
+                            var listOfAirports = new List<Airport>();
+
+                            Airport airport = null;
+
+                            if (newAlerts.Count > 0)
+                            {
+                                listOfAirports = Airport.ListAirports.Where(s => s.Value["ICAO"].ToString().StartsWith("SB")).Select(s => Airport.GetAirportByIata(s.Key)).ToList();
+                            }
+
+
+                            foreach (var item in newAlerts)
+                            {
+
+                                if (Alert.ListOfRecentAlerts != null && Alert.ListOfRecentAlerts.Any(a => a.ID == item.ID))
+                                {
+                                    listToDelete.Add(item);
+                                    continue;
+                                }
+
+                                if (Alert.ListOfRecentAlerts != null && Alert.ListOfRecentAlerts.Where(w => w.TimeCreated > DateTime.Now.AddMinutes(-15) && w.TimeCreated < DateTime.Now.AddMinutes(-2)).Any(a => a.AirplaneID == item.AirplaneID && item.Icon == a.Icon))
+                                {
+                                    listToDelete.Add(item);
+                                    continue;
+                                }
+
+                            }
+                        }
+
                         listToDelete.ForEach(item => newAlerts.Remove(item));
 
                         listAlerts.AddRange(newAlerts);
 
                     }
+
 
                     ListOldAirplanes = listAirplanes;
 
@@ -130,22 +181,22 @@ namespace TowerBotLibCore
         {
             Console.WriteLine("Qual filtro você deseja acessar?\n");
 
-            for (int i = 0; i < Radar.ListRadars.Count; i++)
+            for (int i = 0; i < listRadars.Count; i++)
             {
-                for (int j = 0; j < Radar.ListRadars[i].Plugins.Count; j++)
+                for (int j = 0; j < listRadars[i].Plugins.Count; j++)
                 {
-                    Console.WriteLine("-{0} (ativo:{1}, em teste:{2})", Radar.ListRadars[i].Plugins[j].Name, Radar.ListRadars[i].Plugins[j].IsActive, Radar.ListRadars[i].Plugins[j].IsTesting);
+                    Console.WriteLine("-{0} (ativo:{1}, em teste:{2})", listRadars[i].Plugins[j].Name, listRadars[i].Plugins[j].IsActive, listRadars[i].Plugins[j].IsTesting);
                 }
             }
             string comando = Console.ReadLine();
             IPlugin selectedPlugin = null;
-            for (int i = 0; i < Radar.ListRadars[i].Plugins.Count; i++)
+            for (int i = 0; i < listRadars[i].Plugins.Count; i++)
             {
-                for (int j = 0; j < Radar.ListRadars[i].Plugins.Count; j++)
+                for (int j = 0; j < listRadars[i].Plugins.Count; j++)
                 {
-                    if (Radar.ListRadars[i].Plugins[j].Name.ToLower().StartsWith(comando.ToLower()))
+                    if (listRadars[i].Plugins[j].Name.ToLower().StartsWith(comando.ToLower()))
                     {
-                        selectedPlugin = Radar.ListRadars[i].Plugins[j];
+                        selectedPlugin = listRadars[i].Plugins[j];
                         selectedPlugin.CommandLine();
                         break;
                     }

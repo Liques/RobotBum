@@ -265,7 +265,7 @@ namespace TowerBotLibCore
 
                         if (airplane.State == AirplaneStatus.Cruise || airplane.State == AirplaneStatus.Landing)
                         {
-                            if (Message.Length <= 70 || !this.Radar.HasTwitter)
+                            if (Message.Length <= 70)
                             {
                                 Message += fromPlace;
                             }
@@ -276,7 +276,7 @@ namespace TowerBotLibCore
                         }
                         if (airplane.State == AirplaneStatus.Cruise || airplane.State == AirplaneStatus.TakingOff)
                         {
-                            if (Message.Length <= 70 || !this.Radar.HasTwitter)
+                            if (Message.Length <= 70)
                             {
                                 Message += toPlace;
                             }

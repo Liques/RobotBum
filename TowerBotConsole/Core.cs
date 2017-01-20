@@ -54,6 +54,42 @@ namespace TowerBotConsole
             if (!exists)
                 System.IO.Directory.CreateDirectory(strPath);
 
+                 var radarBSB = new Radar()
+            {
+                Name = "BSB",
+                Description = "Brasília - DF",
+                MainAirportICAO = "SBBR",
+               
+                EndpointUrl = "http://bsbradar.ddns.net:8081/json",
+                LongitudeX = -48.336099,
+                LatitudeX = -15.364184,
+                LongitudeY = -47.256692,
+                LatitudeY = -16.194103,
+                ListRunways = new List<RunwayBasic>() {
+                    new RunwayBasic()
+                    {
+                        NameSideOne = "11L",
+                        NameSideTwo = "29R",
+                        LatitudeSideOne = -15.861333,
+                        LongitudeSideOne = -47.930333,
+                        LatitudeSideTwo = -15.86,
+                        LongitudeSideTwo = -47.898167,
+                    },
+                    new RunwayBasic()
+                    {
+                        NameSideOne = "11R",
+                        NameSideTwo = "29L",
+                        LatitudeSideOne = -15.879167,
+                        LongitudeSideOne = -47.942,
+                        LatitudeSideTwo = -15.8765,
+                        LongitudeSideTwo = -47.9085,
+                    }
+                }
+
+            };
+
+            Radar.AddRadar(radarBSB);
+
             var autoEvent = new AutoResetEvent(false);
 
             var timer = new System.Threading.Timer(new TimerCallback(CheckStatus), null, new TimeSpan(0), new TimeSpan(0, 0, 10));
@@ -88,10 +124,6 @@ namespace TowerBotConsole
                         case "twitter off":
                             isTwitterActive = false;
                             Console.WriteLine("Twitter desactived.\n");
-                            break;
-                        case "twitter test":
-                            twitterManager.PostMessage(Radar.GetAnyRadar(), "Twitter test");
-                            Console.WriteLine("Ok.\n");
                             break;
                         case "refresh":
                             PluginsManager.RefreshAll();
@@ -133,12 +165,7 @@ namespace TowerBotConsole
 
             TowerBotLibCore.Alert currentAlert = null; // Para tratatamento de erro.
             string messageFlow = "No Flow";
-/*
-#if !DEBUG
-            try
-            {
-#endif
-*/
+
             var alerts = PluginsManager.GetAlerts(isToForceUpdateAll);
             isToForceUpdateAll = false;
 
