@@ -16,16 +16,31 @@ namespace TowerBotLibCore
         public static TimeSpan Period { get; set; }
         public static List<Alert> listOldAlerts { get; set; }
 
-        private static List<Radar> listRadars { get {
-            return Radar.ListRadars;
-        } }
+        private static List<Radar> listRadars { get; set; }
 
         static PluginsManager()
         {
 
+            listMainAirports = Airport.ListAirports.Where(s => s.Value["ICAO"].ToString().StartsWith("SB")).Select(s => Airport.GetAirportByIata(s.Key)).ToList();
+            listMainAirports.Add(Airport.GetAirportByIata("SWUZ"));
+
             ListOldAirplanes = new List<AirplaneBasic>();
             Period = new TimeSpan(0, 0, 15);
             listOldAlerts = new List<Alert>();
+
+            listRadars = new List<Radar>()
+            {
+                Radar.GetRadar("BRA"),
+                Radar.GetRadar("BSB"),
+            };
+
+            foreach (var radar in listRadars)
+            {
+                foreach (var Plugin in radar.Plugins)
+                {
+                    Plugin.Radar = radar;
+                }
+            }
         }
 
         public static List<Alert> GetAlerts(bool updateAll)
@@ -47,6 +62,37 @@ namespace TowerBotLibCore
                         var newAlerts = Run(radar, listAirplanes);
 
                         var listToDelete = new List<Alert>();
+
+
+                        if (radar.Name == "BRA")
+                        {
+                            var listOfAirports = new List<Airport>();
+
+                            Airport airport = null;
+
+                            if (newAlerts.Count > 0)
+                            {
+                                listOfAirports = Airport.ListAirports.Where(s => s.Value["ICAO"].ToString().StartsWith("SB")).Select(s => Airport.GetAirportByIata(s.Key)).ToList();
+                            }
+
+
+                            foreach (var item in newAlerts)
+                            {
+
+                                if (Alert.ListOfRecentAlerts != null && Alert.ListOfRecentAlerts.Any(a => a.ID == item.ID))
+                                {
+                                    listToDelete.Add(item);
+                                    continue;
+                                }
+
+                                if (Alert.ListOfRecentAlerts != null && Alert.ListOfRecentAlerts.Where(w => w.TimeCreated > DateTime.Now.AddMinutes(-15) && w.TimeCreated < DateTime.Now.AddMinutes(-2)).Any(a => a.AirplaneID == item.AirplaneID && item.Icon == a.Icon))
+                                {
+                                    listToDelete.Add(item);
+                                    continue;
+                                }
+
+                            }
+                        }
 
                         listToDelete.ForEach(item => newAlerts.Remove(item));
 

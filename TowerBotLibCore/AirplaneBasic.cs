@@ -277,34 +277,7 @@ AE4F16;XU-XA;A nave espacial da Xuxa (êêêêê)|
             }
             #endregion
 
-            if (this.Radars.Count == 1 && this.Radars.First().Name == "BRA")
-            {
-               
-
-                Airport airport = null;
-
-                double distance = 500;
-
-                foreach (var airportLoop in PluginsManager.ListMainAirports)
-                {
-                    var discanceLoop = MathHelper.GetGPSDistance(this.Latitude, airportLoop.Latitude, this.Longitude, airportLoop.Longitude);
-
-                    if (discanceLoop < distance)
-                    {
-                        airport = airportLoop;
-                        distance = discanceLoop;
-                    }
-                }
-                if (airport != null)
-                {
-                    this.Radars.Add(Radar.GetRadar(airport.IATA));
-                }
-            }
-
-
-
             UpdateAirplaneStatus();
-
 
             if (this.PreviousAirplane != null)
             {

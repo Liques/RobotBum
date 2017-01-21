@@ -54,6 +54,46 @@ namespace TowerBotConsole
             if (!exists)
                 System.IO.Directory.CreateDirectory(strPath);
 
+                 var radarBSB = new Radar()
+            {
+                Name = "BSB",
+                Description = "Brasília - DF",
+                MainAirportICAO = "SBBR",
+               
+                EndpointUrl = "http://bsbradar.ddns.net:8081/json",
+                LongitudeX = -48.336099,
+                LatitudeX = -15.364184,
+                LongitudeY = -47.256692,
+                LatitudeY = -16.194103,
+                ListRunways = new List<RunwayBasic>() {
+                    new RunwayBasic()
+                    {
+                        NameSideOne = "11L",
+                        NameSideTwo = "29R",
+                        LatitudeSideOne = -15.861333,
+                        LongitudeSideOne = -47.930333,
+                        LatitudeSideTwo = -15.86,
+                        LongitudeSideTwo = -47.898167,
+                    },
+                    new RunwayBasic()
+                    {
+                        NameSideOne = "11R",
+                        NameSideTwo = "29L",
+                        LatitudeSideOne = -15.879167,
+                        LongitudeSideOne = -47.942,
+                        LatitudeSideTwo = -15.8765,
+                        LongitudeSideTwo = -47.9085,
+                    }
+                },
+                 TwitterConsumerKey = "3r8wBciRbW7wniT7DYIofy60G",
+        TwitterConsumerSecret  = "ozfqugyE2hihws5AkGw8yXVvuZMqY5u9rpIOjdKxxHjqo3KM5T",
+       TwitterAccessToken  = "3087708189-bkr12ClOMZyBeiHmw7i9EZeXlnSNAjx3QjKnxe4",
+        TwitterAccessTokenSecret  = "cVL2s1kCzJl3nAydDXkIz1fVY07g1XWnUGByjb92ZO8wj",
+
+            };
+
+            Radar.AddRadar(radarBSB);
+
             var autoEvent = new AutoResetEvent(false);
 
             var timer = new System.Threading.Timer(new TimerCallback(CheckStatus), null, new TimeSpan(0), new TimeSpan(0, 0, 10));
@@ -88,10 +128,6 @@ namespace TowerBotConsole
                         case "twitter off":
                             isTwitterActive = false;
                             Console.WriteLine("Twitter desactived.\n");
-                            break;
-                        case "twitter test":
-                            twitterManager.PostMessage(Radar.GetAnyRadar(), "Twitter test");
-                            Console.WriteLine("Ok.\n");
                             break;
                         case "refresh":
                             PluginsManager.RefreshAll();
@@ -128,17 +164,9 @@ namespace TowerBotConsole
         
         private static void CheckStatus(object stateInfo)
         {
-           
-            TowerBotFoundationCore.AirportWeather.GetWeather("SB*");
-
             TowerBotLibCore.Alert currentAlert = null; // Para tratatamento de erro.
             string messageFlow = "No Flow";
-/*
-#if !DEBUG
-            try
-            {
-#endif
-*/
+
             var alerts = PluginsManager.GetAlerts(isToForceUpdateAll);
             isToForceUpdateAll = false;
 
@@ -211,7 +239,13 @@ namespace TowerBotConsole
                 Console.WriteLine(String.Format("{0} - {1} issued alert(s).",DateTime.Now.ToString(), alerts.Count));
             }
 
-            ServerWriter.UpdatePages(alerts);
+            var htmlFolder = "/var/www/html/";
+
+            if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)) {
+                htmlFolder = @"server";
+            }
+
+            ServerWriter.UpdatePages(alerts, htmlFolder);
 /*
 #if !DEBUG
             }
