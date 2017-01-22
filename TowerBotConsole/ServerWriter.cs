@@ -26,12 +26,7 @@ namespace TowerBotConsole
         static ServerWriter()
         {
 
-           
-/*
-#if DEBUG
-            strJSONPath += "/debug";
-#endif
-*/
+
             OpenDateTime = DateTime.Now;
            
         }
@@ -74,7 +69,7 @@ namespace TowerBotConsole
             {
                 try
                 {
-                    string currentPath = strPath + @"/main/" + radar.Name;
+                    string currentPath = strPath + @"/" + radar.Name;
 
                     WriteFile(currentPath, "index.html", IndividualRadar(radar));
                     var listAlertByRadar = Alert.ListOfAlerts.Where(s => s.Radar != null && s.Radar.Name == radar.Name && s.AlertType != PluginAlertType.NoAlert).ToList();
