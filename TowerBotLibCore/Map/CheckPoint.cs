@@ -67,7 +67,7 @@ namespace TowerBotLibCore.Map
             }
             catch (Exception e)
             {
-                throw new ArgumentException(@"\Resources\checkpoints.jsonr");
+                throw new ArgumentException(MultiOSFileSupport.ResourcesFolder + "checkpoints.json");
             }
 
         }

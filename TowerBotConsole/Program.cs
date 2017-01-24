@@ -11,11 +11,7 @@ namespace TowerBotConsole
     {
         public static void Main(string[] args)
         {
-#if DEBUG
-            Console.WriteLine("Modo debug.\n");
-
-#endif
-            Core.Start(true);
+            Core.Start(true, args);
         }
     }
     

@@ -24,12 +24,33 @@ namespace TowerBotConsole
         static TwitterManager twitterManager;
         static DateTime nextTimeTwitterMediumAlertPost;
         static int hoursToNextTwitterMediumAlertPost;
+
+
+
+        const string AirportICAOCommand = "-AirportICAO";
+           const  string ModeSMixerURLCommand = "-ModeSMixerURL";
+          const   string LongitudeXCommand = "-LongitudeX";
+           const  string LatitudeXCommand = "-LatitudeX";
+           const  string LongitudeYCommand = "-LongitudeY";
+          const   string LatitudeYCommand = "-LatitudeY";
+
+          const   string TwitterConsumerKeyCommand = "-TwitterConsumerKey";
+          const   string TwitterConsumerSecretCommand = "-TwitterConsumerSecret";
+           const  string TwitterAccessTokenCommand = "-TwitterAccessToken";
+          const   string TwitterAccessTokenSecretCommand = "-TwitterAccessTokenSecret";
+            
+          const   string HTMLServerURLFolderCommand = "-URLServerFolder";  
+
+          const string ShowHeavyWeightAirplanesCommand = "-ShowHeavyWeightAirplanes";
+          const string ShowMediumWeightAirplanesCommand = "-ShowMediumWeightAirplanes";
+          const string ShowLowWeightAirplanesCommand = "-ShowLowWeightAirplanes";
+
          
         /// <summary>
         /// Start App
         /// </summary>
         /// <param name="isConsole"></param>
-        public static void Start(bool isConsole)
+        public static void Start(bool isConsole, string[] cmds)
         {
             if (isConsole)
             {
@@ -54,7 +75,17 @@ namespace TowerBotConsole
             if (!exists)
                 System.IO.Directory.CreateDirectory(strPath);
 
-                 var radarBSB = new Radar()
+           var commandsAnalyse = AnalyseCommands(cmds);
+
+        //    if(!String.IsNullOrEmpty(commandsAnalyse)) {
+        //        Console.WriteLine(commandsAnalyse);
+        //        Console.WriteLine("Closing application...");
+        //        return;
+        //    }
+
+        //    Radar radar = GetRadar(cmds);
+           ServerWriter.HTMLServerFolder = "server";
+           Radar radar = new Radar()
             {
                 Name = "BSB",
                 Description = "Brasília - DF",
@@ -91,8 +122,15 @@ namespace TowerBotConsole
         TwitterAccessTokenSecret  = "cVL2s1kCzJl3nAydDXkIz1fVY07g1XWnUGByjb92ZO8wj",
 
             };
-
-            Radar.AddRadar(radarBSB);
+    
+        try{
+                    Radar.AddRadar(radar);
+        } catch(ArgumentException e) {
+            Console.WriteLine(e.Message);
+            return;
+        }catch(Exception e) {
+            throw e;
+        }
 
             var autoEvent = new AutoResetEvent(false);
 
@@ -141,7 +179,6 @@ namespace TowerBotConsole
                             Console.WriteLine("- log on/off");
                             Console.WriteLine("- updateall");
                             Console.WriteLine("- online");
-                            Console.WriteLine("- twitter on/off/test");
                             Console.WriteLine("- refresh");
                             Console.WriteLine("- Plugins");
 
@@ -161,12 +198,90 @@ namespace TowerBotConsole
 
 
         }
-        
+
+        private static string AnalyseCommands(string[] cmds) {
+                      
+
+            var listEssentialCommands = new List<string>() {
+                AirportICAOCommand,
+                ModeSMixerURLCommand,
+                LongitudeXCommand,
+                LatitudeXCommand,
+                LongitudeYCommand,
+                LatitudeYCommand,
+            };
+
+            cmds.ToList().ForEach(item => listEssentialCommands.RemoveAll(r => r.ToLower() == item.ToLower()));
+
+            if(listEssentialCommands.Count > 0){
+                return String.Format("You maybe are missing the follwing commands: {0}", String.Join(",",listEssentialCommands));
+            }
+
+            
+            var listTwitterEssentialCommands = new List<string>() {
+                TwitterConsumerKeyCommand,
+                TwitterConsumerSecretCommand,
+                TwitterAccessTokenCommand,
+                TwitterAccessTokenSecretCommand,
+            };
+
+            cmds.ToList().ForEach(item => listTwitterEssentialCommands.RemoveAll(r => r.ToLower() == item.ToLower()));
+
+            bool isTwitterEnabled = false;
+
+            if(listEssentialCommands.Count == 0){
+                isTwitterEnabled = true;
+            } else if(listEssentialCommands.Count == 4){
+                isTwitterEnabled = false;
+            } else {
+                throw new ArgumentException(String.Format("If you want to configure twitter, you maybe are missing the following commands: {0}", String.Join(",",listTwitterEssentialCommands)));
+            }
+
+            if(!cmds.Any(a => a == HTMLServerURLFolderCommand) && !isTwitterActive) {
+                return String.Format("If you must at least to configure a HTML Folder (command {0}) or setup an access to Twitter.", HTMLServerURLFolderCommand);
+            }
+
+            return String.Empty;
+
+        }
+ 
+        private static Radar GetRadar(string[] cmds) {
+            var radar = new Radar();
+
+            
+            radar.Name = GetCommandValue(AirportICAOCommand, cmds);
+            radar.MainAirportICAO = GetCommandValue(AirportICAOCommand, cmds);
+            radar.EndpointUrl = GetCommandValue(ModeSMixerURLCommand, cmds);
+            radar.LongitudeX = double.Parse(GetCommandValue(LongitudeXCommand, cmds));
+            radar.LatitudeX = double.Parse(GetCommandValue(LatitudeXCommand, cmds));
+            radar.LongitudeY = double.Parse(GetCommandValue(LongitudeYCommand, cmds));
+            radar.LatitudeY = double.Parse(GetCommandValue(LatitudeYCommand, cmds));
+
+            radar.TwitterConsumerKey = GetCommandValue(TwitterConsumerKeyCommand, cmds);
+            radar.TwitterConsumerSecret = GetCommandValue(TwitterConsumerSecretCommand, cmds);
+            radar.TwitterAccessToken = GetCommandValue(TwitterAccessTokenCommand, cmds);
+            radar.TwitterAccessTokenSecret = GetCommandValue(TwitterAccessTokenSecretCommand, cmds);
+
+            ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);            
+
+            return radar;
+        }
+
+        private static string GetCommandValue(string command, string[] cmds) {
+            var cmdIndex = Array.IndexOf(cmds,command);
+
+            if(cmdIndex < 0)
+            return String.Empty;
+
+            return cmds[cmdIndex + 1];          
+
+
+        }
+
         private static void CheckStatus(object stateInfo)
         {
             TowerBotLibCore.Alert currentAlert = null; // Para tratatamento de erro.
-            string messageFlow = "No Flow";
-
+            
             var alerts = PluginsManager.GetAlerts(isToForceUpdateAll);
             isToForceUpdateAll = false;
 
@@ -189,12 +304,8 @@ namespace TowerBotConsole
                         break;
                 }
 
-                messageFlow = "";
-                messageFlow += ">Tratando alerta ";
                 if (alerts[i].AlertType != TowerBotLibCore.PluginAlertType.NoAlert)
                 {
-                    messageFlow += ">Gravação de log de alertas";
-
                     using (StreamWriter w = File.AppendText(strPath + "\\logAlerts_" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt"))
                     {
                         Log(alerts[i].ToString() + ";" + alerts[i].Justify, w);
@@ -206,12 +317,8 @@ namespace TowerBotConsole
                     }
                 }
                 // Se o alerta for high, postar no twitter de todo jeito
-                if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.High ||
-                    // Se passou 9 horas sem postar nada, então ver se é alerta médio, se não ta de madrugada e postar.
-                    alerts[i].AlertType == TowerBotLibCore.PluginAlertType.Medium && nextTimeTwitterMediumAlertPost <= DateTime.Now && DateTime.Now.Hour >= 9)
+                if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.High)
                 {
-                    messageFlow += ">Alerta High ";
-
                     using (StreamWriter w = File.AppendText(strPath + "\\logAlertsHigh_" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt"))
                     {                        
                         if (isTwitterActive && !isFirstTime)
@@ -225,8 +332,6 @@ namespace TowerBotConsole
                 }
                 if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.NoAlert)
                 {
-                    messageFlow += ">Gravando no log NoAlert ";
-
                     using (StreamWriter w = File.AppendText(strPath + "\\log_" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt"))
                     {
                         Log(alerts[i].ToString(), w);
@@ -245,16 +350,8 @@ namespace TowerBotConsole
                 htmlFolder = @"server";
             }
 
-            ServerWriter.UpdatePages(alerts, htmlFolder);
-/*
-#if !DEBUG
-            }
-            catch (Exception e)
-            {
-                ErrorManager.ThrowError(e, "Core Geral");
-            }
-#endif
-*/
+            ServerWriter.UpdatePages(alerts);
+
             Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.Title = "Robot Bum (Core) - " + DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
@@ -262,11 +359,7 @@ namespace TowerBotConsole
 
             if (isFirstTime)
             {
-
-//#if !DEBUG
                 isTwitterActive = true;
-                Console.WriteLine("> Twitter ativado automaticamente.");
-//#endif
             }
 
             isFirstTime = false;

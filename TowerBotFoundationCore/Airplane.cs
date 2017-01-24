@@ -47,7 +47,6 @@ namespace TowerBotFoundationCore
         public string FlightName { get; set; }
         public Airline Airline { get; set; }
         public AirplaneStatus State { get; set; }
-        public string StateJustify { get; set; }
         public double FlightDistance { get; set; }
         public DateTime DateCreation { get; set; }
         public DateTime DateExpiration { get; set; }

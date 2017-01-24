@@ -100,7 +100,7 @@ namespace TowerBotLibCore.Map
             }
             catch (Exception e)
             {
-                throw new ArgumentException(@"\Resources\charts.jsonr");
+                throw new ArgumentException(MultiOSFileSupport.ResourcesFolder + "charts.json");
             }
 
         }
@@ -119,7 +119,7 @@ namespace TowerBotLibCore.Map
         {
             bool isFollowing = false;
 
-            // Conectar as entradas com o primeiro checkpoint
+            // Connect to the "entrances" of the chart
             if (this.Doors.Count >= 1 && this.CheckPoints.Count >= 1)
             {
                 for (int i = 0; i < this.Doors.Count; i++)
@@ -138,7 +138,7 @@ namespace TowerBotLibCore.Map
                 }
             }
 
-            // Conectar os checkpoints
+            // Connect to the checkpoints
             if (!isFollowing)
             {
                 if (this.CheckPoints.Count >= 2)

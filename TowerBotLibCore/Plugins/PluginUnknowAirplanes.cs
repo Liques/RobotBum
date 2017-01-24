@@ -36,9 +36,9 @@ namespace TowerBotLibCore.Plugins
             {
                 if (IsActive)
                 {
-                    // Necessário essa lista de Wide, pq o Lambda não estava funcionando direito junto com os outros filtros.
+                    // This list is needed because the "PluginWide". It avoid conflicts.
                     var listAirplanesPlugined = listAirplanes.Where(s =>
-                        s.AircraftType.Type != AircraftModel.AirplaneHeavy && // Para não entrar em conflito com o filtro Wide
+                        s.AircraftType.Type != AircraftModel.AirplaneHeavy && 
                         s.AircraftType.Type != AircraftModel.NoModel &&
                         s.AircraftType.IsValid == true
                         ).ToList();
@@ -66,7 +66,7 @@ namespace TowerBotLibCore.Plugins
                            airplane.FlightName.StartsWith("ONE") || airplane.FlightName.StartsWith("O6") ||
                            airplane.FlightName.StartsWith("PTB") ||
                            airplane.FlightName.StartsWith("FAB") || airplane.Registration.Name.StartsWith("FAB")) &&
-                           !airplane.IsSpecial// Sempre trazer os de pinturas especias)
+                           !airplane.IsSpecial// This line alway brings special paintings.
                                     )
                                     continue;
 

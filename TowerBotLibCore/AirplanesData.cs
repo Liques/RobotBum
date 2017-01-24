@@ -27,6 +27,7 @@ namespace TowerBotLibCore
             }
         }
 
+
         static async private Task<List<AirplaneBasic>> DesarializeAirplanes(Radar radar)
         {
 
@@ -114,34 +115,6 @@ namespace TowerBotLibCore
             {
                 Console.WriteLine("Deserialize Radar " + radar.Name + " is out.");
                 ErrorManager.ThrowError(e, "Deserialize Radar " + radar.Name + " is out.");
-            }
-
-            // Se tudo der errado, buscar no outro endpoint
-            if (listAirplanes == null)
-            {
-                listAirplanes = new List<AirplaneBasic>();
-
-                string location = radar.LatitudeX + "," + radar.LatitudeY + "," + radar.LongitudeX + "," + radar.LongitudeY;
-                string url = "http://arn.data.fr24.com/zones/fcgi/feed.js?bounds=" + location + "&faa=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1&vehicles=1&estimated=1&maxage=900&gliders=1&stats=1&";
-
-
-                responseBodyAsText = httpClient.GetStringAsync(url).Result;
-
-                ErrorManager.LastRowData = responseBodyAsText;
-
-                List<KeyValuePair<string, object>> routes_list = null;
-                if (responseBodyAsText.Length > 5)
-                    routes_list = JsonConvert.DeserializeObject<IDictionary<string, object>>(responseBodyAsText).ToList();
-
-
-                if (routes_list != null)
-                {
-                    for (int i = 2; i < routes_list.Count - 1; i++)
-                    {
-                        object[] teste = (object[])(routes_list[i].Value as JArray).ToObject(typeof(object[]));
-                        listAirplanes.Add(AirplaneBasic.ConvertToAirplane(radar, teste, routes_list[i].Key));
-                    }
-                }
             }
 
             radar.CurrentAirplanes = listAirplanes;

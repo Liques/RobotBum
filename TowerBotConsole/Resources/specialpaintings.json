@@ -1,0 +1,262 @@
+[
+ {
+   'HexCode': 'E48E74',
+   'Registration': 'PT-MSY',
+   'Message': 'O avião da tocha olímpica'
+ },
+ {
+   'HexCode': 'E06413',
+   'Registration': 'LV-FPS',
+   'Message': 'Com a pintura SKYTEAM Livery'
+ },
+ {
+   'HexCode': 'E48A71',
+   'Registration': 'PR-AVR',
+   'Message': 'Com a pintura Star Alliance'
+ },
+ {
+   'HexCode': 'E485A4',
+   'Registration': 'PR-AVB',
+   'Message': 'Com a pintura Star Alliance'
+ },
+ {
+   'HexCode': 'E490F0',
+   'Registration': 'PR-OCN',
+   'Message': 'Com a pintura da Turma da Mônica'
+ },
+ {
+   'HexCode': 'E484E9',
+   'Registration': 'PP-PTU',
+   'Message': 'Com a pintura Tudo Azul'
+ },
+ {
+   'HexCode': 'E48AD0',
+   'Registration': 'PR-ATB',
+   'Message': 'De pintura Rosa'
+ },
+ {
+   'HexCode': 'E48A98',
+   'Registration': 'PP-PJQ',
+   'Message': 'Com a pintura Canarinho'
+ },
+ {
+   'HexCode': 'E48F6C',
+   'Registration': 'PR-AUA',
+   'Message': 'Com a pintura Canarinho'
+ },
+ {
+   'HexCode': 'E48AFC',
+   'Registration': 'PR-AXB',
+   'Message': 'Com a pintura da Coca-Cola Zero'
+ },
+ {
+   'HexCode': 'E48CEA',
+   'Registration': 'PR-AXH',
+   'Message': 'Com a pintura Verão Azul'
+ },
+ {
+   'HexCode': 'E48EA8',
+   'Registration': 'PR-AXV',
+   'Message': 'Com a pintura Espírito de União'
+ },
+ {
+   'HexCode': 'E486ED',
+   'Registration': 'PR-AYL',
+   'Message': 'Com a pintura da SKY'
+ },
+ {
+   'HexCode': 'E48763',
+   'Registration': 'PR-AYO',
+   'Message': 'Pintado de Rosa'
+ },
+ {
+   'HexCode': 'E48963',
+   'Registration': 'PR-AYV',
+   'Message': 'Pintado com a bandeira'
+ },
+ {
+   'HexCode': 'E489DD',
+   'Registration': 'PR-AYX',
+   'Message': 'De verde'
+ },
+ {
+   'HexCode': 'E48A09',
+   'Registration': 'PR-AYY',
+   'Message': 'Com a pintura Azul Viagens'
+ },
+ {
+   'HexCode': 'E4898A',
+   'Registration': 'PR-GUM',
+   'Message': 'Com a pintura da CBF'
+ },
+ {
+   'HexCode': 'E48AFE',
+   'Registration': 'PR-GUO',
+   'Message': 'O avião arte dos Gêmeos'
+ },
+ {
+   'HexCode': 'E47ECD',
+   'Registration': 'PR-GTA',
+   'Message': 'Com as novas cores da Gol'
+ },
+ {
+   'HexCode': 'E47ECE',
+   'Registration': 'PR-GTB',
+   'Message': 'De novas cores da Gol'
+ },
+ {
+   'HexCode': 'E48007',
+   'Registration': 'PR-GTP',
+   'Message': 'Com as novas cores da Gol'
+ },
+ {
+   'HexCode': 'E4800A',
+   'Registration': 'PR-GTT',
+   'Message': 'Com as novas cores da Gol'
+ },
+ {
+   'HexCode': 'E49224',
+   'Registration': 'PR-GYB',
+   'Message': 'De as novas cores da Gol'
+ },
+ {
+   'HexCode': 'E48005',
+   'Registration': 'PR-GTN',
+   'Message': 'Com as novas cores da Gol'
+ },
+ {
+   'HexCode': 'E491C2',
+   'Registration': 'PR-GXZ',
+   'Message': 'Com as novas cores da Gol'
+ },
+ {
+   'HexCode': 'E47E4B',
+   'Registration': 'PR-GOH',
+   'Message': 'O líder das novas cores da Gol'
+ },
+ {
+   'HexCode': 'E48161',
+   'Registration': 'PR-GIT',
+   'Message': 'Com a pintura Smiles'
+ },
+ {
+   'HexCode': 'E48853',
+   'Registration': 'PR-GUG',
+   'Message': 'Com Scimitar na asa'
+ },
+ {
+   'HexCode': 'E48854',
+   'Registration': 'PR-GUH',
+   'Message': 'Com Split Scimitar na asa'
+ },
+ {
+   'HexCode': 'E4851B',
+   'Registration': 'PT-TMD',
+   'Message': 'Com a pintura Rio 450 Anos'
+ },
+ {
+   'HexCode': 'E483DE',
+   'Registration': 'PR-MYF',
+   'Message': 'Com a pintura One World'
+ },
+ {
+   'HexCode': '4D012A',
+   'Registration': '',
+   'Message': 'Com a pintura híbrida CLX/Cathay'
+ },
+ {
+   'HexCode': '4D010C',
+   'Registration': 'LX-WCV',
+   'Message': 'Com a pintura New Colors'
+ },
+ {
+   'HexCode': '4D0128',
+   'Registration': 'LX-SCV',
+   'Message': 'Com a pintura New Colors'
+ },
+ {
+   'HexCode': 'E48B1D',
+   'Registration': 'PR-ATH',
+   'Message': 'Com a pintura Sticker 50 Aeronaves'
+ },
+ {
+   'HexCode': 'E48E7D',
+   'Registration': 'PR-AXS',
+   'Message': 'Com a pintura Sticker 100.000.000'
+ },
+ {
+   'HexCode': '3C7068',
+   'Registration': '',
+   'Message': 'Com a pintura Cargo Human Care'
+ },
+ {
+   'HexCode': '3C7063',
+   'Registration': 'D-ALCC',
+   'Message': 'Com a pintura Sticker A.D.H'
+ },
+ {
+   'HexCode': 'E48909',
+   'Registration': 'PR-AYU',
+   'Message': 'Com a pintura Senna Sempre'
+ },
+ {
+   'HexCode': 'E491A0',
+   'Registration': '',
+   'Message': 'Com a pintura World'
+ },
+ {
+   'HexCode': 'E49069',
+   'Registration': '',
+   'Message': 'Com a pintura One World'
+ },
+ {
+   'HexCode': 'N174AA',
+   'Registration': '',
+   'Message': 'Com a pintura One World'
+ },
+ {
+   'HexCode': '0C202C',
+   'Registration': '',
+   'Message': 'Com a pintura Copa Baseball'
+ },
+ {
+   'HexCode': '0C203A',
+   'Registration': '',
+   'Message': 'Com a pintura Copa Seleção'
+ },
+ {
+   'HexCode': '0C2075',
+   'Registration': '',
+   'Message': 'Com a pintura Star Allience'
+ },
+ {
+   'HexCode': '0C2081',
+   'Registration': '',
+   'Message': 'Com a pintura Biomuseo'
+ },
+ {
+   'HexCode': '0C20A8',
+   'Registration': '',
+   'Message': 'Com a pintura Star Alliance'
+ },
+ {
+   'HexCode': '0C20BB',
+   'Registration': '',
+   'Message': 'Com a pintura ConnectMilles'
+ },
+ {
+   'HexCode': 'AE20C4',
+   'Registration': 'PIU-PIU',
+   'Message': 'O avião da galinha pintadinha (cócó!)'
+ },
+ {
+   'HexCode': 'AE4F16',
+   'Registration': 'XU-XA',
+   'Message': 'A nave espacial da Xuxa (êêêêê)'
+ },
+ {
+   'HexCode': '4951E8',
+   'Registration': '',
+   'Message': 'Com a pintura Star Alliance'
+ }
+]

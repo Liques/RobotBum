@@ -133,9 +133,6 @@ namespace TowerBotLibCore
             try
             {
                 string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
-#if DEBUG
-                strJSONPath += "\\debug";
-#endif
 
                 var lastAlertsRaw = LoadFile(strJSONPath, "lastAlerts.json");
                 Alert.ListOfAlerts = JsonConvert.DeserializeObject<List<Alert>>(lastAlertsRaw);
@@ -201,7 +198,6 @@ namespace TowerBotLibCore
         public Alert(Radar radar, string Pluginname, AirplaneBasic airplane, IconType iconType, MessageType messageType = MessageType.General, RatificationType ratificationType = RatificationType.NoRatification)
         {
             this.Airplane = airplane;
-            this.Justify = airplane.StateJustify;
             this.PluginName = Pluginname;
             ID = radar.Name + Pluginname + Airplane.ID;
             ID = ID.Replace(" ", "").Replace("-", "");

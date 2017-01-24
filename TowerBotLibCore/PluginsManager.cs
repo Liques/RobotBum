@@ -90,9 +90,7 @@ namespace TowerBotLibCore
 
             // Verify if there is any alert equal.
             List<Alert> listAlertLessThenOneHour = listOldAlerts;
-            if (radar.Name == "BRA")
-                listAlertLessThenOneHour = listOldAlerts.Where(s => s.TimeCreated > DateTime.Now.AddHours(-1)).ToList();
-
+            
             for (int i = 0; i < listAlertLessThenOneHour.Count; i++)
             {
                 var alertEqual = listAlerts.Where(s => s.ID == listAlertLessThenOneHour[i].ID && s.AlertType == listAlertLessThenOneHour[i].AlertType).ToList().LastOrDefault();
