@@ -13,9 +13,11 @@
 *.lock.json
 .vscode/
 logs/
+lastAlerts.json
 errors/
 server/
 log/
+errors.txt
 
 
 

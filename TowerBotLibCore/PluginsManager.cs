@@ -38,11 +38,12 @@ namespace TowerBotLibCore
                 for (int i = 0; i < listRadars.Count; i++)
                 {
                     var radar = listRadars[i];
+  Console.Write("andra radar");
 
                     List<AirplaneBasic> listAirplanes = null;
                     if (radar != null)
                     {
-
+  Console.Write("lista airplane" + listAirplanes.Count);
                         listAirplanes = AirplanesData.GetAirplanes(radar).Result;
                         var newAlerts = Run(radar, listAirplanes);
 
@@ -90,9 +91,7 @@ namespace TowerBotLibCore
 
             // Verify if there is any alert equal.
             List<Alert> listAlertLessThenOneHour = listOldAlerts;
-            if (radar.Name == "BRA")
-                listAlertLessThenOneHour = listOldAlerts.Where(s => s.TimeCreated > DateTime.Now.AddHours(-1)).ToList();
-
+            
             for (int i = 0; i < listAlertLessThenOneHour.Count; i++)
             {
                 var alertEqual = listAlerts.Where(s => s.ID == listAlertLessThenOneHour[i].ID && s.AlertType == listAlertLessThenOneHour[i].AlertType).ToList().LastOrDefault();

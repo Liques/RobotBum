@@ -16,12 +16,14 @@ namespace TowerBotConsole
         public static DateTime OpenDateTime;
         //public static List<Alert> listOldAlerts = new List<Alert>();
 
-        private static string strJSONPath = "logs";
+        private static string strJSONPath = String.Empty;
 
         /// <summary>
         /// A string abaixo eh para testes, se tiver preenchido, favor retirar
         /// </summary>
-        private static string specialFolderName = "";
+        private static string specialFolderName = String.Empty;
+
+        public static string HTMLServerFolder {get;set;}
 
         static ServerWriter()
         {
@@ -31,7 +33,7 @@ namespace TowerBotConsole
            
         }
         
-        public static void UpdatePages(List<Alert> listNewAlerts, string HTMLServerFolder)
+        public static void UpdatePages(List<Alert> listNewAlerts)
         {
             // Verify if any old alert is older than it's time to be removed 
             List<Alert> listOldBeyondValidationAlerts = Alert.ListOfAlerts.Where(s => s.TimeToBeRemoved <= DateTime.Now).ToList();
@@ -56,6 +58,8 @@ namespace TowerBotConsole
 
             WriteFile(strJSONPath, "lastAlerts.json", toJSON);
 
+            if(String.IsNullOrEmpty(HTMLServerFolder))
+            return;
 
             var strPath = HTMLServerFolder + specialFolderName;
                         
@@ -89,10 +93,14 @@ namespace TowerBotConsole
         {
 
             bool exists = System.IO.Directory.Exists(currentPath);
-            if (!exists)
+            if (!exists && !String.IsNullOrEmpty(currentPath))
                 System.IO.Directory.CreateDirectory(currentPath);
 
-            currentPath += @"/" + fileName;
+            if(!String.IsNullOrEmpty(currentPath))
+                currentPath += @"/" + fileName;
+            else
+                currentPath += fileName;
+                
 
             if (File.Exists(currentPath))
                 File.Delete(currentPath);
@@ -108,12 +116,15 @@ namespace TowerBotConsole
             if (!exists)
                 return String.Empty;
 
-            currentPath += @"/" + fileName;
+           if (!exists && !String.IsNullOrEmpty(currentPath))
+                System.IO.Directory.CreateDirectory(currentPath);
 
-            if (!File.Exists(currentPath))
-                return String.Empty;
+            if(!String.IsNullOrEmpty(currentPath))
+                currentPath += @"/" + fileName;
+            else
+                currentPath += fileName;
 
-            return File.ReadAllText(currentPath).Replace("@T", "TimeCreated").Replace("@I", "Icon").Replace("@A", "AlertType").Replace("$", "2016").Replace("%", "-03:00").Replace("*", "BSB").Replace("@M", "Message").Replace("@R", "Radar").Replace("@N", "Name").Replace("@U", "AirplaneID").Replace("@D", "TimeToBeDeleted");
+            return File.ReadAllText(currentPath);
         }
 
         private static string IndividualRadar(Radar radar, bool showTestAlert = false)
@@ -138,14 +149,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
             strBuilder.Append("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css'>");
             strBuilder.Append("<title>Robot Bum </title>");
             strBuilder.Append("<meta http-equiv='refresh' content='30' >");
-            strBuilder.Append("<h3><b>Robot Bum (");
+            strBuilder.Append("<h3><b>Robot Bum");
             if (radar != null)
-                strBuilder.Append(listAlertByRadar.FirstOrDefault() != null ? listAlertByRadar.FirstOrDefault().Radar.Description : "Não definido");
-            else
-                strBuilder.Append("General");
+                strBuilder.Append(String.Format(" ({0})", radar.Name));
 
 
-            strBuilder.Append(")</b></h3>");
+            strBuilder.Append("</b></h3>");
 
 
             strBuilder.Append("<span class='visible-lg-inline visible-md-inline'><b>Online time: " + (DateTime.Now - OpenDateTime).ToString(@"dd\ hh\:mm\:ss") + "</b></span><hr/>");
@@ -201,13 +210,11 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
 
                         }
                         strBuilder.Append("</font></span>");
-#if true//DEBUG
-                        strBuilder.Append("<span class='visible-lg-inline'><font color=lightgray> ");
-                        if (!String.IsNullOrEmpty(listAlertByRadar[i].ID))
-                            strBuilder.Append(listAlertByRadar[i].ID.Length > 8 ? listAlertByRadar[i].ID.Substring(0, 10) : listAlertByRadar[i].ID);
 
+                        strBuilder.Append("<span class='visible-lg-inline'><font color=lightgray> ");
+                        
                         strBuilder.Append("</font></span>");
-#endif
+
                         strBuilder.Append("<br/>");
 
                     }

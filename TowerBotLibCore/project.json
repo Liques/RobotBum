@@ -1,6 +1,10 @@
 {
   "version": "1.0.0-*",
 
+  "buildOptions": {
+    "debugType": "portable",
+  },
+
   "dependencies": {
     "Microsoft.CSharp": "4.3.0",
     "NETStandard.Library": "1.6.1",
