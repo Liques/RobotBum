@@ -1,2 +1,0 @@
-19/01/2017 17:11:22 ;Vai pousar no aeroporto o PP-CRV  -  - , Learjet 40. #AeroportoBSB #Avião #RobôBum;BSBUnknowAirE48C8D;High;Velocidade vertical abaixo de -500:-2176 e altude menor que 28000:18375, Hex:E48C8D, . !IsKnownAirplane.. É de um país não comum voar por aqui.;
-19/01/2017 17:36:39 ;Está na aproximação da região o ONE6307 (PR-OCM)  -  - , A320 de Maceió - AL. #Avião #RobôBum;BRAUnknowAirE490EF;High;Velocidade vertical abaixo de -500:-1088 e altude menor que 28000:4400, Hex:E490EF, . !IsKnownAirplane.. É de um país não comum voar por aqui.;
