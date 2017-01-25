@@ -124,7 +124,7 @@ namespace TowerBotConsole
             else
                 currentPath += fileName;
 
-            return File.ReadAllText(currentPath).Replace("@T", "TimeCreated").Replace("@I", "Icon").Replace("@A", "AlertType").Replace("$", "2016").Replace("%", "-03:00").Replace("*", "BSB").Replace("@M", "Message").Replace("@R", "Radar").Replace("@N", "Name").Replace("@U", "AirplaneID").Replace("@D", "TimeToBeDeleted");
+            return File.ReadAllText(currentPath);
         }
 
         private static string IndividualRadar(Radar radar, bool showTestAlert = false)
@@ -149,14 +149,12 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
             strBuilder.Append("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css'>");
             strBuilder.Append("<title>Robot Bum </title>");
             strBuilder.Append("<meta http-equiv='refresh' content='30' >");
-            strBuilder.Append("<h3><b>Robot Bum (");
+            strBuilder.Append("<h3><b>Robot Bum");
             if (radar != null)
-                strBuilder.Append(listAlertByRadar.FirstOrDefault() != null ? listAlertByRadar.FirstOrDefault().Radar.Description : "Não definido");
-            else
-                strBuilder.Append("General");
+                strBuilder.Append(String.Format(" ({0})", radar.Name));
 
 
-            strBuilder.Append(")</b></h3>");
+            strBuilder.Append("</b></h3>");
 
 
             strBuilder.Append("<span class='visible-lg-inline visible-md-inline'><b>Online time: " + (DateTime.Now - OpenDateTime).ToString(@"dd\ hh\:mm\:ss") + "</b></span><hr/>");
@@ -214,9 +212,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
                         strBuilder.Append("</font></span>");
 
                         strBuilder.Append("<span class='visible-lg-inline'><font color=lightgray> ");
-                        if (!String.IsNullOrEmpty(listAlertByRadar[i].ID))
-                            strBuilder.Append(listAlertByRadar[i].ID.Length > 8 ? listAlertByRadar[i].ID.Substring(0, 10) : listAlertByRadar[i].ID);
-
+                        
                         strBuilder.Append("</font></span>");
 
                         strBuilder.Append("<br/>");

@@ -168,8 +168,6 @@ namespace TowerBotLibCore
             {
                 if (ListSpecialPainitngs.Count <= 0)
                 {
-                    string specialPaintings = "";
-
                 StreamReader file = File.OpenText(MultiOSFileSupport.ResourcesFolder + "specialpaintings.json");
 
                 string jsonstring = file.ReadToEnd();//file.ReadToEnd();
@@ -190,7 +188,7 @@ namespace TowerBotLibCore
             }
             catch (Exception e)
             {
-                ErrorManager.ThrowError(e, "Error on Special Painting");
+                ErrorManager.ThrowError(e, "Error on Special Painting " + e.Message);
             }
             #endregion
 

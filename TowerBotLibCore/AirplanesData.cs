@@ -120,6 +120,7 @@ namespace TowerBotLibCore
             radar.CurrentAirplanes = listAirplanes;
             radar.LastAirplanes = listAirplanes;
 
+          
 
             return listAirplanes;
 

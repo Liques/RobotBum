@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace TowerBotConsole
     /// </summary>
     public class Core
     {
+         
         static bool showUpdates = true;
         static bool isToForceUpdateAll = false;
         static bool isTwitterActive = false;
@@ -54,7 +56,8 @@ namespace TowerBotConsole
         {
             if (isConsole)
             {
-                Console.Title = "Towerbot\n";
+                Console.Title = "RobotBum\n";
+                Console.WriteLine("-RobotBum-\n");
                 Console.WriteLine("Starting...\n");
 
             }
@@ -75,62 +78,28 @@ namespace TowerBotConsole
             if (!exists)
                 System.IO.Directory.CreateDirectory(strPath);
 
+#if DEBUG
+           // Quick test line.
+           //cmds = new List<string>() { "-AirportICAO","BSB","-ModeSMixerURL","http://162.243.32.213:8088","-URLServerFolder","server" }.ToArray();
+#endif
            var commandsAnalyse = AnalyseCommands(cmds);
 
-        //    if(!String.IsNullOrEmpty(commandsAnalyse)) {
-        //        Console.WriteLine(commandsAnalyse);
-        //        Console.WriteLine("Closing application...");
-        //        return;
-        //    }
+           if(!String.IsNullOrEmpty(commandsAnalyse)) {
+               Console.WriteLine(commandsAnalyse);
+               Console.WriteLine("Closing application...");
+               return;
+           }
 
-        //    Radar radar = GetRadar(cmds);
-           ServerWriter.HTMLServerFolder = "server";
-           Radar radar = new Radar()
-            {
-                Name = "BSB",
-                Description = "Brasília - DF",
-                MainAirportICAO = "SBBR",
-               
-                EndpointUrl = "http://bsbradar.ddns.net:8081/json",
-                LongitudeX = -48.336099,
-                LatitudeX = -15.364184,
-                LongitudeY = -47.256692,
-                LatitudeY = -16.194103,
-                ListRunways = new List<RunwayBasic>() {
-                    new RunwayBasic()
-                    {
-                        NameSideOne = "11L",
-                        NameSideTwo = "29R",
-                        LatitudeSideOne = -15.861333,
-                        LongitudeSideOne = -47.930333,
-                        LatitudeSideTwo = -15.86,
-                        LongitudeSideTwo = -47.898167,
-                    },
-                    new RunwayBasic()
-                    {
-                        NameSideOne = "11R",
-                        NameSideTwo = "29L",
-                        LatitudeSideOne = -15.879167,
-                        LongitudeSideOne = -47.942,
-                        LatitudeSideTwo = -15.8765,
-                        LongitudeSideTwo = -47.9085,
-                    }
-                },
-                 TwitterConsumerKey = "3r8wBciRbW7wniT7DYIofy60G",
-        TwitterConsumerSecret  = "ozfqugyE2hihws5AkGw8yXVvuZMqY5u9rpIOjdKxxHjqo3KM5T",
-       TwitterAccessToken  = "3087708189-bkr12ClOMZyBeiHmw7i9EZeXlnSNAjx3QjKnxe4",
-        TwitterAccessTokenSecret  = "cVL2s1kCzJl3nAydDXkIz1fVY07g1XWnUGByjb92ZO8wj",
+           Radar radar = GetRadar(cmds);
 
-            };
-    
-        try{
-                    Radar.AddRadar(radar);
-        } catch(ArgumentException e) {
-            Console.WriteLine(e.Message);
-            return;
-        }catch(Exception e) {
-            throw e;
-        }
+            try{
+                Radar.AddRadar(radar);
+            } catch(ArgumentException e) {
+                Console.WriteLine(e.Message);
+                return;
+            }catch(Exception e) {
+                throw e;
+            }
 
             var autoEvent = new AutoResetEvent(false);
 
@@ -205,10 +174,6 @@ namespace TowerBotConsole
             var listEssentialCommands = new List<string>() {
                 AirportICAOCommand,
                 ModeSMixerURLCommand,
-                LongitudeXCommand,
-                LatitudeXCommand,
-                LongitudeYCommand,
-                LatitudeYCommand,
             };
 
             cmds.ToList().ForEach(item => listEssentialCommands.RemoveAll(r => r.ToLower() == item.ToLower()));
@@ -251,16 +216,29 @@ namespace TowerBotConsole
             
             radar.Name = GetCommandValue(AirportICAOCommand, cmds);
             radar.MainAirportICAO = GetCommandValue(AirportICAOCommand, cmds);
-            radar.EndpointUrl = GetCommandValue(ModeSMixerURLCommand, cmds);
-            radar.LongitudeX = double.Parse(GetCommandValue(LongitudeXCommand, cmds));
-            radar.LatitudeX = double.Parse(GetCommandValue(LatitudeXCommand, cmds));
-            radar.LongitudeY = double.Parse(GetCommandValue(LongitudeYCommand, cmds));
-            radar.LatitudeY = double.Parse(GetCommandValue(LatitudeYCommand, cmds));
+            radar.EndpointUrl = GetCommandValue(ModeSMixerURLCommand, cmds) + "/json";
+            radar.LongitudeX = GetCommandValueDouble(LongitudeXCommand, cmds);
+            radar.LatitudeX =GetCommandValueDouble(LatitudeXCommand, cmds);
+            radar.LongitudeY = GetCommandValueDouble(LongitudeYCommand, cmds);
+            radar.LatitudeY = GetCommandValueDouble(LatitudeYCommand, cmds);
 
             radar.TwitterConsumerKey = GetCommandValue(TwitterConsumerKeyCommand, cmds);
             radar.TwitterConsumerSecret = GetCommandValue(TwitterConsumerSecretCommand, cmds);
             radar.TwitterAccessToken = GetCommandValue(TwitterAccessTokenCommand, cmds);
             radar.TwitterAccessTokenSecret = GetCommandValue(TwitterAccessTokenSecretCommand, cmds);
+
+            if(cmds.Any(a => a == ShowLowWeightAirplanesCommand))
+                radar.ShowApproximationLowWeightAirplanes = GetCommandValueBool(ShowLowWeightAirplanesCommand, cmds);
+            else
+                radar.ShowApproximationLowWeightAirplanes = true;
+            if(cmds.Any(a => a == ShowMediumWeightAirplanesCommand))
+                radar.ShowApproximationMediumWeightAirplanes = GetCommandValueBool(ShowMediumWeightAirplanesCommand, cmds);
+            else
+                radar.ShowApproximationMediumWeightAirplanes = true;
+            if(cmds.Any(a => a == ShowHeavyWeightAirplanesCommand))
+                radar.ShowApproximationHeavyWeightAirplanes = GetCommandValueBool(ShowHeavyWeightAirplanesCommand, cmds);
+            else
+                radar.ShowApproximationHeavyWeightAirplanes = true;
 
             ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);            
 
@@ -273,10 +251,30 @@ namespace TowerBotConsole
             if(cmdIndex < 0)
             return String.Empty;
 
-            return cmds[cmdIndex + 1];          
+            return cmds[cmdIndex + 1].Replace("\"","");          
+        }
 
+        
+        private static bool GetCommandValueBool(string command, string[] cmds) {
+            string commandValue = GetCommandValue(command, cmds);
+            
+            if(!String.IsNullOrEmpty(commandValue))
+                return false;
+
+            return bool.Parse(commandValue);
 
         }
+
+        private static double GetCommandValueDouble(string command, string[] cmds) {
+            string commandValue = GetCommandValue(command, cmds);
+            
+            if(String.IsNullOrEmpty(commandValue))
+                return 0;
+
+            return double.Parse(commandValue);
+
+        }
+
 
         private static void CheckStatus(object stateInfo)
         {
@@ -310,13 +308,13 @@ namespace TowerBotConsole
                     {
                         Log(alerts[i].ToString() + ";" + alerts[i].Justify, w);
                         Console.ForegroundColor = ConsoleColor.White;
-                        //Console.Write(alerts[i].Radar.Name);
+                        Console.Write(alerts[i].Radar.Name);
                         Console.ForegroundColor = color;
-                        //Console.WriteLine(" " + DateTime.Now.ToString("HH:mm:ss") + " - " + (alerts[i].ToString().Length < 64 ? alerts[i].ToString() : alerts[i].ToString().Substring(0, 61) + "..."));
+                        Console.WriteLine(" " + DateTime.Now.ToString("HH:mm:ss") + " - " + (alerts[i].ToString().Length < 64 ? alerts[i].ToString() : alerts[i].ToString().Substring(0, 61) + "..."));
 
                     }
                 }
-                // Se o alerta for high, postar no twitter de todo jeito
+                // If it's a "high" alert, it must be posted on twitter or server
                 if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.High)
                 {
                     using (StreamWriter w = File.AppendText(strPath + "\\logAlertsHigh_" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt"))
@@ -338,16 +336,6 @@ namespace TowerBotConsole
                     }
                 }
 
-            }
-
-            if(alerts != null && alerts.Count > 0) {
-                Console.WriteLine(String.Format("{0} - {1} issued alert(s).",DateTime.Now.ToString(), alerts.Count));
-            }
-
-            var htmlFolder = "/var/www/html/";
-
-            if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)) {
-                htmlFolder = @"server";
             }
 
             ServerWriter.UpdatePages(alerts);

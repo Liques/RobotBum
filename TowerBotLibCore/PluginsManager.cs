@@ -38,11 +38,12 @@ namespace TowerBotLibCore
                 for (int i = 0; i < listRadars.Count; i++)
                 {
                     var radar = listRadars[i];
+  Console.Write("andra radar");
 
                     List<AirplaneBasic> listAirplanes = null;
                     if (radar != null)
                     {
-
+  Console.Write("lista airplane" + listAirplanes.Count);
                         listAirplanes = AirplanesData.GetAirplanes(radar).Result;
                         var newAlerts = Run(radar, listAirplanes);
 

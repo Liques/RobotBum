@@ -40,6 +40,15 @@ namespace TowerBotLibCore
         public string RadarParentName { get; set; }
 
         [IgnoreDataMemberAttribute]
+        public bool IsTwitterEnabled { get { return 
+            !String.IsNullOrEmpty(this.TwitterAccessToken) &&
+            !String.IsNullOrEmpty(this.TwitterAccessTokenSecret) &&
+            !String.IsNullOrEmpty(this.TwitterConsumerKey) &&
+            !String.IsNullOrEmpty(this.TwitterConsumerSecret)
+        ; 
+        } }
+
+        [IgnoreDataMemberAttribute]
         public Radar RadarParent { get { return (Radar)RadarParentName; } }
 
         [IgnoreDataMemberAttribute]

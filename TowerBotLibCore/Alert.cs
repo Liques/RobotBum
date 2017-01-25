@@ -132,7 +132,7 @@ namespace TowerBotLibCore
         {
             try
             {
-                string strJSONPath = System.IO.Directory.GetCurrentDirectory() + "\\logs";
+                string strJSONPath = String.Empty;
 
                 var lastAlertsRaw = LoadFile(strJSONPath, "lastAlerts.json");
                 Alert.ListOfAlerts = JsonConvert.DeserializeObject<List<Alert>>(lastAlertsRaw);
@@ -227,16 +227,19 @@ namespace TowerBotLibCore
         private static string LoadFile(string currentPath, string fileName)
         {
 
-            bool exists = System.IO.Directory.Exists(currentPath);
+          bool exists = System.IO.Directory.Exists(currentPath);
             if (!exists)
                 return String.Empty;
 
-            currentPath += @"\" + fileName;
+           if (!exists && !String.IsNullOrEmpty(currentPath))
+                System.IO.Directory.CreateDirectory(currentPath);
 
-            if (!File.Exists(currentPath))
-                return String.Empty;
+            if(!String.IsNullOrEmpty(currentPath))
+                currentPath += @"/" + fileName;
+            else
+                currentPath += fileName;
 
-            return File.ReadAllText(currentPath).Replace("@T", "TimeCreated").Replace("@I", "Icon").Replace("@A", "AlertType").Replace("$", "2016").Replace("%", "-03:00").Replace("*", "BSB").Replace("@M", "Message").Replace("@R", "Radar").Replace("@N", "Name").Replace("@U", "AirplaneID").Replace("@D", "TimeToBeDeleted");
+            return File.ReadAllText(currentPath);
         }
 
 
