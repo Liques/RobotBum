@@ -93,17 +93,17 @@ namespace TowerBotConsole
 
 #if DEBUG
         //    // Quick test line.
-           cmds = new List<string>() {  "-AirportICAO","SBBR",
-                                        "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
-                                        "-URLServerFolder","server" ,
-                                        "-ShowAllCruisesOnlyOnServer","1" ,
-                                        "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
-                                      //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
-                                       // "-AvoidAllModelsStartingWith","A32,B73",
-                                      //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
-                                        "-ShowHelicopters","1",
-                                       // "-MessageLanguage","en-PIRATE",
-                                        }.ToArray();
+        //    cmds = new List<string>() {  "-AirportICAO","SBBR",
+        //                                 "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
+        //                                 "-URLServerFolder","server" ,
+        //                                 "-ShowAllCruisesOnlyOnServer","1" ,
+        //                                 "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
+        //                               //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
+        //                                // "-AvoidAllModelsStartingWith","A32,B73",
+        //                               //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
+        //                                 "-ShowHelicopters","1",
+        //                                // "-MessageLanguage","en-PIRATE",
+        //                                 }.ToArray();
 #endif
            var commandsAnalyse = AnalyseCommands(cmds);
 
