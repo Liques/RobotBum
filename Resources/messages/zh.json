@@ -1,0 +1,46 @@
+/* Automatic translation */
+{
+  "articles": [
+    "",
+  ],
+  "indefinitiveArticle": [
+    "一個"
+  ],
+  "notIdentifiedAirplane": [
+    "我們不能識別的飛機"
+  ],
+  "from": [
+    "來自",
+  ],
+  "to": [
+    "即將",
+  ],
+  "TakingOffPhraseStart": [
+    "它起飛 ",
+  ],
+  "TakingOffPhraseEnd": [
+    " 正在起飛",
+  ],
+  "CruisePhraseStart": [
+    "它在巡航",
+  ],
+  "CruisePhraseEnd": [
+    " 在巡航",
+  ],
+  "LandingPhraseStart": [
+    "它正在著陸 ",
+  ],
+  "LandingPhraseEnd": [
+    " 正在著陸",
+  ],
+  "TaxingPhraseStart": [
+    "它在機場 ",
+  ],
+  "TaxingPhraseEnd": [
+    " 在機場",
+  ],
+  "Orbit": [
+    " 正在旋轉",
+  ]
+ 
+}

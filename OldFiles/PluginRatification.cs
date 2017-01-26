@@ -53,15 +53,47 @@ namespace TowerBotLibCore.Plugins
                             {
                                 if (airplane.State == AirplaneStatus.TakingOff || airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.DataImcomplete)
                                 {
-                                    
-                                    #region Orbit detection
+                                    if (airplane.FollowingChart != null && airplane.PreviousAirplane.FollowingChart == null
+                                        && (radar.Name == "BSB" || radar.Name == "CWB"))
+                                    {
+                                        Alert PluginAlert = new Alert(radar, Name, airplane, IconType.Chart, MessageType.General, RatificationType.Chart);
+                                        PluginAlert.Airplane = airplane;
+                                        PluginAlert.Justify += ". Foi encontrado uma nova carta." + PluginAlert.AlertType.ToString();
+                                        PluginAlert.AlertType = airplane.PreviousAirplane.LastAlertType;
+
+                                        if (AnalyseRunwayHeavyAircraft && airplane.Weight == AirplaneWeight.Heavy || AnalyseRunwayLowAircraft)
+                                        {
+                                            listAlerts.Add(PluginAlert);
+                                        }
+
+                                    }
+
+                                    if (String.IsNullOrEmpty(airplane.PreviousAirplane.RunwayName) && !String.IsNullOrEmpty(airplane.RunwayName)
+                                        && (radar.Name == "BSB" || radar.Name == "CWB" || radar.Name == "GRU" || radar.Name == "CGH"))
+                                    {
+                                        Alert PluginAlert = new Alert(radar, Name, airplane, IconType.Runway, MessageType.General, RatificationType.FinalRunway);
+                                        PluginAlert.Airplane = airplane;
+                                        PluginAlert.Justify += ". Foi detectado runway." + PluginAlert.AlertType.ToString();
+                                        PluginAlert.AlertType = airplane.PreviousAirplane.LastAlertType;
+
+                                        if (AnalyseRunwayHeavyAircraft && airplane.Weight == AirplaneWeight.Heavy || AnalyseRunwayLowAircraft)
+                                        {
+                                            listAlerts.Add(PluginAlert);
+                                        }
+
+                                    }
+
+                                    #region Detecção de órbitas
                                     if (AnalyseOrbit && airplane.IsOrbiting)
                                     {
 
                                         Alert PluginAlert = new Alert(radar, Name, airplane, IconType.Orbit, MessageType.General, RatificationType.Orbit);
+                                        PluginAlert.Justify += ". Foi detectado orbita.";
                                         if (airplane.LastAlertType != PluginAlertType.High && airplane.LastAlertType != PluginAlertType.Medium && airplane.LastAlertType != PluginAlertType.Low)
                                             PluginAlert.AlertType = PluginAlertType.Test;
-                                        
+                                        else
+                                            PluginAlert.AlertType = PluginAlertType.Test;// airplane.LastAlertType;
+
                                         PluginAlert.AlertType = PluginAlertType.High;
 
                                         listAlerts.Add(PluginAlert);

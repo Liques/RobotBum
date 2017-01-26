@@ -16,14 +16,14 @@ namespace TowerBotFoundationCore
                     if(!String.IsNullOrEmpty(resourcesFolder))
                         return resourcesFolder;
                    else {
-                        return resourcesFolder = "Resources" + Spliter;
+                        return resourcesFolder = "Resources" + Splitter;
                         }
                     }
                 set { resourcesFolder = value;}
             }
 
             private static string splitter;
-            private static string Spliter
+            public static string Splitter
             {
                 get { 
                      if(!String.IsNullOrEmpty(splitter))
@@ -36,7 +36,6 @@ namespace TowerBotFoundationCore
                  return splitter = "/";
                  
                     }
-                set { resourcesFolder = value;}
             } 
     
 

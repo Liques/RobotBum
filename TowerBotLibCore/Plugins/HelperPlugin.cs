@@ -236,10 +236,6 @@ namespace TowerBotLibCore.Plugins
             else if (!heavyWeight && airplane.Weight == AirplaneWeight.Heavy)
                 alertType = PluginAlertType.Medium;
 
-            if(!radar.AvoidCommonTraffic && (airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.TakingOff))
-                alertType = PluginAlertType.High;
-
-
             return alertType;
         }
 

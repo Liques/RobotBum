@@ -52,10 +52,8 @@ namespace TowerBotConsole
             Alert.ListOfAlerts.AddRange(listNewAlerts);
             Alert.ListOfRecentAlerts = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddDays(-1)).ToList();
 
-
             var toJSON = JsonConvert.SerializeObject(Alert.ListOfAlerts.Where(w => w.Icon != IconType.GoodNightAnnoucement).ToList());
-            toJSON = toJSON.Replace("TimeCreated", "@T").Replace("Icon", "@I").Replace("AlertType", "@A").Replace("2016", "$").Replace("-03:00", "%").Replace("BSB", "*").Replace("Message", "@M").Replace("Radar", "@R").Replace("Name", "@N").Replace("AirplaneID", "@U").Replace("TimeToBeDeleted", "@D");
-
+            
             WriteFile(strJSONPath, "lastAlerts.json", toJSON);
 
             if(String.IsNullOrEmpty(HTMLServerFolder))
@@ -85,7 +83,7 @@ namespace TowerBotConsole
                 }
             }
 
-            var listGeneralOnlyImportantAlert = Alert.ListOfAlerts.Where(s => s.AlertType == PluginAlertType.High).Take(100).ToList();
+            var listGeneralOnlyImportantAlert = Alert.ListOfAlerts.Where(s => s.AlertType == PluginAlertType.High).ToList();
             WriteFile(strPath + @"/data/", "general.json", JsonConvert.SerializeObject(listGeneralOnlyImportantAlert));
         }
 
@@ -146,7 +144,11 @@ AAAGYFUABmAAVQZgVQAGYABVBmAAAAZgAAAGYAIiJmIiIAZgAjEmYjEgBmACMyZiMyAGYAJCJmJC
 IAZgAAAAAAAABmUAAAAAAABWZmZmZmZmZmYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
             strBuilder.Append("<meta name=viewport content='width=device-width, initial-scale=1'>");
-            strBuilder.Append("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css'>");
+            if(!System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
+                strBuilder.Append("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css'>");
+            else
+                strBuilder.Append("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css'>");
+            
             strBuilder.Append("<title>Robot Bum </title>");
             strBuilder.Append("<meta http-equiv='refresh' content='30' >");
             strBuilder.Append("<h3><b>Robot Bum");
@@ -186,13 +188,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
 
                         if (radar != null)
                         {
-                            strBuilder.Append("<span ><b class='visible-lg-inline visible-md-inline'>" + listAlertByRadar[i].TimeCreated.ToString("dd/MM/yyyy ") + "</b></span>");
-                            strBuilder.Append("<span><b>" + listAlertByRadar[i].TimeCreated.ToString("HH:mm") + "</b>");
+                            strBuilder.Append("<span ><b class='visible-lg-inline visible-md-inline'>" + listAlertByRadar[i].TimeCreated.ToString() + "</b></span>");
+                            //strBuilder.Append("<span><b>" + listAlertByRadar[i].TimeCreated.ToString("HH:mm") + "</b>");
                         }
                         else
                         {
-                            strBuilder.Append("<span><b class='visible-lg-inline visible-md-inline'> " + Alert.ListOfAlerts[i].TimeCreated.ToString("dd/MM/yyyy ") + "</b></span>");
-                            strBuilder.Append("<span><b>" + listAlertByRadar[i].TimeCreated.ToString("HH:mm") + "</b> - ");
+                            strBuilder.Append("<span><b class='visible-lg-inline visible-md-inline'> " + Alert.ListOfAlerts[i].TimeCreated.ToString() + "</b></span>");
+                            //strBuilder.Append("<span><b>" + listAlertByRadar[i].TimeCreated.ToString("HH:mm") + "</b> - ");
                             strBuilder.Append("<span><b><a href='main/" + listAlertByRadar[i].Radar.Name + "/index.html'>" + listAlertByRadar[i].Radar.Description + "</a></b></span>");
 
                         }

@@ -1,0 +1,54 @@
+{
+  "articles": [
+    "O",
+  ],
+  "indefinitiveArticle": [
+    "Um"
+  ],
+  "notIdentifiedAirplane": [
+    "Um avião que não conseguimos identificar o registro"
+  ],
+  "from": [
+    "vindo de",
+    "de"
+  ],
+  "to": [
+    "indo para",
+    "para"
+  ],
+  "TakingOffPhraseStart": [
+    "Está decolando",
+	"Estar a decolar"
+  ],
+  "TakingOffPhraseEnd": [
+    " está decolando",
+	" estar a decolar",
+	
+  ],
+  "CruisePhraseStart": [
+    "Está em cruzeiro ",
+   "Está voando pela região ",
+  ],
+  "CruisePhraseEnd": [
+    " está em cruzeiro",
+    " está cruzando a região",
+  ],
+  "LandingPhraseStart": [
+    "Está em pousando ",         
+	"Está a pousar ",
+  ],
+  "LandingPhraseEnd": [
+    " está pousando",
+	" está a pousar",
+  ],
+  "TaxingPhraseStart": [
+    "Está no aeroporto ",
+  ],
+  "TaxingPhraseEnd": [
+    " parece estar no aeroporto",
+  ],
+  "Orbit": [
+    " está orbitando",
+  ]
+ 
+}

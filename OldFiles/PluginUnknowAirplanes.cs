@@ -51,7 +51,7 @@ namespace TowerBotLibCore.Plugins
 
                             var radarName = radar.Name;
 
-                            if (radar.AvoidCommonTraffic)
+                            if (true)
                             {
 
                                 if (airplane.AircraftType.Type == AircraftModel.Helicopter ||

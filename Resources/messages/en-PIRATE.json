@@ -1,0 +1,50 @@
+
+{
+  "articles": [
+    "Th'",
+  ],
+  "indefinitiveArticle": [
+    "an"
+  ],
+  "notIdentifiedAirplane": [
+    "A ship that we could not identify"
+  ],
+  "from": [
+    "comin' from",
+  ],
+  "to": [
+    "goin' to",
+  ],
+  "TakingOffPhraseStart": [
+    "'tis takin' off  ",
+	 "Avast, thar! 'tis takin' off  ",
+  ],
+  "TakingOffPhraseEnd": [
+    " be takin' off",
+  ],
+  "CruisePhraseStart": [
+    "'tis on cruise ",
+  ],
+  "CruisePhraseEnd": [
+    " be on cruise",
+  ],
+  "LandingPhraseStart": [
+    "'t's landin' ", 
+    "'t's landin' now ", 
+    "Hi-ho. 't's landin' now ", 
+  ],
+  "LandingPhraseEnd": [
+    " be landin' ",
+    " be landin' now",
+  ],
+  "TaxingPhraseStart": [
+    "'tis on th' seaport ",
+  ],
+  "TaxingPhraseEnd": [
+    " is on the seaport",
+  ],
+  "Orbit": [
+    " be orbitin1",
+  ]
+ 
+}

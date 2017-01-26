@@ -1,0 +1,52 @@
+
+{
+  "articles": [
+    "ה",
+  ],
+  "indefinitiveArticle": [
+    ""
+  ],
+  "notIdentifiedAirplane": [
+    "מטוס שלא יכולנו לזהות"
+  ],
+  "from": [
+    "מגיע מ",
+  ],
+  "to": [
+    "הולך ל",
+  ],
+   "TakingOffPhraseStart": [
+     "זה ממריא",
+     "זה ממריא עכשיו",
+   ],
+   "TakingOffPhraseEnd": [
+     "ממריא",
+	"ממריא עכשיו",
+   ],
+   "CruisePhraseStart": [
+     "זה בשיט",
+	"האם עכשיו בשיט",
+   ],
+   "CruisePhraseEnd": [
+     "הוא בשיט",
+	"הוא עכשיו בשיט",
+   ],
+   "LandingPhraseStart": [
+     "זה הנחיתה",
+     "זה נחיתה עכשיו",
+   ],
+   "LandingPhraseEnd": [
+     "נוחת",
+     "נוחת עכשיו",
+   ],
+   "TaxingPhraseStart": [
+     "זה על שדה התעופה",
+   ],
+   "TaxingPhraseEnd": [
+     "הוא על בשדה התעופה",
+   ],
+   "Orbit": [
+     "הוא מקיף",
+   ]
+ 
+}

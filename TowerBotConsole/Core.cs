@@ -46,6 +46,13 @@ namespace TowerBotConsole
           const string ShowHeavyWeightAirplanesCommand = "-ShowHeavyWeightAirplanes";
           const string ShowMediumWeightAirplanesCommand = "-ShowMediumWeightAirplanes";
           const string ShowLowWeightAirplanesCommand = "-ShowLowWeightAirplanes";
+          const string ShowAllCruisesOnlyOnServerCommand = "-ShowAllCruisesOnlyOnServer";
+          const string AvoidAllFlightsStartingWithCommand = "-AvoidAllFlightsStartingWith";
+          const string ShowAllFlightStartingWithCommand = "-ShowAllFlightStartingWith";
+          const string AvoidAllModelsStartingWithCommand = "-AvoidAllModelsStartingWith";
+          const string ShowAllModelsStartingWithCommand = "-ShowAllModelsStartingWith";
+          const string ShowHelicoptersCommand = "-ShowHelicopters";
+          const string MessageLanguageCommand = "-MessageLanguage";
 
          
         /// <summary>
@@ -79,8 +86,18 @@ namespace TowerBotConsole
                 System.IO.Directory.CreateDirectory(strPath);
 
 #if DEBUG
-           // Quick test line.
-           //cmds = new List<string>() { "-AirportICAO","BSB","-ModeSMixerURL","http://162.243.32.213:8088","-URLServerFolder","server" }.ToArray();
+        //    // Quick test line.
+        //    cmds = new List<string>() {  "-AirportICAO","SBBR",
+        //                                 "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
+        //                                 "-URLServerFolder","server" ,
+        //                                 "-ShowAllCruisesOnlyOnServer","1" ,
+        //                                // "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
+        //                               //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
+        //                                // "-AvoidAllModelsStartingWith","A32,B73",
+        //                               //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
+        //                                 "-ShowHelicopters","1",
+        //                                // "-MessageLanguage","en-PIRATE",
+        //                                 }.ToArray();
 #endif
            var commandsAnalyse = AnalyseCommands(cmds);
 
@@ -90,7 +107,7 @@ namespace TowerBotConsole
                return;
            }
 
-           Radar radar = GetRadar(cmds);
+           Radar radar = GetRadarAndSetCommands(cmds);
 
             try{
                 Radar.AddRadar(radar);
@@ -210,7 +227,7 @@ namespace TowerBotConsole
 
         }
  
-        private static Radar GetRadar(string[] cmds) {
+        private static Radar GetRadarAndSetCommands(string[] cmds) {
             var radar = new Radar();
 
             
@@ -240,7 +257,31 @@ namespace TowerBotConsole
             else
                 radar.ShowApproximationHeavyWeightAirplanes = true;
 
-            ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);            
+            ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);     
+
+            if(cmds.Any(a => a == ShowAllCruisesOnlyOnServerCommand))
+                radar.ShowAllCruisesOnlyOnServer = GetCommandValueBool(ShowAllCruisesOnlyOnServerCommand, cmds);
+            if(cmds.Any(a => a == AvoidAllFlightsStartingWithCommand))
+                radar.AvoidAllFlightsStartingWith = GetCommandValue(AvoidAllFlightsStartingWithCommand, cmds).Split(',').ToList();
+            if(cmds.Any(a => a == ShowAllFlightStartingWithCommand))
+                radar.AvoidAllModelsStartingWith = GetCommandValue(ShowAllFlightStartingWithCommand, cmds).Split(',').ToList();
+            if(cmds.Any(a => a == AvoidAllModelsStartingWithCommand))
+                radar.AvoidAllModelsStartingWith = GetCommandValue(AvoidAllModelsStartingWithCommand, cmds).Split(',').ToList();
+            if(cmds.Any(a => a == ShowAllModelsStartingWithCommand))
+                radar.ShowAllModelsStartingWith = GetCommandValue(ShowAllModelsStartingWithCommand, cmds).Split(',').ToList();
+            if(cmds.Any(a => a == ShowHelicoptersCommand))
+                radar.ShowHelicopters = GetCommandValueBool(ShowHelicoptersCommand, cmds);
+
+            if(cmds.Any(a => a == MessageLanguageCommand)) {
+                var cultureCode =  GetCommandValue(MessageLanguageCommand, cmds);
+                try {
+                    var cultureInfo = new CultureInfo(cultureCode);
+                    CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+                } catch {
+                    MessageMaker.CustomLanguageCode = cultureCode;
+                    MessageMaker.LoadMessages();
+                }
+            }
 
             return radar;
         }

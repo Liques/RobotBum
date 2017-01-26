@@ -75,20 +75,6 @@ namespace TowerBotLibCore
         }
 
         public static void AddRadar(Radar radar) {
-           
-            radar.Plugins = new List<IPlugin>()
-                {
-                    new PluginUnknowAirplanes(false, false),
-                    new PluginWide(),
-                    new PluginRatification(false, false, false, false, true),
-                };
-
-                 radar.Plugins.ForEach(item => {
-                item.Radar = radar;
-            });
-
-
-
             listRadars.Add(radar);
         }
         
@@ -104,11 +90,24 @@ namespace TowerBotLibCore
 
 
         [IgnoreDataMemberAttribute]
-        public bool AvoidCommonTraffic { get; set; }
-
+        public List<string> AvoidAllFlightsStartingWith { get; set; }
+        [IgnoreDataMemberAttribute]
+        public List<string> ShowAllFlightStartingWith { get; set; }
+        [IgnoreDataMemberAttribute]
+        public List<string> AvoidAllModelsStartingWith { get; set; }
+        [IgnoreDataMemberAttribute]
+        public List<string> ShowAllModelsStartingWith { get; set; }
+        [IgnoreDataMemberAttribute]
+        public bool ShowHelicopters { get; set; }
+        [IgnoreDataMemberAttribute]
+        public bool ShowAllCruisesOnlyOnServer { get; set; }
+        [IgnoreDataMemberAttribute]
         public string TwitterConsumerKey { get; set; }
+        [IgnoreDataMemberAttribute]
         public string TwitterConsumerSecret { get; set; }
+        [IgnoreDataMemberAttribute]
         public string TwitterAccessToken { get; set; }
+        [IgnoreDataMemberAttribute]
         public string TwitterAccessTokenSecret { get; set; }
 
         public Radar()
@@ -123,6 +122,25 @@ namespace TowerBotLibCore
             this.ShowApproximationHeavyWeightAirplanes = true;
             this.ShowApproximationMediumWeightAirplanes = true;
             this.ShowApproximationLowWeightAirplanes = true;
+            this.ShowHelicopters = true;
+            
+            AvoidAllFlightsStartingWith = new List<string>();
+            ShowAllFlightStartingWith = new List<string>();
+            AvoidAllModelsStartingWith = new List<string>();
+            ShowAllModelsStartingWith = new List<string>();
+
+            this.Plugins = new List<IPlugin>()
+                {
+                    //new PluginUnknowAirplanes(false, false),
+                    //new PluginWide(),
+                    new PluginRatification(false, false, false, false, true),
+                    new PluginFilterAlerts(),
+                };
+
+            this.Plugins.ForEach(item => {
+                item.Radar = this;
+            });
+
         }
 
         public static implicit operator Radar(string radarName)

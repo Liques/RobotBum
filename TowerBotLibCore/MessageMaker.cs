@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -45,13 +46,34 @@ namespace TowerBotLibCore
         string airplaneTypeLongPhrase = String.Empty; // 'Com um Boeing 7...
         string formatedAltitude = String.Empty;
 
+        public static string CustomLanguageCode = String.Empty;
+
         static MessageMaker() {
              LoadMessages();
         }
 
         public static void LoadMessages() {
 
-                StreamReader file = File.OpenText(MultiOSFileSupport.ResourcesFolder + "messages.json");    
+            string messageLanguageFolder = MultiOSFileSupport.ResourcesFolder + MultiOSFileSupport.Splitter + "messages" + MultiOSFileSupport.Splitter;
+            string messageLanguageFileName = CultureInfo.CurrentCulture.Name + ".json";
+
+            if(String.IsNullOrEmpty(CustomLanguageCode)) {
+
+                if(!File.Exists(messageLanguageFolder + messageLanguageFileName)) {
+                    messageLanguageFileName = CultureInfo.CurrentCulture.TwoLetterISOLanguageName + ".json";
+                    if(!File.Exists(messageLanguageFolder + messageLanguageFileName)) {
+                        messageLanguageFileName = "en.json";
+                        Console.WriteLine("Messages in {0} was not found... But you can make your own translation! :-)", CultureInfo.CurrentCulture.EnglishName);
+                    }
+                }
+            } else {
+
+                if(String.IsNullOrEmpty(CustomLanguageCode))
+                    return;
+                messageLanguageFileName = CustomLanguageCode + ".json";
+            }
+
+                StreamReader file = File.OpenText(messageLanguageFolder + messageLanguageFileName);    
 
                 string jsonstring = file.ReadToEnd();//file.ReadToEnd();
                 try{
@@ -62,7 +84,7 @@ namespace TowerBotLibCore
                     listOfFromMessages = listNames["from"];
                     listOfToMessages = listNames["to"];
                     listOfToMessagesTakingOffPhraseStart = listNames["TakingOffPhraseStart"];
-                    listOfToMessagesTakingOffPhraseStart = listNames["TakingOffPhraseEnd"];
+                    listOfToMessagesTakingOffPhraseEnd = listNames["TakingOffPhraseEnd"];
                     listOfToMessagesCruisePhraseStart = listNames["CruisePhraseStart"];
                     listOfToMessagesCruisePhraseEnd = listNames["CruisePhraseEnd"];                
                     listOfToMessagesLandingPhraseStart = listNames["LandingPhraseStart"];
@@ -267,11 +289,13 @@ namespace TowerBotLibCore
 
                 if (Message.Length <= 125 && (airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.TakingOff)&& radar.MainAirport != null)
                 {
-                    Message += " #Aiport" + radar.MainAirport.ICAO;
+                    Message += " #Airport" + radar.MainAirport.ICAO;
                 }
 
                 if (Message.Length <= 130)
                     Message += " #RobotBum";
+
+                Message = Message.Trim();
 
             }
             catch (Exception e)
@@ -307,8 +331,8 @@ namespace TowerBotLibCore
             string startingPhrase = RandomListPhrases(listOfPhrasesStarting);
             string endingPhrase = RandomListPhrases(listOfPhrasesEnding);
             return RandomListPhrases( new List<string>() {
-               phraseBeginningWithAirplaneRegistration + endingPhrase,
-               startingPhrase + phraseEndingWithAirplaneRegistration,
+               String.Format("{0} {1}",phraseBeginningWithAirplaneRegistration, endingPhrase),
+                String.Format("{0} {1}",startingPhrase, phraseEndingWithAirplaneRegistration),
             });
         }
 
@@ -327,7 +351,7 @@ namespace TowerBotLibCore
 
         private string GetOrbitPhrase()
         {
-            return RandomListPhrases(listOfToMessagesOrbit);
+            return airplaneRegistrationOrModel + " " + RandomListPhrases(listOfToMessagesOrbit);
         }
 
         private static string RandomListPhrases(List<string> lstPhrases, int seed = 0)
