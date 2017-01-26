@@ -132,9 +132,6 @@ namespace TowerBotLibCore
             ListRunways = new List<RunwayBasic>();
             Plugins = new List<IPlugin>();
 
-            this.ShowAllApproximationHeavyWeightAirplanes = true;
-            this.ShowAllApproximationMediumWeightAirplanes = true;
-            this.ShowAllApproximationLowWeightAirplanes = true;
             this.ShowHelicopters = true;
             
             AvoidAllFlightsStartingWith = new List<string>();
