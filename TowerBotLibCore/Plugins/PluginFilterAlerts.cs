@@ -92,10 +92,12 @@ namespace TowerBotLibCore.Plugins
                             airplane.Weight == AirplaneWeight.Heavy) {
                                 MakeAlert(listAlerts,radar,airplane);         
                                 continue;                                                       
+                            } else if(airplane.State == AirplaneStatus.Cruise) {
+                                MakeAlert(listAlerts,radar,airplane, PluginAlertType.Low); 
                             }
 
                             // If this line is reached, the airplane is unknow. So we can make an alert for it!
-                            MakeAlert(listAlerts,radar,airplane, PluginAlertType.Low); 
+                            MakeAlert(listAlerts,radar,airplane); 
 
                         }
 
