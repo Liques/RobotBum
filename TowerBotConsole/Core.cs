@@ -252,36 +252,23 @@ namespace TowerBotConsole
 
             if(cmds.Any(a => a == ShowAllLowWeightAirplanesCommand))
                 radar.ShowAllApproximationLowWeightAirplanes = GetCommandValueBool(ShowAllLowWeightAirplanesCommand, cmds);
-            else
-                radar.ShowAllApproximationLowWeightAirplanes = true;
+            
             if(cmds.Any(a => a == ShowAllMediumWeightAirplanesCommand))
                 radar.ShowAllApproximationMediumWeightAirplanes = GetCommandValueBool(ShowAllMediumWeightAirplanesCommand, cmds);
-            else
-                radar.ShowAllApproximationMediumWeightAirplanes = true;
+                
             if(cmds.Any(a => a == ShowAllHeavyWeightAirplanesCommand))
                 radar.ShowAllApproximationHeavyWeightAirplanes = GetCommandValueBool(ShowAllHeavyWeightAirplanesCommand, cmds);
-            else
-                radar.ShowAllApproximationHeavyWeightAirplanes = true;
-
-
 
 
             if(cmds.Any(a => a == AvoidAllLowWeightAirplanesCommand))
                 radar.AvoidAllApproximationLowWeightAirplanes = GetCommandValueBool(AvoidAllLowWeightAirplanesCommand, cmds);
-            else
-                radar.AvoidAllApproximationLowWeightAirplanes = true;
+            
             if(cmds.Any(a => a == AvoidAllMediumWeightAirplanesCommand))
                 radar.AvoidAllApproximationMediumWeightAirplanes = GetCommandValueBool(AvoidAllMediumWeightAirplanesCommand, cmds);
-            else
-                radar.AvoidAllApproximationMediumWeightAirplanes = true;
+            
             if(cmds.Any(a => a == AvoidAllHeavyWeightAirplanesCommand))
                 radar.AvoidAllApproximationHeavyWeightAirplanes = GetCommandValueBool(AvoidAllHeavyWeightAirplanesCommand, cmds);
-            else
-                radar.AvoidAllApproximationHeavyWeightAirplanes = true;
-
-
-
-
+            
 
             ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);     
 
