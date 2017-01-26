@@ -82,11 +82,24 @@ namespace TowerBotLibCore
 
         public int ApproximationMaxAltitude { get; set; }
         
-        public bool ShowApproximationHeavyWeightAirplanes { get; set; }
+        [IgnoreDataMemberAttribute]
+        public bool ShowAllApproximationHeavyWeightAirplanes { get; set; }
 
-        public bool ShowApproximationMediumWeightAirplanes { get; set; }
+        [IgnoreDataMemberAttribute]
+        public bool ShowAllApproximationMediumWeightAirplanes { get; set; }
 
-        public bool ShowApproximationLowWeightAirplanes { get; set; }
+        [IgnoreDataMemberAttribute]
+        public bool ShowAllApproximationLowWeightAirplanes { get; set; }
+
+
+         [IgnoreDataMemberAttribute]
+        public bool AvoidAllApproximationHeavyWeightAirplanes { get; set; }
+
+        [IgnoreDataMemberAttribute]
+        public bool AvoidAllApproximationMediumWeightAirplanes { get; set; }
+
+        [IgnoreDataMemberAttribute]
+        public bool AvoidAllApproximationLowWeightAirplanes { get; set; }
 
 
         [IgnoreDataMemberAttribute]
@@ -119,9 +132,9 @@ namespace TowerBotLibCore
             ListRunways = new List<RunwayBasic>();
             Plugins = new List<IPlugin>();
 
-            this.ShowApproximationHeavyWeightAirplanes = true;
-            this.ShowApproximationMediumWeightAirplanes = true;
-            this.ShowApproximationLowWeightAirplanes = true;
+            this.ShowAllApproximationHeavyWeightAirplanes = true;
+            this.ShowAllApproximationMediumWeightAirplanes = true;
+            this.ShowAllApproximationLowWeightAirplanes = true;
             this.ShowHelicopters = true;
             
             AvoidAllFlightsStartingWith = new List<string>();

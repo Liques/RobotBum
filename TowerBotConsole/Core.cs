@@ -43,9 +43,15 @@ namespace TowerBotConsole
             
           const   string HTMLServerURLFolderCommand = "-URLServerFolder";  
 
-          const string ShowHeavyWeightAirplanesCommand = "-ShowHeavyWeightAirplanes";
-          const string ShowMediumWeightAirplanesCommand = "-ShowMediumWeightAirplanes";
-          const string ShowLowWeightAirplanesCommand = "-ShowLowWeightAirplanes";
+          const string ShowAllHeavyWeightAirplanesCommand = "-ShowAllHeavyWeightAirplanes";
+          const string ShowAllMediumWeightAirplanesCommand = "-ShowAllMediumWeightAirplanes";
+          const string ShowAllLowWeightAirplanesCommand = "-ShowAllLowWeightAirplanes";
+
+
+          const string AvoidAllHeavyWeightAirplanesCommand = "-AvoidAllHeavyWeightAirplanes";
+          const string AvoidAllMediumWeightAirplanesCommand = "-AvoidAllMediumWeightAirplanes";
+          const string AvoidAllLowWeightAirplanesCommand = "-AvoidAllLowWeightAirplanes";
+
           const string ShowAllCruisesOnlyOnServerCommand = "-ShowAllCruisesOnlyOnServer";
           const string AvoidAllFlightsStartingWithCommand = "-AvoidAllFlightsStartingWith";
           const string ShowAllFlightStartingWithCommand = "-ShowAllFlightStartingWith";
@@ -244,18 +250,38 @@ namespace TowerBotConsole
             radar.TwitterAccessToken = GetCommandValue(TwitterAccessTokenCommand, cmds);
             radar.TwitterAccessTokenSecret = GetCommandValue(TwitterAccessTokenSecretCommand, cmds);
 
-            if(cmds.Any(a => a == ShowLowWeightAirplanesCommand))
-                radar.ShowApproximationLowWeightAirplanes = GetCommandValueBool(ShowLowWeightAirplanesCommand, cmds);
+            if(cmds.Any(a => a == ShowAllLowWeightAirplanesCommand))
+                radar.ShowAllApproximationLowWeightAirplanes = GetCommandValueBool(ShowAllLowWeightAirplanesCommand, cmds);
             else
-                radar.ShowApproximationLowWeightAirplanes = true;
-            if(cmds.Any(a => a == ShowMediumWeightAirplanesCommand))
-                radar.ShowApproximationMediumWeightAirplanes = GetCommandValueBool(ShowMediumWeightAirplanesCommand, cmds);
+                radar.ShowAllApproximationLowWeightAirplanes = true;
+            if(cmds.Any(a => a == ShowAllMediumWeightAirplanesCommand))
+                radar.ShowAllApproximationMediumWeightAirplanes = GetCommandValueBool(ShowAllMediumWeightAirplanesCommand, cmds);
             else
-                radar.ShowApproximationMediumWeightAirplanes = true;
-            if(cmds.Any(a => a == ShowHeavyWeightAirplanesCommand))
-                radar.ShowApproximationHeavyWeightAirplanes = GetCommandValueBool(ShowHeavyWeightAirplanesCommand, cmds);
+                radar.ShowAllApproximationMediumWeightAirplanes = true;
+            if(cmds.Any(a => a == ShowAllHeavyWeightAirplanesCommand))
+                radar.ShowAllApproximationHeavyWeightAirplanes = GetCommandValueBool(ShowAllHeavyWeightAirplanesCommand, cmds);
             else
-                radar.ShowApproximationHeavyWeightAirplanes = true;
+                radar.ShowAllApproximationHeavyWeightAirplanes = true;
+
+
+
+
+            if(cmds.Any(a => a == AvoidAllLowWeightAirplanesCommand))
+                radar.AvoidAllApproximationLowWeightAirplanes = GetCommandValueBool(AvoidAllLowWeightAirplanesCommand, cmds);
+            else
+                radar.AvoidAllApproximationLowWeightAirplanes = true;
+            if(cmds.Any(a => a == AvoidAllMediumWeightAirplanesCommand))
+                radar.AvoidAllApproximationMediumWeightAirplanes = GetCommandValueBool(AvoidAllMediumWeightAirplanesCommand, cmds);
+            else
+                radar.AvoidAllApproximationMediumWeightAirplanes = true;
+            if(cmds.Any(a => a == AvoidAllHeavyWeightAirplanesCommand))
+                radar.AvoidAllApproximationHeavyWeightAirplanes = GetCommandValueBool(AvoidAllHeavyWeightAirplanesCommand, cmds);
+            else
+                radar.AvoidAllApproximationHeavyWeightAirplanes = true;
+
+
+
+
 
             ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);     
 
