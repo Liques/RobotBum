@@ -88,14 +88,14 @@ namespace TowerBotLibCore.Plugins
                             }
 
                             // If ShowAllCruisesOnlyOnServer is true...
-                            if(airplane.State == AirplaneStatus.Cruise && radar.ShowAllCruisesOnlyOnServer &&
-                            airplane.From.ICAO != radar.MainAirportICAO && airplane.To.ICAO != radar.MainAirportICAO) {
-                                MakeAlert(listAlerts,radar,airplane, PluginAlertType.Low);         
+                            if(airplane.State == AirplaneStatus.Cruise && radar.ShowAllCruisesHeavyWeight &&
+                            airplane.Weight == AirplaneWeight.Heavy) {
+                                MakeAlert(listAlerts,radar,airplane);         
                                 continue;                                                       
                             }
 
                             // If this line is reached, the airplane is unknow. So we can make an alert for it!
-                            MakeAlert(listAlerts,radar,airplane);
+                            MakeAlert(listAlerts,radar,airplane, PluginAlertType.Low); 
 
                         }
 

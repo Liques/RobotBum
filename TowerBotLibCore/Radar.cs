@@ -113,7 +113,7 @@ namespace TowerBotLibCore
         [IgnoreDataMemberAttribute]
         public bool ShowHelicopters { get; set; }
         [IgnoreDataMemberAttribute]
-        public bool ShowAllCruisesOnlyOnServer { get; set; }
+        public bool ShowAllCruisesHeavyWeight { get; set; }
         [IgnoreDataMemberAttribute]
         public string TwitterConsumerKey { get; set; }
         [IgnoreDataMemberAttribute]
@@ -138,6 +138,8 @@ namespace TowerBotLibCore
             ShowAllFlightStartingWith = new List<string>();
             AvoidAllModelsStartingWith = new List<string>();
             ShowAllModelsStartingWith = new List<string>();
+
+            ShowAllCruisesHeavyWeight = true;
 
             this.Plugins = new List<IPlugin>()
                 {
