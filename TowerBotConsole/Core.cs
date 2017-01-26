@@ -52,7 +52,7 @@ namespace TowerBotConsole
           const string AvoidAllMediumWeightAirplanesCommand = "-AvoidAllMediumWeightAirplanes";
           const string AvoidAllLowWeightAirplanesCommand = "-AvoidAllLowWeightAirplanes";
 
-          const string ShowAllCruisesOnlyOnServerCommand = "-ShowAllCruisesOnlyOnServer";
+          const string ShowAllCruisesHeavyWeightCommand = "-ShowAllCruisesHeavyWeight";
           const string AvoidAllFlightsStartingWithCommand = "-AvoidAllFlightsStartingWith";
           const string ShowAllFlightStartingWithCommand = "-ShowAllFlightStartingWith";
           const string AvoidAllModelsStartingWithCommand = "-AvoidAllModelsStartingWith";
@@ -96,7 +96,7 @@ namespace TowerBotConsole
         //    cmds = new List<string>() {  "-AirportICAO","SBBR",
         //                                 "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
         //                                 "-URLServerFolder","server" ,
-        //                                 "-ShowAllCruisesOnlyOnServer","1" ,
+        //                                 "-ShowAllCruisesHeavyWeight","1" ,
         //                                 "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
         //                               //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
         //                                // "-AvoidAllModelsStartingWith","A32,B73",
@@ -272,8 +272,8 @@ namespace TowerBotConsole
 
             ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);     
 
-            if(cmds.Any(a => a == ShowAllCruisesOnlyOnServerCommand))
-                radar.ShowAllCruisesOnlyOnServer = GetCommandValueBool(ShowAllCruisesOnlyOnServerCommand, cmds);
+            if(cmds.Any(a => a == ShowAllCruisesHeavyWeightCommand))
+                radar.ShowAllCruisesHeavyWeight = GetCommandValueBool(ShowAllCruisesHeavyWeightCommand, cmds);
             if(cmds.Any(a => a == AvoidAllFlightsStartingWithCommand))
                 radar.AvoidAllFlightsStartingWith = GetCommandValue(AvoidAllFlightsStartingWithCommand, cmds).Split(',').ToList();
             if(cmds.Any(a => a == ShowAllFlightStartingWithCommand))
