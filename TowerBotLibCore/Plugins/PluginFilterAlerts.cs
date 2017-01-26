@@ -94,6 +94,7 @@ namespace TowerBotLibCore.Plugins
                                 continue;                                                       
                             } else if(airplane.State == AirplaneStatus.Cruise) {
                                 MakeAlert(listAlerts,radar,airplane, PluginAlertType.Low); 
+                                continue;   
                             }
 
                             // If this line is reached, the airplane is unknow. So we can make an alert for it!
