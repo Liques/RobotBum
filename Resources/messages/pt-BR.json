@@ -23,17 +23,11 @@
 	"Está decolando do aeroporto",
 	"Está indo embora da região",
 	"Já está decolando",
-	"Subindo rapidamente, decolando está",
-	"Bem rapidinho está decolando",
-	"Começando a missão, está decolando",
-	"Hora de trabalhar! Está decolando"
   ],
   "TakingOffPhraseEnd": [
     " está decolando",
 	" está parece estar decolando",
 	" está decolando do aeroporto",
-	" está saindo do aeroporto",
-	" está indo embora da região"
   ],
   "CruisePhraseStart": [
     "Está em cruzeiro ",
@@ -61,12 +55,6 @@
 	"Vai pousar no aeroporto ",
 	"Vai chegando no aeroporto ",
 	"Já em aproximação está chegando ",
-	"Descendo aos poucos está pousando ",
-	"Bem rapidinho está pousando ",
-	"Depois de um bom voo, está pousando ",
-	"Cumprindo a missão, está pousando ",
-	"Chegando a hora de descansar! Está pousando ",
-	"Trazendo gente para conexão, está pousando ",
   ],
   "LandingPhraseEnd": [
     " está pousando",
