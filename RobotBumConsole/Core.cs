@@ -103,7 +103,7 @@ namespace RobotBumConsole
             //                           //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
             //                             "-ShowHelicopters","1",
             //                            // "-MessageLanguage","en-PIRATE",
-                                         }.ToArray();
+            //                             }.ToArray();
 #endif
             var commandsAnalyse = AnalyseCommands(cmds);
 
