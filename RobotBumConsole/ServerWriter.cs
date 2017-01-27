@@ -41,14 +41,7 @@ namespace RobotBumConsole
             {
                 Alert.ListOfAlerts.Remove(listOldBeyondValidationAlerts[i]);
             }
-
-            for (int i = 0; i < listNewAlerts.Count; i++)
-            {
-                if (listNewAlerts[i].AlertType == PluginAlertType.NoAlert && listNewAlerts[i].Radar.Name == "BSB")
-                    listNewAlerts[i].TimeToBeRemoved = DateTime.Now.AddDays(3);
-
-            }
-
+            
             Alert.ListOfAlerts.AddRange(listNewAlerts);
             Alert.ListOfRecentAlerts = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddDays(-1)).ToList();
 
@@ -131,7 +124,7 @@ namespace RobotBumConsole
             if (radar != null)
                 listAlertByRadar = Alert.ListOfAlerts.Where(s => s.Radar != null && s.Radar.Name == radar.Name).ToList();
             else
-                listAlertByRadar = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddHours(-6) && w.Radar.Name != "BRA").ToList();
+                listAlertByRadar = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddHours(-6)).ToList();
 
             if (!showTestAlert)
                 listAlertByRadar = listAlertByRadar.Where(w => w.Icon != IconType.GoodNightAnnoucement).ToList();

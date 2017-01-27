@@ -37,9 +37,16 @@ namespace RobotBumLibCore.Plugins
                             // If the airplane does not have enough data...
                             if(airplane.State == AirplaneStatus.DataImcomplete)
                                 continue;
-                            
+
+                            // If is to show everyting...
+                            if (radar.ShowEverything)
+                            {
+                                MakeAlert(listAlerts, radar, airplane);
+                                continue;
+                            }
+
                             // If the airplane is "special" on specialpaintings.json
-                            if(!String.IsNullOrEmpty(airplane.SpecialDescription)){
+                            if (!String.IsNullOrEmpty(airplane.SpecialDescription)){
 
                                 MakeAlert(listAlerts,radar,airplane);
                                 continue;

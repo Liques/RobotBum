@@ -93,16 +93,16 @@ namespace RobotBumConsole
 
 #if DEBUG
             // Quick test line.
-            cmds = new List<string>() {  "-AirportICAO","SBBR",
-                                         "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
-                                         "-URLServerFolder","server" ,
-                                         "-ShowAllCruisesHeavyWeight","1" ,
-                                         "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
-                                       //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
-                                        // "-AvoidAllModelsStartingWith","A32,B73",
-                                       //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
-                                         "-ShowHelicopters","1",
-                                        // "-MessageLanguage","en-PIRATE",
+            //cmds = new List<string>() {  "-AirportICAO","SBBR",
+            //                             "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
+            //                             "-URLServerFolder","server" ,
+            //                             "-ShowAllCruisesHeavyWeight","1" ,
+            //                             "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
+            //                           //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
+            //                            // "-AvoidAllModelsStartingWith","A32,B73",
+            //                           //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
+            //                             "-ShowHelicopters","1",
+            //                            // "-MessageLanguage","en-PIRATE",
                                          }.ToArray();
 #endif
             var commandsAnalyse = AnalyseCommands(cmds);
@@ -264,6 +264,12 @@ namespace RobotBumConsole
             radar.TwitterConsumerSecret = GetCommandValue(TwitterConsumerSecretCommand, cmds);
             radar.TwitterAccessToken = GetCommandValue(TwitterAccessTokenCommand, cmds);
             radar.TwitterAccessTokenSecret = GetCommandValue(TwitterAccessTokenSecretCommand, cmds);
+
+            if(!cmds.Any(a => a.Contains("ShowAll")) &&
+               !cmds.Any(a => a.Contains("AvoidAll")))
+            {
+                radar.ShowEverything = true;
+            }
 
             if (cmds.Any(a => a == ShowAllLowWeightAirplanesCommand))
                 radar.ShowAllApproximationLowWeightAirplanes = GetCommandValueBool(ShowAllLowWeightAirplanesCommand, cmds);

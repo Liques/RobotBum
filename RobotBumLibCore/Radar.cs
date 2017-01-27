@@ -37,6 +37,7 @@ namespace RobotBumLibCore
         
         public double LatitudeY { get; set; }
 
+        [IgnoreDataMemberAttribute]
         public string RadarParentName { get; set; }
 
         [IgnoreDataMemberAttribute]
@@ -77,9 +78,9 @@ namespace RobotBumLibCore
         public static void AddRadar(Radar radar) {
             listRadars.Add(radar);
         }
-        
+        [IgnoreDataMemberAttribute]
         public string HTMLServerFolder { get; set; }
-
+        [IgnoreDataMemberAttribute]
         public int ApproximationMaxAltitude { get; set; }
         
         [IgnoreDataMemberAttribute]
@@ -114,6 +115,7 @@ namespace RobotBumLibCore
         public bool ShowHelicopters { get; set; }
         [IgnoreDataMemberAttribute]
         public bool ShowAllCruisesHeavyWeight { get; set; }
+        public bool ShowEverything { get; set; }
         [IgnoreDataMemberAttribute]
         public string TwitterConsumerKey { get; set; }
         [IgnoreDataMemberAttribute]
@@ -133,7 +135,7 @@ namespace RobotBumLibCore
             Plugins = new List<IPlugin>();
 
             this.ShowHelicopters = true;
-            
+
             AvoidAllFlightsStartingWith = new List<string>();
             ShowAllFlightStartingWith = new List<string>();
             AvoidAllModelsStartingWith = new List<string>();

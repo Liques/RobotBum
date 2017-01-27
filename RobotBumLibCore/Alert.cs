@@ -228,9 +228,7 @@ namespace RobotBumLibCore
         {
 
           bool exists = System.IO.Directory.Exists(currentPath);
-            if (!exists)
-                return String.Empty;
-
+           
            if (!exists && !String.IsNullOrEmpty(currentPath))
                 System.IO.Directory.CreateDirectory(currentPath);
 
