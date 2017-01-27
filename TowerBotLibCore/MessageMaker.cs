@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TowerBotFoundationCore;
 using TowerBotLibCore.Plugins;
+using System.Text.RegularExpressions;
 
 namespace TowerBotLibCore
 {
@@ -23,14 +24,14 @@ namespace TowerBotLibCore
         static List<string> listOfToMessagesTakingOffPhraseEnd = new List<string>();
         static List<string> listOfToMessagesCruisePhraseStart = new List<string>();
         static List<string> listOfToMessagesCruisePhraseEnd = new List<string>();
-        
+
         static List<string> listOfToMessagesLandingPhraseStart = new List<string>();
         static List<string> listOfToMessagesLandingPhraseEnd = new List<string>();
-        
+
         static List<string> listOfToMessagesTaxingPhraseStart = new List<string>();
         static List<string> listOfToMessagesTaxingPhraseEnd = new List<string>();
         static List<string> listOfToMessagesOrbit = new List<string>();
-        
+
 
         public string Message { get; set; }
         public Radar Radar { get; set; }
@@ -38,7 +39,7 @@ namespace TowerBotLibCore
 
         string airplaneRegistrationOrModel = String.Empty; // nome de apresentação do avião de acordo com os dados
         string article = String.Empty;
-        string indefinitiveArticle = String.Empty; 
+        string indefinitiveArticle = String.Empty;
         string phraseBeginningWithAirplaneRegistration = String.Empty; // Com a primeira letra maiuscula
         string phraseEndingWithAirplaneRegistration = String.Empty; // Com a primeira letra minuscula
         string fromPlace = String.Empty; // Frase 'De...'
@@ -48,55 +49,65 @@ namespace TowerBotLibCore
 
         public static string CustomLanguageCode = String.Empty;
 
-        static MessageMaker() {
-             LoadMessages();
+        static MessageMaker()
+        {
+            LoadMessages();
         }
 
-        public static void LoadMessages() {
+        public static void LoadMessages()
+        {
 
             string messageLanguageFolder = MultiOSFileSupport.ResourcesFolder + MultiOSFileSupport.Splitter + "messages" + MultiOSFileSupport.Splitter;
             string messageLanguageFileName = CultureInfo.CurrentCulture.Name + ".json";
 
-            if(String.IsNullOrEmpty(CustomLanguageCode)) {
+            if (String.IsNullOrEmpty(CustomLanguageCode))
+            {
 
-                if(!File.Exists(messageLanguageFolder + messageLanguageFileName)) {
+                if (!File.Exists(messageLanguageFolder + messageLanguageFileName))
+                {
                     messageLanguageFileName = CultureInfo.CurrentCulture.TwoLetterISOLanguageName + ".json";
-                    if(!File.Exists(messageLanguageFolder + messageLanguageFileName)) {
+                    if (!File.Exists(messageLanguageFolder + messageLanguageFileName))
+                    {
                         messageLanguageFileName = "en.json";
                         Console.WriteLine("Messages in {0} was not found... But you can make your own translation! :-)", CultureInfo.CurrentCulture.EnglishName);
                     }
                 }
-            } else {
+            }
+            else
+            {
 
-                if(String.IsNullOrEmpty(CustomLanguageCode))
+                if (String.IsNullOrEmpty(CustomLanguageCode))
                     return;
                 messageLanguageFileName = CustomLanguageCode + ".json";
             }
 
-                StreamReader file = File.OpenText(messageLanguageFolder + messageLanguageFileName);    
+            StreamReader file = File.OpenText(messageLanguageFolder + messageLanguageFileName);
 
-                string jsonstring = file.ReadToEnd();//file.ReadToEnd();
-                try{
-                    var listNames = JsonConvert.DeserializeObject<IDictionary<string, List<string>>>(jsonstring);
+            string jsonstring = file.ReadToEnd();//file.ReadToEnd();
+            try
+            {
+                var listNames = JsonConvert.DeserializeObject<IDictionary<string, List<string>>>(jsonstring);
 
-                    listOfArticles = listNames["articles"];
-                    listOfIndefinitiveArticles = listNames["indefinitiveArticle"];
-                    listOfFromMessages = listNames["from"];
-                    listOfToMessages = listNames["to"];
-                    listOfToMessagesTakingOffPhraseStart = listNames["TakingOffPhraseStart"];
-                    listOfToMessagesTakingOffPhraseEnd = listNames["TakingOffPhraseEnd"];
-                    listOfToMessagesCruisePhraseStart = listNames["CruisePhraseStart"];
-                    listOfToMessagesCruisePhraseEnd = listNames["CruisePhraseEnd"];                
-                    listOfToMessagesLandingPhraseStart = listNames["LandingPhraseStart"];
-                    listOfToMessagesLandingPhraseEnd = listNames["LandingPhraseEnd"];
-                    listOfToMessagesTaxingPhraseStart = listNames["TaxingPhraseStart"];
-                    listOfToMessagesTaxingPhraseEnd = listNames["TaxingPhraseEnd"];
-                    listOfToMessagesOrbit = listNames["Orbit"];
+                listOfArticles = listNames["articles"];
+                listOfIndefinitiveArticles = listNames["indefinitiveArticle"];
+                listOfFromMessages = listNames["from"];
+                listOfToMessages = listNames["to"];
+                listOfToMessagesTakingOffPhraseStart = listNames["TakingOffPhraseStart"];
+                listOfToMessagesTakingOffPhraseEnd = listNames["TakingOffPhraseEnd"];
+                listOfToMessagesCruisePhraseStart = listNames["CruisePhraseStart"];
+                listOfToMessagesCruisePhraseEnd = listNames["CruisePhraseEnd"];
+                listOfToMessagesLandingPhraseStart = listNames["LandingPhraseStart"];
+                listOfToMessagesLandingPhraseEnd = listNames["LandingPhraseEnd"];
+                listOfToMessagesTaxingPhraseStart = listNames["TaxingPhraseStart"];
+                listOfToMessagesTaxingPhraseEnd = listNames["TaxingPhraseEnd"];
+                listOfToMessagesOrbit = listNames["Orbit"];
 
-                    notIdentifiedMessage = RandomListPhrases(listNames["notIdentifiedAirplane"]);
-                } catch(Exception e) {
-                    ErrorManager.ThrowError(e, "Error loading data from the file messages.json");
-                }
+                notIdentifiedMessage = RandomListPhrases(listNames["notIdentifiedAirplane"]);
+            }
+            catch (Exception e)
+            {
+                ErrorManager.ThrowError(e, "Error loading data from the file messages.json");
+            }
         }
 
         public MessageMaker(AirplaneBasic airplane, Radar radar, RatificationType ratificationType = RatificationType.NoRatification)
@@ -132,7 +143,7 @@ namespace TowerBotLibCore
                     if (this.Airplane.IsSpecial)
                         airplaneRegistrationOrModel = String.Format("{0}, {1} {2}", airplane.SpecialDescription, this.article.ToLower(), this.Airplane.Registration.Name);
                     else
-                        airplaneRegistrationOrModel =  String.Format("{0}, ({1})", airplane.SpecialDescription, this.Airplane.Registration.Name);
+                        airplaneRegistrationOrModel = String.Format("{0}, ({1})", airplane.SpecialDescription, this.Airplane.Registration.Name);
 
                     if (!String.IsNullOrEmpty(this.Airplane.FlightName))
                         airplaneRegistrationOrModel += String.Format(", {0}", this.Airplane.FlightName);
@@ -143,10 +154,10 @@ namespace TowerBotLibCore
                 {
                     if (!String.IsNullOrEmpty(this.Airplane.FlightName))
                         airplaneRegistrationOrModel = String.Format("{0}, {1} ({2})", airplane.AircraftType.Name, this.Airplane.FlightName, this.Airplane.Registration.Name);
-                        //airplaneRegistrationOrModel = airplane.AircraftType.Name + ", o " + this.Airplane.FlightName + " (" + this.Airplane.Registration.Name + ")";
+                    //airplaneRegistrationOrModel = airplane.AircraftType.Name + ", o " + this.Airplane.FlightName + " (" + this.Airplane.Registration.Name + ")";
                     else
-                        airplaneRegistrationOrModel = String.Format("{0}, ({1})", airplane.AircraftType.Name, this.Airplane.Registration.Name);                    
-                        //airplaneRegistrationOrModel = airplane.AircraftType.Name + " (" + this.Airplane.Registration.Name + ")";
+                        airplaneRegistrationOrModel = String.Format("{0}, ({1})", airplane.AircraftType.Name, this.Airplane.Registration.Name);
+                    //airplaneRegistrationOrModel = airplane.AircraftType.Name + " (" + this.Airplane.Registration.Name + ")";
 
                     airplaneTypeLongPhrase = String.Empty;
 
@@ -176,7 +187,7 @@ namespace TowerBotLibCore
                 }
                 else
                 {
-                    airplaneRegistrationOrModel = String.Format( "{0} (Hex: {1})", notIdentifiedMessage, this.Airplane.ID);
+                    airplaneRegistrationOrModel = String.Format("{0} (Hex: {1})", notIdentifiedMessage, this.Airplane.ID);
                     article = String.Empty;
                 }
 
@@ -216,7 +227,8 @@ namespace TowerBotLibCore
                     #endregion
 
                     #region Setting what is the route of the airplane
-                    if(airplane.From.City != airplane.To.City) {
+                    if (airplane.From.City != airplane.To.City)
+                    {
                         string fromPlace = !String.IsNullOrEmpty(airplane.From.City) ? String.Format(" {0} {1}", RandomListPhrases(listOfFromMessages), airplane.From.City) : String.Empty;
                         string toPlace = !String.IsNullOrEmpty(airplane.To.City) ? String.Format(" {0} {1}", RandomListPhrases(listOfToMessages), airplane.From.City) : String.Empty;
                     }
@@ -242,9 +254,9 @@ namespace TowerBotLibCore
                         {
                             Message = GetParkingTaxiPhrase();
                         }
-                        
-                            Message += airplaneTypeLongPhrase;
-                       
+
+                        Message += airplaneTypeLongPhrase;
+
                         if (airplane.State == AirplaneStatus.Cruise || airplane.State == AirplaneStatus.Landing)
                         {
                             if (Message.Length <= 100)
@@ -287,7 +299,7 @@ namespace TowerBotLibCore
                 }
 
 
-                if (Message.Length <= 125 && (airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.TakingOff)&& radar.MainAirport != null)
+                if (Message.Length <= 125 && (airplane.State == AirplaneStatus.Landing || airplane.State == AirplaneStatus.TakingOff) && radar.MainAirport != null)
                 {
                     Message += " #Airport" + radar.MainAirport.ICAO;
                 }
@@ -295,7 +307,7 @@ namespace TowerBotLibCore
                 if (Message.Length <= 130)
                     Message += " #RobotBum";
 
-                Message = Message.Trim();
+                Message = Regex.Replace(Message, @"\s+", " ");
 
             }
             catch (Exception e)
@@ -307,30 +319,31 @@ namespace TowerBotLibCore
 
         private string GetCruisePhrase()
         {
-            return GetFormatedPhrase(listOfToMessagesCruisePhraseStart,listOfToMessagesCruisePhraseEnd);
+            return GetFormatedPhrase(listOfToMessagesCruisePhraseStart, listOfToMessagesCruisePhraseEnd);
         }
 
         private string GetTakingOffPhrase()
         {
-            return GetFormatedPhrase(listOfToMessagesTakingOffPhraseStart,listOfToMessagesTakingOffPhraseEnd);
+            return GetFormatedPhrase(listOfToMessagesTakingOffPhraseStart, listOfToMessagesTakingOffPhraseEnd);
         }
 
 
         private string GetLandingPhrase()
         {
-            return GetFormatedPhrase(listOfToMessagesLandingPhraseStart,listOfToMessagesLandingPhraseEnd);
+            return GetFormatedPhrase(listOfToMessagesLandingPhraseStart, listOfToMessagesLandingPhraseEnd);
 
         }
 
         private string GetParkingTaxiPhrase()
         {
-             return GetFormatedPhrase(listOfToMessagesTakingOffPhraseStart ,listOfToMessagesTakingOffPhraseEnd);
+            return GetFormatedPhrase(listOfToMessagesTakingOffPhraseStart, listOfToMessagesTakingOffPhraseEnd);
         }
 
-        private string GetFormatedPhrase(List<string> listOfPhrasesStarting, List<string> listOfPhrasesEnding) {
+        private string GetFormatedPhrase(List<string> listOfPhrasesStarting, List<string> listOfPhrasesEnding)
+        {
             string startingPhrase = RandomListPhrases(listOfPhrasesStarting);
             string endingPhrase = RandomListPhrases(listOfPhrasesEnding);
-            return RandomListPhrases( new List<string>() {
+            return RandomListPhrases(new List<string>() {
                String.Format("{0} {1}",phraseBeginningWithAirplaneRegistration, endingPhrase),
                 String.Format("{0} {1}",startingPhrase, phraseEndingWithAirplaneRegistration),
             });
@@ -346,7 +359,7 @@ namespace TowerBotLibCore
         {
             // This version is not supporting runways well yet.
             return String.Empty;
-           
+
         }
 
         private string GetOrbitPhrase()
@@ -367,7 +380,7 @@ namespace TowerBotLibCore
             if (sorteNumber >= lstPhrases.Count - 1)
                 return lstPhrases.LastOrDefault();
             else if (sorteNumber < 0)
-                return  lstPhrases.FirstOrDefault();
+                return lstPhrases.FirstOrDefault();
             else
                 return lstPhrases[sorteNumber];
         }

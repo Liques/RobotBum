@@ -15,7 +15,7 @@ namespace TowerBotConsole
     /// </summary>
     public class Core
     {
-         
+
         static bool showUpdates = true;
         static bool isToForceUpdateAll = false;
         static bool isTwitterActive = false;
@@ -30,37 +30,37 @@ namespace TowerBotConsole
 
 
         const string AirportICAOCommand = "-AirportICAO";
-           const  string ModeSMixerURLCommand = "-ModeSMixerURL";
-          const   string LongitudeXCommand = "-LongitudeX";
-           const  string LatitudeXCommand = "-LatitudeX";
-           const  string LongitudeYCommand = "-LongitudeY";
-          const   string LatitudeYCommand = "-LatitudeY";
+        const string ModeSMixerURLCommand = "-ModeSMixerURL";
+        const string LongitudeXCommand = "-LongitudeX";
+        const string LatitudeXCommand = "-LatitudeX";
+        const string LongitudeYCommand = "-LongitudeY";
+        const string LatitudeYCommand = "-LatitudeY";
 
-          const   string TwitterConsumerKeyCommand = "-TwitterConsumerKey";
-          const   string TwitterConsumerSecretCommand = "-TwitterConsumerSecret";
-           const  string TwitterAccessTokenCommand = "-TwitterAccessToken";
-          const   string TwitterAccessTokenSecretCommand = "-TwitterAccessTokenSecret";
-            
-          const   string HTMLServerURLFolderCommand = "-URLServerFolder";  
+        const string TwitterConsumerKeyCommand = "-TwitterConsumerKey";
+        const string TwitterConsumerSecretCommand = "-TwitterConsumerSecret";
+        const string TwitterAccessTokenCommand = "-TwitterAccessToken";
+        const string TwitterAccessTokenSecretCommand = "-TwitterAccessTokenSecret";
 
-          const string ShowAllHeavyWeightAirplanesCommand = "-ShowAllHeavyWeightAirplanes";
-          const string ShowAllMediumWeightAirplanesCommand = "-ShowAllMediumWeightAirplanes";
-          const string ShowAllLowWeightAirplanesCommand = "-ShowAllLowWeightAirplanes";
+        const string HTMLServerURLFolderCommand = "-URLServerFolder";
+
+        const string ShowAllHeavyWeightAirplanesCommand = "-ShowAllHeavyWeightAirplanes";
+        const string ShowAllMediumWeightAirplanesCommand = "-ShowAllMediumWeightAirplanes";
+        const string ShowAllLowWeightAirplanesCommand = "-ShowAllLowWeightAirplanes";
 
 
-          const string AvoidAllHeavyWeightAirplanesCommand = "-AvoidAllHeavyWeightAirplanes";
-          const string AvoidAllMediumWeightAirplanesCommand = "-AvoidAllMediumWeightAirplanes";
-          const string AvoidAllLowWeightAirplanesCommand = "-AvoidAllLowWeightAirplanes";
+        const string AvoidAllHeavyWeightAirplanesCommand = "-AvoidAllHeavyWeightAirplanes";
+        const string AvoidAllMediumWeightAirplanesCommand = "-AvoidAllMediumWeightAirplanes";
+        const string AvoidAllLowWeightAirplanesCommand = "-AvoidAllLowWeightAirplanes";
 
-          const string ShowAllCruisesHeavyWeightCommand = "-ShowAllCruisesHeavyWeight";
-          const string AvoidAllFlightsStartingWithCommand = "-AvoidAllFlightsStartingWith";
-          const string ShowAllFlightStartingWithCommand = "-ShowAllFlightStartingWith";
-          const string AvoidAllModelsStartingWithCommand = "-AvoidAllModelsStartingWith";
-          const string ShowAllModelsStartingWithCommand = "-ShowAllModelsStartingWith";
-          const string ShowHelicoptersCommand = "-ShowHelicopters";
-          const string MessageLanguageCommand = "-MessageLanguage";
+        const string ShowAllCruisesHeavyWeightCommand = "-ShowAllCruisesHeavyWeight";
+        const string AvoidAllFlightsStartingWithCommand = "-AvoidAllFlightsStartingWith";
+        const string ShowAllFlightStartingWithCommand = "-ShowAllFlightStartingWith";
+        const string AvoidAllModelsStartingWithCommand = "-AvoidAllModelsStartingWith";
+        const string ShowAllModelsStartingWithCommand = "-ShowAllModelsStartingWith";
+        const string ShowHelicoptersCommand = "-ShowHelicopters";
+        const string MessageLanguageCommand = "-MessageLanguage";
 
-         
+
         /// <summary>
         /// Start App
         /// </summary>
@@ -92,35 +92,41 @@ namespace TowerBotConsole
                 System.IO.Directory.CreateDirectory(strPath);
 
 #if DEBUG
-        //    // Quick test line.
-        //    cmds = new List<string>() {  "-AirportICAO","SBBR",
-        //                                 "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
-        //                                 "-URLServerFolder","server" ,
-        //                                 "-ShowAllCruisesHeavyWeight","1" ,
-        //                                 "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
-        //                               //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
-        //                                // "-AvoidAllModelsStartingWith","A32,B73",
-        //                               //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
-        //                                 "-ShowHelicopters","1",
-        //                                // "-MessageLanguage","en-PIRATE",
-        //                                 }.ToArray();
+            // Quick test line.
+            cmds = new List<string>() {  "-AirportICAO","SBBR",
+                                         "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
+                                         "-URLServerFolder","server" ,
+                                         "-ShowAllCruisesHeavyWeight","1" ,
+                                         "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
+                                       //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
+                                        // "-AvoidAllModelsStartingWith","A32,B73",
+                                       //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
+                                         "-ShowHelicopters","1",
+                                        // "-MessageLanguage","en-PIRATE",
+                                         }.ToArray();
 #endif
-           var commandsAnalyse = AnalyseCommands(cmds);
+            var commandsAnalyse = AnalyseCommands(cmds);
 
-           if(!String.IsNullOrEmpty(commandsAnalyse)) {
-               Console.WriteLine(commandsAnalyse);
-               Console.WriteLine("Closing application...");
-               return;
-           }
+            if (!String.IsNullOrEmpty(commandsAnalyse))
+            {
+                Console.WriteLine(commandsAnalyse);
+                Console.WriteLine("Closing application...");
+                return;
+            }
 
-           Radar radar = GetRadarAndSetCommands(cmds);
+            Radar radar = GetRadarAndSetCommands(cmds);
 
-            try{
+            try
+            {
                 Radar.AddRadar(radar);
-            } catch(ArgumentException e) {
+            }
+            catch (ArgumentException e)
+            {
                 Console.WriteLine(e.Message);
                 return;
-            }catch(Exception e) {
+            }
+            catch (Exception e)
+            {
                 throw e;
             }
 
@@ -191,8 +197,9 @@ namespace TowerBotConsole
 
         }
 
-        private static string AnalyseCommands(string[] cmds) {
-                      
+        private static string AnalyseCommands(string[] cmds)
+        {
+
 
             var listEssentialCommands = new List<string>() {
                 AirportICAOCommand,
@@ -201,11 +208,12 @@ namespace TowerBotConsole
 
             cmds.ToList().ForEach(item => listEssentialCommands.RemoveAll(r => r.ToLower() == item.ToLower()));
 
-            if(listEssentialCommands.Count > 0){
-                return String.Format("You maybe are missing the follwing commands: {0}", String.Join(",",listEssentialCommands));
+            if (listEssentialCommands.Count > 0)
+            {
+                return String.Format("You maybe are missing the follwing commands: {0}", String.Join(",", listEssentialCommands));
             }
 
-            
+
             var listTwitterEssentialCommands = new List<string>() {
                 TwitterConsumerKeyCommand,
                 TwitterConsumerSecretCommand,
@@ -217,31 +225,38 @@ namespace TowerBotConsole
 
             bool isTwitterEnabled = false;
 
-            if(listEssentialCommands.Count == 0){
+            if (listEssentialCommands.Count == 0)
+            {
                 isTwitterEnabled = true;
-            } else if(listEssentialCommands.Count == 4){
+            }
+            else if (listEssentialCommands.Count == 4)
+            {
                 isTwitterEnabled = false;
-            } else {
-                throw new ArgumentException(String.Format("If you want to configure twitter, you maybe are missing the following commands: {0}", String.Join(",",listTwitterEssentialCommands)));
+            }
+            else
+            {
+                throw new ArgumentException(String.Format("If you want to configure twitter, you maybe are missing the following commands: {0}", String.Join(",", listTwitterEssentialCommands)));
             }
 
-            if(!cmds.Any(a => a == HTMLServerURLFolderCommand) && !isTwitterActive) {
+            if (!cmds.Any(a => a == HTMLServerURLFolderCommand) && !isTwitterActive)
+            {
                 return String.Format("If you must at least to configure a HTML Folder (command {0}) or setup an access to Twitter.", HTMLServerURLFolderCommand);
             }
 
             return String.Empty;
 
         }
- 
-        private static Radar GetRadarAndSetCommands(string[] cmds) {
+
+        private static Radar GetRadarAndSetCommands(string[] cmds)
+        {
             var radar = new Radar();
 
-            
+
             radar.Name = GetCommandValue(AirportICAOCommand, cmds);
             radar.MainAirportICAO = GetCommandValue(AirportICAOCommand, cmds);
             radar.EndpointUrl = GetCommandValue(ModeSMixerURLCommand, cmds) + "/json";
             radar.LongitudeX = GetCommandValueDouble(LongitudeXCommand, cmds);
-            radar.LatitudeX =GetCommandValueDouble(LatitudeXCommand, cmds);
+            radar.LatitudeX = GetCommandValueDouble(LatitudeXCommand, cmds);
             radar.LongitudeY = GetCommandValueDouble(LongitudeYCommand, cmds);
             radar.LatitudeY = GetCommandValueDouble(LatitudeYCommand, cmds);
 
@@ -250,47 +265,51 @@ namespace TowerBotConsole
             radar.TwitterAccessToken = GetCommandValue(TwitterAccessTokenCommand, cmds);
             radar.TwitterAccessTokenSecret = GetCommandValue(TwitterAccessTokenSecretCommand, cmds);
 
-            if(cmds.Any(a => a == ShowAllLowWeightAirplanesCommand))
+            if (cmds.Any(a => a == ShowAllLowWeightAirplanesCommand))
                 radar.ShowAllApproximationLowWeightAirplanes = GetCommandValueBool(ShowAllLowWeightAirplanesCommand, cmds);
-            
-            if(cmds.Any(a => a == ShowAllMediumWeightAirplanesCommand))
+
+            if (cmds.Any(a => a == ShowAllMediumWeightAirplanesCommand))
                 radar.ShowAllApproximationMediumWeightAirplanes = GetCommandValueBool(ShowAllMediumWeightAirplanesCommand, cmds);
-                
-            if(cmds.Any(a => a == ShowAllHeavyWeightAirplanesCommand))
+
+            if (cmds.Any(a => a == ShowAllHeavyWeightAirplanesCommand))
                 radar.ShowAllApproximationHeavyWeightAirplanes = GetCommandValueBool(ShowAllHeavyWeightAirplanesCommand, cmds);
 
 
-            if(cmds.Any(a => a == AvoidAllLowWeightAirplanesCommand))
+            if (cmds.Any(a => a == AvoidAllLowWeightAirplanesCommand))
                 radar.AvoidAllApproximationLowWeightAirplanes = GetCommandValueBool(AvoidAllLowWeightAirplanesCommand, cmds);
-            
-            if(cmds.Any(a => a == AvoidAllMediumWeightAirplanesCommand))
+
+            if (cmds.Any(a => a == AvoidAllMediumWeightAirplanesCommand))
                 radar.AvoidAllApproximationMediumWeightAirplanes = GetCommandValueBool(AvoidAllMediumWeightAirplanesCommand, cmds);
-            
-            if(cmds.Any(a => a == AvoidAllHeavyWeightAirplanesCommand))
+
+            if (cmds.Any(a => a == AvoidAllHeavyWeightAirplanesCommand))
                 radar.AvoidAllApproximationHeavyWeightAirplanes = GetCommandValueBool(AvoidAllHeavyWeightAirplanesCommand, cmds);
-            
 
-            ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);     
 
-            if(cmds.Any(a => a == ShowAllCruisesHeavyWeightCommand))
+            ServerWriter.HTMLServerFolder = GetCommandValue(HTMLServerURLFolderCommand, cmds);
+
+            if (cmds.Any(a => a == ShowAllCruisesHeavyWeightCommand))
                 radar.ShowAllCruisesHeavyWeight = GetCommandValueBool(ShowAllCruisesHeavyWeightCommand, cmds);
-            if(cmds.Any(a => a == AvoidAllFlightsStartingWithCommand))
+            if (cmds.Any(a => a == AvoidAllFlightsStartingWithCommand))
                 radar.AvoidAllFlightsStartingWith = GetCommandValue(AvoidAllFlightsStartingWithCommand, cmds).Split(',').ToList();
-            if(cmds.Any(a => a == ShowAllFlightStartingWithCommand))
+            if (cmds.Any(a => a == ShowAllFlightStartingWithCommand))
                 radar.AvoidAllModelsStartingWith = GetCommandValue(ShowAllFlightStartingWithCommand, cmds).Split(',').ToList();
-            if(cmds.Any(a => a == AvoidAllModelsStartingWithCommand))
+            if (cmds.Any(a => a == AvoidAllModelsStartingWithCommand))
                 radar.AvoidAllModelsStartingWith = GetCommandValue(AvoidAllModelsStartingWithCommand, cmds).Split(',').ToList();
-            if(cmds.Any(a => a == ShowAllModelsStartingWithCommand))
+            if (cmds.Any(a => a == ShowAllModelsStartingWithCommand))
                 radar.ShowAllModelsStartingWith = GetCommandValue(ShowAllModelsStartingWithCommand, cmds).Split(',').ToList();
-            if(cmds.Any(a => a == ShowHelicoptersCommand))
+            if (cmds.Any(a => a == ShowHelicoptersCommand))
                 radar.ShowHelicopters = GetCommandValueBool(ShowHelicoptersCommand, cmds);
 
-            if(cmds.Any(a => a == MessageLanguageCommand)) {
-                var cultureCode =  GetCommandValue(MessageLanguageCommand, cmds);
-                try {
+            if (cmds.Any(a => a == MessageLanguageCommand))
+            {
+                var cultureCode = GetCommandValue(MessageLanguageCommand, cmds);
+                try
+                {
                     var cultureInfo = new CultureInfo(cultureCode);
                     CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-                } catch {
+                }
+                catch
+                {
                     MessageMaker.CustomLanguageCode = cultureCode;
                     MessageMaker.LoadMessages();
                 }
@@ -299,30 +318,33 @@ namespace TowerBotConsole
             return radar;
         }
 
-        private static string GetCommandValue(string command, string[] cmds) {
-            var cmdIndex = Array.IndexOf(cmds,command);
+        private static string GetCommandValue(string command, string[] cmds)
+        {
+            var cmdIndex = Array.IndexOf(cmds, command);
 
-            if(cmdIndex < 0)
-            return String.Empty;
+            if (cmdIndex < 0)
+                return String.Empty;
 
-            return cmds[cmdIndex + 1].Replace("\"","");          
+            return cmds[cmdIndex + 1].Replace("\"", "");
         }
 
-        
-        private static bool GetCommandValueBool(string command, string[] cmds) {
+
+        private static bool GetCommandValueBool(string command, string[] cmds)
+        {
             string commandValue = GetCommandValue(command, cmds);
-            
-            if(!String.IsNullOrEmpty(commandValue))
+
+            if (!String.IsNullOrEmpty(commandValue))
                 return false;
 
             return bool.Parse(commandValue);
 
         }
 
-        private static double GetCommandValueDouble(string command, string[] cmds) {
+        private static double GetCommandValueDouble(string command, string[] cmds)
+        {
             string commandValue = GetCommandValue(command, cmds);
-            
-            if(String.IsNullOrEmpty(commandValue))
+
+            if (String.IsNullOrEmpty(commandValue))
                 return 0;
 
             return double.Parse(commandValue);
@@ -333,7 +355,7 @@ namespace TowerBotConsole
         private static void CheckStatus(object stateInfo)
         {
             TowerBotLibCore.Alert currentAlert = null; // Para tratatamento de erro.
-            
+
             var alerts = PluginsManager.GetAlerts(isToForceUpdateAll);
             isToForceUpdateAll = false;
 
@@ -372,14 +394,14 @@ namespace TowerBotConsole
                 if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.High)
                 {
                     using (StreamWriter w = File.AppendText(strPath + "\\logAlertsHigh_" + DateTime.Now.ToString("dd-MM-yyyy") + ".txt"))
-                    {                        
+                    {
                         if (isTwitterActive && !isFirstTime)
                         {
                             twitterManager.PostMessage(alerts[i].Radar, alerts[i].Message);
                         };
 
                         Log(alerts[i].ToString(), w);
-                        
+
                     }
                 }
                 if (alerts[i].AlertType == TowerBotLibCore.PluginAlertType.NoAlert)

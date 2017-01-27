@@ -23,16 +23,16 @@ namespace TowerBotConsole
         /// </summary>
         private static string specialFolderName = String.Empty;
 
-        public static string HTMLServerFolder {get;set;}
+        public static string HTMLServerFolder { get; set; }
 
         static ServerWriter()
         {
 
 
             OpenDateTime = DateTime.Now;
-           
+
         }
-        
+
         public static void UpdatePages(List<Alert> listNewAlerts)
         {
             // Verify if any old alert is older than it's time to be removed 
@@ -44,7 +44,7 @@ namespace TowerBotConsole
 
             for (int i = 0; i < listNewAlerts.Count; i++)
             {
-                if (listNewAlerts[i].AlertType == PluginAlertType.NoAlert && listNewAlerts[i].Radar.Name == "BSB")                    
+                if (listNewAlerts[i].AlertType == PluginAlertType.NoAlert && listNewAlerts[i].Radar.Name == "BSB")
                     listNewAlerts[i].TimeToBeRemoved = DateTime.Now.AddDays(3);
 
             }
@@ -53,14 +53,14 @@ namespace TowerBotConsole
             Alert.ListOfRecentAlerts = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddDays(-1)).ToList();
 
             var toJSON = JsonConvert.SerializeObject(Alert.ListOfAlerts.Where(w => w.Icon != IconType.GoodNightAnnoucement).ToList());
-            
+
             WriteFile(strJSONPath, "lastAlerts.json", toJSON);
 
-            if(String.IsNullOrEmpty(HTMLServerFolder))
-            return;
+            if (String.IsNullOrEmpty(HTMLServerFolder))
+                return;
 
             var strPath = HTMLServerFolder + specialFolderName;
-                        
+
             WriteFile(strPath, "index.html", IndividualRadar(null));
 
             bool exists = System.IO.Directory.Exists(strPath + @"/data/");
@@ -94,17 +94,17 @@ namespace TowerBotConsole
             if (!exists && !String.IsNullOrEmpty(currentPath))
                 System.IO.Directory.CreateDirectory(currentPath);
 
-            if(!String.IsNullOrEmpty(currentPath))
+            if (!String.IsNullOrEmpty(currentPath))
                 currentPath += @"/" + fileName;
             else
                 currentPath += fileName;
-                
+
 
             if (File.Exists(currentPath))
                 File.Delete(currentPath);
 
             File.AppendAllText(currentPath, content, Encoding.UTF8);
-           
+
         }
 
         private static string LoadFile(string currentPath, string fileName)
@@ -114,10 +114,10 @@ namespace TowerBotConsole
             if (!exists)
                 return String.Empty;
 
-           if (!exists && !String.IsNullOrEmpty(currentPath))
+            if (!exists && !String.IsNullOrEmpty(currentPath))
                 System.IO.Directory.CreateDirectory(currentPath);
 
-            if(!String.IsNullOrEmpty(currentPath))
+            if (!String.IsNullOrEmpty(currentPath))
                 currentPath += @"/" + fileName;
             else
                 currentPath += fileName;
@@ -133,7 +133,7 @@ namespace TowerBotConsole
             else
                 listAlertByRadar = Alert.ListOfAlerts.Where(w => w.TimeCreated > DateTime.Now.AddHours(-6) && w.Radar.Name != "BRA").ToList();
 
-            if(!showTestAlert)
+            if (!showTestAlert)
                 listAlertByRadar = listAlertByRadar.Where(w => w.Icon != IconType.GoodNightAnnoucement).ToList();
 
             StringBuilder strBuilder = new StringBuilder();
@@ -144,11 +144,11 @@ AAAGYFUABmAAVQZgVQAGYABVBmAAAAZgAAAGYAIiJmIiIAZgAjEmYjEgBmACMyZiMyAGYAJCJmJC
 IAZgAAAAAAAABmUAAAAAAABWZmZmZmZmZmYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
             strBuilder.Append("<meta name=viewport content='width=device-width, initial-scale=1'>");
-            if(!System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
+            if (!System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
                 strBuilder.Append("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css'>");
             else
                 strBuilder.Append("<link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.2.0-rc2/css/bootstrap-rtl.min.css'>");
-            
+
             strBuilder.Append("<title>Robot Bum </title>");
             strBuilder.Append("<meta http-equiv='refresh' content='30' >");
             strBuilder.Append("<h3><b>Robot Bum");
@@ -205,7 +205,8 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
                             var start = listAlertByRadar[i].Message.ToString().Split('#').ToList();
                             if (start.Count == 1)
                                 strBuilder.Append(listAlertByRadar[i].Message.ToString());
-                            else {
+                            else
+                            {
                                 strBuilder.Append("<span>" + start.FirstOrDefault() + "</span>");
                                 strBuilder.Append("<span class='visible-lg-inline'>" + listAlertByRadar[i].Message.ToString().Replace(start.FirstOrDefault(), "") + "</span>");
                             }
@@ -214,7 +215,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
                         strBuilder.Append("</font></span>");
 
                         strBuilder.Append("<span class='visible-lg-inline'><font color=lightgray> ");
-                        
+
                         strBuilder.Append("</font></span>");
 
                         strBuilder.Append("<br/>");
@@ -227,7 +228,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' />");
                 }
             }
             strBuilder.Append("<hr/>");
-           
+
             strBuilder.Append("<hr/>");
             strBuilder.Append("<h5>Robot Bum</h5>");
 

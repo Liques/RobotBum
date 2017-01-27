@@ -332,7 +332,7 @@ namespace TowerBotLibCore
 
                         if (currentAir.PreviousAirplane == null || numReq >= maxReq)
                             break;
-                        else if (currentAir.PreviousAirplane.State == AirplaneStatus.ParkingOrTaxing)
+                        else if (currentAir.PreviousAirplane.Altitude == 0)
                             break;
 
                         decimal distanceLatitude = Convert.ToDecimal(currentAir.Latitude) - Convert.ToDecimal(currentAir.PreviousAirplane.Latitude);
