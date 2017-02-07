@@ -83,9 +83,9 @@ It's the enough to run Robot Bum. But if you want to filter some traffic or if y
 |  -AvoidAllLowWeightAirplanes    | true/false                                             | 
 |                                 |                                                        | 
 |  -ShowAllCruisesHeavyWeight     | true/false                                             | 
-|  -AvoidAllFlightsStartingWith   | Ex.: "EK","DAL","AIS"                                | 
-|  -ShowAllFlightStartingWith     | Ex.: "EK","DAL","AIS"                                | 
-|  -AvoidAllModelsStartingWith    | Ex.: "A38","B77","B76"                               | 
-|  -ShowAllModelsStartingWith     | Ex.: "A38","B77","B76"                               | 
+|  -AvoidAllFlightsStartingWith   | Ex.: "EK,DAL,AIS"                                | 
+|  -ShowAllFlightStartingWith     | Ex.: "EK,DAL,AIS"                                | 
+|  -AvoidAllModelsStartingWith    | Ex.: "A38,B77,B76"                               | 
+|  -ShowAllModelsStartingWith     | Ex.: "A38,B77,B76"                               | 
 |  -ShowHelicopters               | true/false                                             | 
 |  -MessageLanguage               |  Supported languages: en,en-PIRATE,pt,pt-BR,zh-HANS,he | 
