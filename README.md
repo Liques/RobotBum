@@ -1,5 +1,5 @@
 # RobotBum
-RobotBum is application that tracks airplanes and sends messages to Twitter or a webserver. Works on Windows and Linux, using .NET Core.
+RobotBum is application that tracks airplanes and sends messages to Twitter or a webserver. Works on Windows, Linux and Mac OS X, using .NET Core.
 
 ![alt tag](https://github.com/Liques/RobotBum/raw/master/example.PNG)
 
