@@ -6,13 +6,13 @@ RobotBum is application that tracks airplanes and sends messages to Twitter or a
 
 Note: The application, for a while, is not running on RaspberryPI devices, even if it's running the latest versions of Windows 10 or Linux. The framework we are using (.NET Core) is not supporting ARM devices yet, but they will release support to ARM devices next months.
 
- [Download now!](https://github.com/Liques/RobotBum/releases).
+ - [Download page](https://github.com/Liques/RobotBum/releases)
 
 ##How to Install
 
 ###Step 1: 
 
-If you don't have a ADS-B reciever or you already have an instance running ModeSMixer2, even if it's not running in you machine, please skip to the step 2.
+If you don't have a ADS-B reciever or you already have an instance running ModeSMixer2, even if it's not running in your machine, please skip to the step 2.
 
 If you have your own ADS-B reciever you have to install ***ModeSMixer2***. This program, as their website says, has ability to receive data across the network from one or more sources, such as instances of dump1090, rtl1090, modesdeco2, ADSB# or any other Mode S decoding application. This program is free, run in most operational systems. 
 
@@ -42,19 +42,27 @@ Type the following line, replacing the parameters:
 
 Example:
 ```
-.\RobotBumConsole.exe  
+.\RobotBumConsole 
         -AirportICAO KJFK 
         -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
         -URLServerFolder server
 ```
 
-If you run and have no error, **it's running!** The application is writing some HTML pages, you can see them in "server" folder. If you have Apache2, IIS or any webserver installed your machine, you just need to change the -URLServerFolder as the example below:
+If you run and have no error, **it's running!** The application is writing some HTML pages, you can see these files in the "server" folder. If you have Apache2, IIS or any webserver installed on your machine, you just need to change the -URLServerFolder as the example below:
 
 ```
-.\RobotBumConsole.exe  
+.\RobotBumConsole  
         -AirportICAO KJFK 
         -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
         -URLServerFolder /var/www/html 
+```
+
+
+```
+RobotBumConsole.exe  
+        -AirportICAO KJFK 
+        -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
+        -URLServerFolder "c:\\inetpub\\wwwroot"
 ```
 
 It's the enough to run Robot Bum. But if you want to filter some traffic or if you want to post the messages on Twitter, Robot Bum have a lot options.
