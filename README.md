@@ -36,13 +36,48 @@ Type the following line, replacing the parameters:
 
 Example:
 ```
-.\RobotBumConsole.exe  -AirportICAO KJFK -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 -URLServerFolder server
+.\RobotBumConsole.exe  
+        -AirportICAO KJFK 
+        -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
+        -URLServerFolder server
 ```
 
 If you run and have no error, **it's running!** The application is writing some HTML pages, you can see them in "server" folder. If you have Apache2, IIS or any webserver installed your machine, you just need to change the -URLServerFolder as the example below:
 
 ```
-.\RobotBumConsole.exe  -AirportICAO KJFK -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 -URLServerFolder /var/www/html 
+.\RobotBumConsole.exe  
+        -AirportICAO KJFK 
+        -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
+        -URLServerFolder /var/www/html 
 ```
 
 It's the enough to run Robot Bum. But if you want to filter some traffic or if you want to post the messages on Twitter, Robot Bum have a lot options.
+
+## List of command-line options
+
+|     Command                              |Value| 
+|---------------------------------|--------------------------------------------------------| 
+|                        |                                                   | 
+|  -TwitterConsumerKey            | text                                             | 
+|  -TwitterConsumerSecret         | text                                             | 
+|  -TwitterAccessToken            | text                                             | 
+|  -TwitterAccessTokenSecret      | text                                             | 
+|                                 |                                                        | 
+|  -URLServerFolder               | text                                             | 
+|                                 |                                                        | 
+|  -ShowAllHeavyWeightAirplanes   | true/false                                             | 
+|  -ShowAllMediumWeightAirplanes  | true/false                                             | 
+|  -ShowAllLowWeightAirplanes     | true/false                                             | 
+|                                 |                                                        | 
+|                                 |                                                        | 
+|  -AvoidAllHeavyWeightAirplanes  | true/false                                             | 
+|  -AvoidAllMediumWeightAirplanes | true/false                                             | 
+|  -AvoidAllLowWeightAirplanes    | true/false                                             | 
+|                                 |                                                        | 
+|  -ShowAllCruisesHeavyWeight     | true/false                                             | 
+|  -AvoidAllFlightsStartingWith   | Ex.: ("EK","DAL","AIS")                                | 
+|  -ShowAllFlightStartingWith     | Ex.: ("EK","DAL","AIS")                                | 
+|  -AvoidAllModelsStartingWith    | Ex.: ("A38","B77","B76")                               | 
+|  -ShowAllModelsStartingWith     | Ex.: ("A38","B77","B76")                               | 
+|  -ShowHelicopters               | true/false                                             | 
+|  -MessageLanguage               |  Supported languages: en,en-PIRATE,pt,pt-BR,zh-HANS,he | 
