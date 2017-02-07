@@ -1,6 +1,9 @@
 # RobotBum
 RobotBum is application that tracks airplanes and sends messages to Twitter or a webserver. Works on Windows and Linux, using .NET Core.
 
+![alt tag](https://github.com/Liques/RobotBum/raw/master/example.PNG)
+
+
 Note: The application, for a while, is not running on RaspberryPI devices, even if it's running the latest versions of Windows 10 or Linux. The framework we are using (.NET Core) is not supporting ARM devices yet, but they will release support to ARM devices next months.
 
 ##How to Install
