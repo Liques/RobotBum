@@ -1,0 +1,52 @@
+
+{
+  "articles": [
+    "The",
+  ],
+  "indefinitiveArticle": [
+    "a"
+  ],
+  "notIdentifiedAirplane": [
+    "An airplane that we could not identify"
+  ],
+  "from": [
+    "coming from",
+  ],
+  "to": [
+    "going to",
+  ],
+  "TakingOffPhraseStart": [
+    "It's taking off ",
+    "It's taking off now ",
+  ],
+  "TakingOffPhraseEnd": [
+    " is taking off",
+	" is taking off now ",
+  ],
+  "CruisePhraseStart": [
+    "It's on cruise",
+	"Is now on cruise",
+  ],
+  "CruisePhraseEnd": [
+    " is on cruise",
+	" is now on cruise",
+  ],
+  "LandingPhraseStart": [
+    "It's landing ", 
+    "It's landing now ", 
+  ],
+  "LandingPhraseEnd": [
+    " is landing ",
+    " is landing now",
+  ],
+  "TaxingPhraseStart": [
+    "It's on the airport ",
+  ],
+  "TaxingPhraseEnd": [
+    " is on the airport",
+  ],
+  "Orbit": [
+    " is orbiting",
+  ]
+ 
+}

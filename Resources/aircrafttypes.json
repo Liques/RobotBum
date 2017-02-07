@@ -1,0 +1,994 @@
+﻿{
+  "A140": {
+    "Name": "Antonov AN-140",
+    "Type": "1"
+  },
+  "A225": {
+    "Name": "Antonov An-225 Mriya",
+    "Type": "1"
+  },
+  "A306": {
+    "Name": "Airbus A300-600",
+    "Type": "1"
+  },
+  "A30B": {
+    "Name": "Airbus A300",
+    "Type": "1"
+  },
+  "A310": {
+    "Name": "Airbus A310",
+    "Type": "1"
+  },
+  "A318": {
+    "Name": "Airbus A318",
+    "Type": "2"
+  },
+  "A319": {
+    "Name": "Airbus A319",
+    "Type": "2"
+  },
+  "A320": {
+    "Name": "Airbus A320",
+    "Type": "2"
+  },
+  "A321": {
+    "Name": "Airbus A321",
+    "Type": "2"
+  },
+  "A330": {
+    "Name": "Airbus A330",
+    "Type": "1"
+  },
+  "A332": {
+    "Name": "Airbus A330-200",
+    "Type": "1"
+  },
+  "A333": {
+    "Name": "Airbus A330-300",
+    "Type": "1"
+  },
+  "A340": {
+    "Name": "Airbus A340",
+    "Type": "1"
+  },
+  "A342": {
+    "Name": "Airbus A340-200",
+    "Type": "1"
+  },
+  "A343": {
+    "Name": "Airbus A340-300",
+    "Type": "1"
+  },
+  "A345": {
+    "Name": "Airbus A340-500",
+    "Type": "1"
+  },
+  "A346": {
+    "Name": "Airbus A340-600",
+    "Type": "1"
+  },
+  "A350": {
+    "Name": "Airbus A350",
+    "Type": "1"
+  },
+  "A351": {
+    "Name": "Airbus A350-1000",
+    "Type": "1"
+  },
+  "A358": {
+    "Name": "Airbus A350-800",
+    "Type": "1"
+  },
+  "A359": {
+    "Name": "Airbus A350-900",
+    "Type": "1"
+  },
+  "A388": {
+    "Name": "Airbus A380-800",
+    "Type": "1"
+  },
+  "A3ST": {
+    "Name": "Airbus A300-600ST Beluga Freighter",
+    "Type": "1"
+  },
+  "A748": {
+    "Name": "Hawker Siddeley HS 748",
+    "Type": "3"
+  },
+  "AC68": {
+    "Name": "Gulfstream/Rockwell (Aero) Commander",
+    "Type": "3"
+  },
+  "AC90": {
+    "Name": "Gulfstream/Rockwell (Aero) Turbo Commander",
+    "Type": "3"
+  },
+  "AN12": {
+    "Name": "Antonov AN-12",
+    "Type": "2"
+  },
+  "AN24": {
+    "Name": "Antonov AN-24",
+    "Type": "2"
+  },
+  "AN26": {
+    "Name": "Antonov AN-26",
+    "Type": "2"
+  },
+  "AN28": {
+    "Name": "Antonov AN-28",
+    "Type": "2"
+  },
+  "AN30": {
+    "Name": "Antonov AN-30",
+    "Type": "2"
+  },
+  "AN32": {
+    "Name": "Antonov AN-32",
+    "Type": "2"
+  },
+  "AN72": {
+    "Name": "Antonov AN-72 / AN-74",
+    "Type": "2"
+  },
+
+
+  "AS32": {
+    "Name": "Eurocopter AS332 Super Puma",
+    "Type": "4"
+  },
+  "AT43": {
+    "Name": "ATR 42-300 / 320",
+    "Type": "2"
+  },
+  "AT45": {
+    "Name": "ATR 42-500",
+    "Type": "2"
+  },
+  "AT72": {
+    "Name": "ATR 72",
+    "Type": "2"
+  },
+  "AT73": {
+    "Name": "ATR 72-200 series",
+    "Type": "2"
+  },
+  "AT75": {
+    "Name": "ATR 72-500",
+    "Type": "2"
+  },
+  "AT76": {
+    "Name": "ATR 72-600",
+    "Type": "2"
+  },
+  "ATP": {
+    "Name": "British Aerospace ATP",
+    "Type": "2"
+  },
+  "B105": {
+    "Name": "Eurocopter (MBB) Bo.105",
+    "Type": "4"
+  },
+  "B190": {
+    "Name": "Beechcraft 1900",
+    "Type": "1"
+  },
+  "B212": {
+    "Name": "Bell 212",
+    "Type": "4"
+  },
+  "B412": {
+    "Name": "Bell 412",
+    "Type": "4"
+  },
+  "B429": {
+    "Name": "Bell 429",
+    "Type": "4"
+  },
+  "B461": {
+    "Name": "BAe 146-100",
+    "Type": "2"
+  },
+  "B462": {
+    "Name": "BAe 146-200",
+    "Type": "2"
+  },
+  "B463": {
+    "Name": "BAe 146-300",
+    "Type": "2"
+  },
+  "B703": {
+    "Name": "Boeing 707",
+    "Type": "1"
+  },
+  "B712": {
+    "Name": "Boeing 717",
+    "Type": "1"
+  },
+  "B720": {
+    "Name": "Boeing 720B",
+    "Type": "1"
+  },
+  "B721": {
+    "Name": "Boeing 727-100",
+    "Type": "1"
+  },
+  "B722": {
+    "Name": "Boeing 727-200",
+    "Type": "1"
+  },
+  "B731": {
+    "Name": "Boeing 737-100",
+    "Type": "2"
+  },
+  "B732": {
+    "Name": "Boeing 737-200",
+    "Type": "2"
+  },
+  "B733": {
+    "Name": "Boeing 737-300",
+    "Type": "2"
+  },
+  "B734": {
+    "Name": "Boeing 737-400",
+    "Type": "2"
+  },
+  "B735": {
+    "Name": "Boeing 737-500",
+    "Type": "2"
+  },
+  "B736": {
+    "Name": "Boeing 737-600",
+    "Type": "2"
+  },
+  "B737": {
+    "Name": "Boeing 737-700",
+    "Type": "2"
+  },
+  "B738": {
+    "Name": "Boeing 737-800",
+    "Type": "2"
+  },
+  "B739": {
+    "Name": "Boeing 737-900",
+    "Type": "2"
+  },
+  "B741": {
+    "Name": "Boeing 747-100",
+    "Type": "1"
+  },
+  "B742": {
+    "Name": "Boeing 747-200",
+    "Type": "1"
+  },
+  "B743": {
+    "Name": "Boeing 747-300",
+    "Type": "1"
+  },
+  "B744": {
+    "Name": "Boeing 747-400",
+    "Type": "1"
+  },
+  "BE36": {
+    "Name": "Beech G36 Bonanza ",
+    "Type": "3"
+  },
+  "BE20": {
+    "Name": "Beechcraft Super King Air",
+    "Type": "3"
+  },
+
+  "B748": {
+    "Name": "Boeing 747-8",
+    "Type": "1"
+  },
+  "B74R": {
+    "Name": "Boeing 747SR",
+    "Type": "1"
+  },
+  "N74S": {
+    "Name": "Boeing 747SP",
+    "Type": "1"
+  },
+  "B752": {
+    "Name": "Boeing 757-200",
+    "Type": "1"
+  },
+  "B753": {
+    "Name": "Boeing 757-300",
+    "Type": "1"
+  },
+  "B762": {
+    "Name": "Boeing 767-200",
+    "Type": "1"
+  },
+  "B763": {
+    "Name": "Boeing 767-300",
+    "Type": "1"
+  },
+  "B764": {
+    "Name": "Boeing 767-400",
+    "Type": "1"
+  },
+  "B772": {
+    "Name": "Boeing 777-200",
+    "Type": "1"
+  },
+  "B77F": {
+    "Name": "Boeing 777F",
+    "Type": "1"
+  },
+  "B77L": {
+    "Name": "Boeing 777-200LR",
+    "Type": "1"
+  },
+  "B773": {
+    "Name": "Boeing 777-300",
+    "Type": "1"
+  },
+  "B77W": {
+    "Name": "Boeing 777-300ER",
+    "Type": "1"
+  },
+  "B783": {
+    "Name": "Boeing 787-3",
+    "Type": "1"
+  },
+  "B788": {
+    "Name": "Boeing 787-8",
+    "Type": "1"
+  },
+  "B789": {
+    "Name": "Boeing 787-9",
+    "Type": "1"
+  },
+  "BA11": {
+    "Name": "British Aerospace (BAC) One Eleven",
+    "Type": "2"
+  },
+  "BE58": {
+    "Name": "Beechcraft Baron 58",
+    "Type": "3"
+  },
+  "BCS1": {
+    "Name": "Bombardier CS100",
+    "Type": "3"
+  },
+  "BCS3": {
+    "Name": "Bombardier CS300",
+    "Type": "3"
+  },
+  "BELF": {
+    "Name": "Shorts SC-5 Belfast",
+    "Type": "2"
+  },
+  "BN2P": {
+    "Name": "Pilatus Britten-Norman BN-2A/B Islander",
+    "Type": "3"
+  },
+  "C130": {
+    "Name": "Lockheed Hercules",
+    "Type": "1"
+  },
+  "C162": {
+    "Name": "Cessna 162",
+    "Type": "3"
+  },
+  "C172": {
+    "Name": "Cessna 172",
+    "Type": "3"
+  },
+  "C77R": {
+    "Name": "Cessna 177 Cardinal RG",
+    "Type": "3"
+  },
+  "C182S": {
+    "Name": "Cessna 182 Skylane",
+    "Type": "3"
+  },
+  "C208": {
+    "Name": "Cessna 208 Caravan",
+    "Type": "3"
+  },
+  "C210": {
+    "Name": "Cessna 210 Centurion",
+    "Type": "3"
+  },
+  "C212": {
+    "Name": "CASA / IPTN 212 Aviocar",
+    "Type": "3"
+  },
+  "C25A": {
+    "Name": "Cessna Citation CJ2",
+    "Type": "3"
+  },
+  "C25B": {
+    "Name": "Cessna Citation CJ3",
+    "Type": "3"
+  },
+  "C25C": {
+    "Name": "Cessna Citation CJ4",
+    "Type": "3"
+  },
+  "C46": {
+    "Name": "Curtiss C-46 Commando",
+    "Type": "3"
+  },
+  "C500": {
+    "Name": "Cessna Citation I",
+    "Type": "3"
+  },
+  "C510": {
+    "Name": "Cessna Citation Mustang",
+    "Type": "3"
+  },
+  "C525": {
+    "Name": "Cessna CitationJet",
+    "Type": "3"
+  },
+  "C550": {
+    "Name": "Cessna Citation II",
+    "Type": "3"
+  },
+  "C560": {
+    "Name": "Cessna Citation V",
+    "Type": "3"
+  },
+  "C56X": {
+    "Name": "Cessna Citation Excel",
+    "Type": "3"
+  },
+  "C650": {
+    "Name": "Cessna Citation III",
+    "Type": "3"
+  },
+  "C680": {
+    "Name": "Cessna Citation Sovereign",
+    "Type": "3"
+  },
+  "C750": {
+    "Name": "Cessna Citation X",
+    "Type": "3"
+  },
+  "CL2T": {
+    "Name": "Canadair CL-415",
+    "Type": "2"
+  },
+  "CL30": {
+    "Name": "Bombardier Challenger 300",
+    "Type": "3"
+  },
+  "CL44": {
+    "Name": "Canadair CL-44",
+    "Type": "2"
+  },
+  "CL60": {
+    "Name": "Canadair Challenger",
+    "Type": "2"
+  },
+  "CN35": {
+    "Name": "CASA/IPTN CN-235",
+    "Type": "2"
+  },
+  "CONC": {
+    "Name": "Aerospatiale/BAC Concorde",
+    "Type": "1"
+  },
+  "CONI": {
+    "Name": "Lockheed L-1049 Super Constellation",
+    "Type": "2"
+  },
+  "COUC": {
+    "Name": "Helio H-250 Courier / H-295 / 385 Super Courier",
+    "Type": "3"
+  },
+  "CRJ1": {
+    "Name": "Canadair Regional Jet 100",
+    "Type": "3"
+  },
+  "CRJ2": {
+    "Name": "Canadair Regional Jet 200",
+    "Type": "3"
+  },
+  "CRJ7": {
+    "Name": "Canadair Regional Jet 700",
+    "Type": "3"
+  },
+  "CRJ9": {
+    "Name": "Canadair Regional Jet 900",
+    "Type": "3"
+  },
+  "CRJX": {
+    "Name": "Canadair Regional Jet 1000",
+    "Type": "3"
+  },
+  "CVLP": {
+    "Name": "Convair CV-240 & -440",
+    "Type": "2"
+  },
+  "CVLT": {
+    "Name": "Convair CV-580",
+    "Type": "2"
+  },
+  "D228": {
+    "Name": "Fairchild Dornier Do.228",
+    "Type": "2"
+  },
+  "D328": {
+    "Name": "Fairchild Dornier Do.328",
+    "Type": "2"
+  },
+  "DC10": {
+    "Name": "Douglas DC-10",
+    "Type": "1"
+  },
+  "DC3": {
+    "Name": "Douglas DC-3",
+    "Type": "1"
+  },
+  "DC6": {
+    "Name": "Douglas DC-6",
+    "Type": "1"
+  },
+  "DC85": {
+    "Name": "Douglas DC-8-50",
+    "Type": "1"
+  },
+  "DC86": {
+    "Name": "Douglas DC-8-62",
+    "Type": "1"
+  },
+  "DC87": {
+    "Name": "Douglas DC-8-72",
+    "Type": "1"
+  },
+  "DC9": {
+    "Name": "Douglas DC-9",
+    "Type": "1"
+  },
+  "DC91": {
+    "Name": "Douglas DC-9-10",
+    "Type": "1"
+  },
+  "DC92": {
+    "Name": "Douglas DC-9-20",
+    "Type": "1"
+  },
+  "DC93": {
+    "Name": "Douglas DC-9-30",
+    "Type": "1"
+  },
+  "DC94": {
+    "Name": "Douglas DC-9-40",
+    "Type": "1"
+  },
+  "DC95": {
+    "Name": "Douglas DC-9-50",
+    "Type": "1"
+  },
+  "DH2T": {
+    "Name": "De Havilland Canada DHC-2 Turbo-Beaver",
+    "Type": "2"
+  },
+  "DH8A": {
+    "Name": "De Havilland Canada DHC-8-100 Dash 8 / 8Q",
+    "Type": "2"
+  },
+  "DH8B": {
+    "Name": "De Havilland Canada DHC-8-200 Dash 8 / 8Q",
+    "Type": "2"
+  },
+  "DH8C": {
+    "Name": "De Havilland Canada DHC-8-300 Dash 8 / 8Q",
+    "Type": "2"
+  },
+  "DH8D": {
+    "Name": "De Havilland Canada DHC-8-400 Dash 8Q",
+    "Type": "2"
+  },
+  "DHC2": {
+    "Name": "De Havilland Canada DHC-2 Beaver",
+    "Type": "2"
+  },
+  "DHC3": {
+    "Name": "De Havilland Canada DHC-3 Otter",
+    "Type": "2"
+  },
+  "DHC4": {
+    "Name": "De Havilland Canada DHC-4 Caribou",
+    "Type": "2"
+  },
+  "DHC6": {
+    "Name": "De Havilland Canada DHC-6 Twin Otter",
+    "Type": "2"
+  },
+  "DHC7": {
+    "Name": "De Havilland Canada DHC-7 Dash 7",
+    "Type": "2"
+  },
+  "DOVE": {
+    "Name": "De Havilland DH.104 Dove",
+    "Type": "2"
+  },
+  "E110": {
+    "Name": "Embraer EMB 110 Bandeirante",
+    "Type": "3"
+  },
+  "E120": {
+    "Name": "Embraer EMB 120 Brasilia",
+    "Type": "3"
+  },
+  "E135": {
+    "Name": "Embraer RJ135",
+    "Type": "2"
+  },
+  "E145": {
+    "Name": "Embraer RJ145",
+    "Type": "2"
+  },
+  "RJ145": {
+    "Name": "Embraer RJ145",
+    "Type": "2"
+  },
+  "E170": {
+    "Name": "Embraer 170",
+    "Type": "2"
+  },
+  "E170": {
+    "Name": "Embraer 175",
+    "Type": "2"
+  },
+  "E190": {
+    "Name": "Embraer 190",
+    "Type": "2"
+  },
+  "E190": {
+    "Name": "Embraer 195",
+    "Type": "2"
+  },
+  "E545": {
+    "Name": "Embraer Legacy 450",
+    "Type": "3"
+  },
+  "E135": {
+    "Name": "Embraer Legacy 600",
+    "Type": "3"
+  },
+  "E50P": {
+    "Name": "Embraer Phenom 100",
+    "Type": "3"
+  },
+  "E55": {
+    "Name": "Embraer Phenom 300",
+    "Type": "3"
+  },
+  "E55P": {
+    "Name": "Embraer Phenom 300",
+    "Type": "3"
+  },
+  "EC25": {
+    "Name": "Eurocopter EC225 Super Puma",
+    "Type": "4"
+  },
+  "EC55": {
+    "Name": "Eurocopter EC155",
+    "Type": "4"
+  },
+  "EC45": {
+    "Name": "Eurocopter EC145",
+    "Type": "4"
+  },
+  "EXPL": {
+    "Name": "MD Helicopters MD900 Explorer",
+    "Type": "4"
+  },
+  "F100": {
+    "Name": "Fokker 100",
+    "Type": "2"
+  },
+  "F27": {
+    "Name": "Fokker F27 Friendship",
+    "Type": "2"
+  },
+  "F28": {
+    "Name": "Fokker F28 Fellowship",
+    "Type": "2"
+  },
+  "F50": {
+    "Name": "Fokker 50",
+    "Type": "2"
+  },
+  "F70": {
+    "Name": "Fokker 70",
+    "Type": "2"
+  },
+  "G159": {
+    "Name": "Gulfstream Aerospace G-159 Gulfstream I",
+    "Type": "3"
+  },
+  "G280": {
+    "Name": "Gulfstream G280",
+    "Type": "3"
+  },
+  "G21": {
+    "Name": "Grumman G-21 Goose",
+    "Type": "3"
+  },
+  "G73T": {
+    "Name": "Grumman G-73 Turbo Mallard",
+    "Type": "3"
+  },
+  "GLEX": {
+    "Name": "Canadair Global Express",
+    "Type": "3"
+  },
+  "GLF4": {
+    "Name": "Gulfstream IV",
+    "Type": "3"
+  },
+  "GLF5": {
+    "Name": "Gulfstream V",
+    "Type": "3"
+  },
+  "GLF6": {
+    "Name": "Gulfstream G650",
+    "Type": "3"
+  },
+  "HERN": {
+    "Name": "De Havilland DH.114 Heron",
+    "Type": "3"
+  },
+  "H25B": {
+    "Name": "Hawker 800",
+    "Type": "3"
+  },
+  "I114": {
+    "Name": "Ilyushin IL114",
+    "Type": "2"
+  },
+  "IL18": {
+    "Name": "Ilyushin IL18",
+    "Type": "2"
+  },
+  "IL62": {
+    "Name": "Ilyushin IL62",
+    "Type": "2"
+  },
+  "IL76": {
+    "Name": "Ilyushin IL76",
+    "Type": "2"
+  },
+  "IL86": {
+    "Name": "Ilyushin IL86",
+    "Type": "2"
+  },
+  "IL96": {
+    "Name": "Ilyushin IL96",
+    "Type": "2"
+  },
+  "J328": {
+    "Name": "Fairchild Dornier 328JET",
+    "Type": "2"
+  },
+  "JS31": {
+    "Name": "British Aerospace Jetstream 31",
+    "Type": "3"
+  },
+  "JS32": {
+    "Name": "British Aerospace Jetstream 32",
+    "Type": "3"
+  },
+  "JS41": {
+    "Name": "British Aerospace Jetstream 41",
+    "Type": "3"
+  },
+  "JU52": {
+    "Name": "Junkers Ju52/3M",
+    "Type": "2"
+  },
+  "L101": {
+    "Name": "Lockheed L-1011 Tristar",
+    "Type": "2"
+  },
+  "L188": {
+    "Name": "Lockheed L-188 Electra",
+    "Type": "2"
+  },
+  "L410": {
+    "Name": "LET 410",
+    "Type": "2"
+  },
+  "LJ40": {
+    "Name": "Learjet 40",
+    "Type": "3"
+  },
+  "LOAD": {
+    "Name": "Ayres LM200 Loadmaster",
+    "Type": "2"
+  },
+  "MD11": {
+    "Name": "McDonnell Douglas MD-11",
+    "Type": "1"
+  },
+  "MD81": {
+    "Name": "McDonnell Douglas MD-81",
+    "Type": "1"
+  },
+  "MD82": {
+    "Name": "McDonnell Douglas MD-82",
+    "Type": "1"
+  },
+  "MD83": {
+    "Name": "McDonnell Douglas MD-83",
+    "Type": "1"
+  },
+  "MD87": {
+    "Name": "McDonnell Douglas MD-87",
+    "Type": "1"
+  },
+  "MD88": {
+    "Name": "McDonnell Douglas MD-88",
+    "Type": "1"
+  },
+  "MD90": {
+    "Name": "McDonnell Douglas MD-90",
+    "Type": "1"
+  },
+  "MI8": {
+    "Name": "MIL Mi-8 / Mi-17 / Mi-171 / Mil-172",
+    "Type": "4"
+  },
+  "MU2": {
+    "Name": "Mitsubishi Mu-2",
+    "Type": "3"
+  },
+  "N262": {
+    "Name": "Aerospatiale (Nord) 262",
+    "Type": "2"
+  },
+  "NOMA": {
+    "Name": "Government Aircraft Factories N22B / N24A Nomad",
+    "Type": "2"
+  },
+  "P68": {
+    "Name": "Partenavia P.68",
+    "Type": "3"
+  },
+  "PA31": {
+    "Name": "Piper PA-31 Navajo",
+    "Type": "3"
+  },
+  "PA46": {
+    "Name": "Piper PA-46",
+    "Type": "3"
+  },
+  "PC12": {
+    "Name": "Pilatus PC-12",
+    "Type": "3"
+  },
+  "PC6T": {
+    "Name": "Pilatus PC-6 Turbo Porter",
+    "Type": "3"
+  },
+  "RJ1H": {
+    "Name": "Avro RJ100",
+    "Type": "3"
+  },
+  "RJ70": {
+    "Name": "Avro RJ70",
+    "Type": "3"
+  },
+  "RJ85": {
+    "Name": "Avro RJ85",
+    "Type": "3"
+  },
+  "RX1H": {
+    "Name": "Avro RJX100",
+    "Type": "3"
+  },
+  "RX85": {
+    "Name": "Avro RJX85",
+    "Type": "3"
+  },
+  "S210": {
+    "Name": "Aerospatiale (Sud Aviation) Se.210 Caravelle",
+    "Type": "2"
+  },
+  "S58T": {
+    "Name": "Sikorsky S-58T",
+    "Type": "4"
+  },
+  "S601": {
+    "Name": "Aerospatiale SN.601 Corvette",
+    "Type": "3"
+  },
+  "S61": {
+    "Name": "Sikorsky S-61",
+    "Type": "4"
+  },
+  "S65C": {
+    "Name": "Eurocopter (Aerospatiale) SA365C / SA365N Dauphin 2",
+    "Type": "4"
+  },
+  "S76": {
+    "Name": "Sikorsky S-76",
+    "Type": "4"
+  },
+  "S92": {
+    "Name": "Sikorsky S-92",
+    "Type": "4"
+  },
+  "SB20": {
+    "Name": "Saab 2000",
+    "Type": "2"
+  },
+  "SC7": {
+    "Name": "Shorts SC-7 Skyvan",
+    "Type": "2"
+  },
+  "SF34": {
+    "Name": "Saab SF340A/B",
+    "Type": "2"
+  },
+  "SH33": {
+    "Name": "Shorts SD.330",
+    "Type": "2"
+  },
+  "SH36": {
+    "Name": "Shorts SD.360",
+    "Type": "2"
+  },
+  "SU95": {
+    "Name": "Sukhoi Superjet 100",
+    "Type": "3"
+  },
+  "T134": {
+    "Name": "Tupolev Tu-134",
+    "Type": "2"
+  },
+  "T144": {
+    "Name": "Tupolev Tu-144",
+    "Type": "2"
+  },
+  "T154": {
+    "Name": "Tupolev Tu-154",
+    "Type": "2"
+  },
+  "T204": {
+    "Name": "Tupolev Tu-204 / Tu-214",
+    "Type": "2"
+  },
+  "TRIS": {
+    "Name": "Pilatus Britten-Norman BN-2A Mk III Trislander",
+    "Type": "3"
+  },
+  "VISC": {
+    "Name": "Vickers Viscount",
+    "Type": "2"
+  },
+  "WW24": {
+    "Name": "Israel Aircraft Industries 1124 Westwind",
+    "Type": "3"
+  },
+  "Y12": {
+    "Name": "Harbin Yunshuji Y12",
+    "Type": "3"
+  },
+  "YK40": {
+    "Name": "Yakovlev Yak-40",
+    "Type": "2"
+  },
+  "YK42": {
+    "Name": "Yakovlev Yak-42",
+    "Type": "2"
+  },
+  "YS11": {
+    "Name": "NAMC YS-11",
+    "Type": "2"
+  },
+
+  "XXX": {
+    "Name": "Airboinger 24",
+    "Type": "1"
+  }
+}

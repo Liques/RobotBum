@@ -1,0 +1,27 @@
+﻿/*
+
+ INFORMATION ABOUT CHARTS DETECTION
+
+ This JSON provides information about charts. You can fill this file with information of your region,
+ but before you must to register every single point in checkpoints.json file.
+
+
+ PROVE': {                                                   -- Name of the chart
+     "Type": "STAR",                                         -- Type of the chat (SID or STAR)
+     "Doors": "REINA;DOKBA;PUGNU",                           -- Doors are the first point that connects to the first checkpoint. Example: REINA, DOKBA and PUGNU are connecting directly to PROVE, because it's the first checkpoint in the list.
+     "CheckPoints": "PROVE;MOLTI;OPROK;MOPDA;BR046;LUVLA",   -- List of checkpoint
+     "Region": "BSB"                                         -- Region must be the same name of your Radar
+ }
+
+ Don't forget to follow the JSON standards.
+
+*/
+
+{
+  "PROVE": {
+    "Type": "STAR",
+    "Doors": "REINA;DOKBA;PUGNU",
+    "CheckPoints": "PROVE;MOLTI;OPROK;MOPDA;BR046;LUVLA",
+    "Region": "BSB"
+  },
+}
