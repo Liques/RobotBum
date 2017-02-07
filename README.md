@@ -6,6 +6,8 @@ RobotBum is application that tracks airplanes and sends messages to Twitter or a
 
 Note: The application, for a while, is not running on RaspberryPI devices, even if it's running the latest versions of Windows 10 or Linux. The framework we are using (.NET Core) is not supporting ARM devices yet, but they will release support to ARM devices next months.
 
+ [Download now!](https://github.com/Liques/RobotBum/releases).
+
 ##How to Install
 
 ###Step 1: 
@@ -20,7 +22,7 @@ If you have your own ADS-B reciever you have to install ***ModeSMixer2***. This 
 ###Step 2: 
 
 1. Make sure that you already have an instance ModeSMixer2 running and the machine where you are installing Robot Bum have access to it webserver.
-2. Download the lastest version of RobotBum in our [release page](https://github.com/Liques/RobotBum/releases). 
+2. Download the lastest version of RobotBum in our [download page](https://github.com/Liques/RobotBum/releases). 
 3. Unzip the file.
 4. If you are on windows, open DOS Command Prompt or if you are on Linux or Mac OS, make sure that you are on terminal or on a SSH client.
 
