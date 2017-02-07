@@ -14,7 +14,7 @@ Note: The application, for a while, is not running on RaspberryPI devices, even 
 
 If you don't have a ADS-B reciever or you already have an instance running ModeSMixer2, even if it's not running in you machine, please skip to the step 2.
 
-If you have your own ADS-B reciever you have to install ***ModeSMixer2***. This program, as they website says, has ability to receive data across the network from one or more sources, such as instances of dump1090, rtl1090, modesdeco2, ADSB# or any other Mode S decoding application. This program is free, run in most operational systems. 
+If you have your own ADS-B reciever you have to install ***ModeSMixer2***. This program, as their website says, has ability to receive data across the network from one or more sources, such as instances of dump1090, rtl1090, modesdeco2, ADSB# or any other Mode S decoding application. This program is free, run in most operational systems. 
 
 - [Download link page for ModeSMixer2](http://xdeco.org/?page_id=30)
 - [How to install and run ModeSMixer2](http://xdeco.org/?page_id=48)
@@ -25,6 +25,7 @@ If you have your own ADS-B reciever you have to install ***ModeSMixer2***. This 
 2. Download the lastest version of RobotBum in our [download page](https://github.com/Liques/RobotBum/releases). 
 3. Unzip the file.
 4. If you are on windows, open DOS Command Prompt or if you are on Linux or Mac OS, make sure that you are on terminal or on a SSH client.
+5. Navigate to the folder that you unziped.
 
 ###Step 3: 
 Type the following line, replacing the parameters:
