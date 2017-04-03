@@ -23,6 +23,14 @@ namespace RobotBumLibCore
 
         private static Dictionary<string, string> ListSpecialPainitngs = new Dictionary<string, string>();
 
+        private static double appAltitude = 28000;
+
+        public static double AppAltitude
+        {
+            get { return appAltitude; }
+            set { appAltitude = value; }
+        }
+
         public AirplaneBasic()
         {
             Radars = new List<Radar>();
@@ -375,11 +383,11 @@ namespace RobotBumLibCore
         {
             try
             {
-                if (this.Altitude <= 28000 && this.VerticalSpeed < -500)
+                if (this.Altitude <= AirplaneBasic.AppAltitude && this.VerticalSpeed < -500)
                 {
                     this.State = AirplaneStatus.Landing;
                 }
-                else if (this.Altitude <= 28000 && this.VerticalSpeed < 0 && this.PreviousAirplane != null)
+                else if (this.Altitude <= AirplaneBasic.AppAltitude && this.VerticalSpeed < 0 && this.PreviousAirplane != null)
                 {
                     if (this.PreviousAirplane.State == AirplaneStatus.Landing)
                     {

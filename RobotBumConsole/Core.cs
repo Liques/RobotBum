@@ -60,6 +60,9 @@ namespace RobotBumConsole
         const string ShowHelicoptersCommand = "-ShowHelicopters";
         const string MessageLanguageCommand = "-MessageLanguage";
 
+        const string ApproximationAltitudeeCommand = "-ApproximationAltitude";
+
+
 
         /// <summary>
         /// Start App
@@ -305,6 +308,10 @@ namespace RobotBumConsole
                 radar.ShowAllModelsStartingWith = GetCommandValue(ShowAllModelsStartingWithCommand, cmds).Split(',').ToList();
             if (cmds.Any(a => a == ShowHelicoptersCommand))
                 radar.ShowHelicopters = GetCommandValueBool(ShowHelicoptersCommand, cmds);
+            if (cmds.Any(a => a == ApproximationAltitudeeCommand))
+                AirplaneBasic.AppAltitude = GetCommandValueDouble(ShowHelicoptersCommand, cmds);
+
+            
 
             if (cmds.Any(a => a == MessageLanguageCommand))
             {
