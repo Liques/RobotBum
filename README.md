@@ -22,27 +22,21 @@ If you have your own ADS-B reciever you have to install ***ModeSMixer2***. This 
 ###Step 2: 
 
 1. Make sure that you already have an instance ModeSMixer2 running and the machine where you are installing Robot Bum have access to it webserver.
-2. Download the lastest version of RobotBum in our [download page](https://github.com/Liques/RobotBum/releases). 
+2. Download the lastest code of RobotBum or clone this repository 
 3. Unzip the file.
 4. If you are on windows, open DOS Command Prompt or if you are on Linux or Mac OS, make sure that you are on terminal or on a SSH client.
 5. Navigate to the folder that you unziped.
 
 ###Step 3: 
 Type the following line, replacing the parameters:
-  - On Windows:
   
   ```
-  RobotBumConsole.exe  -AirportICAO [YourClosestAirportICAO] -ModeSMixerURL [YourModeXMixer2ServerLink] -URLServerFolder server
+  dotnet run  -AirportICAO [YourClosestAirportICAO] -ModeSMixerURL [YourModeXMixer2ServerLink] -URLServerFolder server
   ```
   
-  - On Linux:
-    ```
-    .\RobotBumConsole  -AirportICAO [YourClosestAirportICAO] -ModeSMixerURL [YourModeXMixer2ServerLink] -URLServerFolder server
-    ```
-
 Example:
 ```
-.\RobotBumConsole 
+ dotner run  
         -AirportICAO KJFK 
         -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
         -URLServerFolder server
@@ -51,18 +45,10 @@ Example:
 If you run and have no error, **it's running!** The application is writing some HTML pages, you can see these files in the "server" folder. If you have Apache2, IIS or any webserver installed on your machine, you just need to change the -URLServerFolder as the example below:
 
 ```
-.\RobotBumConsole  
+ dotner run  
         -AirportICAO KJFK 
         -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
         -URLServerFolder /var/www/html 
-```
-
-
-```
-RobotBumConsole.exe  
-        -AirportICAO KJFK 
-        -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
-        -URLServerFolder "c:\\inetpub\\wwwroot"
 ```
 
 It's the enough to run Robot Bum. But if you want to filter some traffic or if you want to post the messages on Twitter, Robot Bum have a lot options.
