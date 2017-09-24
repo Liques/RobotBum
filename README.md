@@ -36,7 +36,7 @@ Type the following line, replacing the parameters:
   
 Example:
 ```
- dotner run  
+ dotnet run  
         -AirportICAO KJFK 
         -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
         -URLServerFolder server
@@ -45,7 +45,7 @@ Example:
 If you run and have no error, **it's running!** The application is writing some HTML pages, you can see these files in the "server" folder. If you have Apache2, IIS or any webserver installed on your machine, you just need to change the -URLServerFolder as the example below:
 
 ```
- dotner run  
+ dotnet run  
         -AirportICAO KJFK 
         -ModeSMixerURL http://mymodesmixerserver.ddns.net:8081 
         -URLServerFolder /var/www/html 
