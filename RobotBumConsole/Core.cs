@@ -36,6 +36,10 @@ namespace RobotBumConsole
         const string LongitudeYCommand = "-LongitudeY";
         const string LatitudeYCommand = "-LatitudeY";
 
+        const string UserCommand = "-User";
+        const string PasswordCommand = "-Password";
+
+
         const string TwitterConsumerKeyCommand = "-TwitterConsumerKey";
         const string TwitterConsumerSecretCommand = "-TwitterConsumerSecret";
         const string TwitterAccessTokenCommand = "-TwitterAccessToken";
@@ -92,18 +96,20 @@ namespace RobotBumConsole
                 System.IO.Directory.CreateDirectory(strPath);
 
 #if DEBUG
-            // Quick test line.
-            //cmds = new List<string>() {  "-AirportICAO","SBBR",
-            //                             "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
-            //                             "-URLServerFolder","server" ,
-            //                             "-ShowAllCruisesHeavyWeight","1" ,
-            //                             "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
-            //                           //  "-ShowAllFlightStartingWith","\"EK,DAL\"",
-            //                            // "-AvoidAllModelsStartingWith","A32,B73",
-            //                           //  "-ShowAllModelsStartingWith","\"EK,DAL\"",
-            //                             "-ShowHelicopters","1",
-            //                            // "-MessageLanguage","en-PIRATE",
-            //                             }.ToArray();
+          //  Quick test line.
+           //cmds = new List<string>() {  "-AirportICAO","SBBR",
+           //                              "-ModeSMixerURL","http://bsbradar.ddns.net:8081",
+           //                              "-URLServerFolder","server" ,
+           //                              "-ShowAllCruisesHeavyWeight","1" ,
+           //                              "-AvoidAllFlightsStartingWith","\"GLO,GOL,TAM\"",
+           //                              "-ShowAllFlightStartingWith","\"EK,DAL\"",
+           //                              "-AvoidAllModelsStartingWith","A32,B73",
+           //                              "-ShowAllModelsStartingWith","\"EK,DAL\"",
+           //                              "-ShowHelicopters","1",
+           //                              "-User","bsb",
+           //                              "-Password","aero",
+           //     "-MessageLanguage","en-PIRATE",
+           //}.ToArray();
 #endif
             var commandsAnalyse = AnalyseCommands(cmds);
 
@@ -132,7 +138,7 @@ namespace RobotBumConsole
 
             var autoEvent = new AutoResetEvent(false);
 
-            var timer = new System.Threading.Timer(new TimerCallback(CheckStatus), null, new TimeSpan(0), new TimeSpan(0, 0, 10));
+            var timer = new System.Threading.Timer(new TimerCallback(CheckStatus), null, new TimeSpan(0), new TimeSpan(1, 0, 10));
 
             if (isConsole)
             {
@@ -259,6 +265,10 @@ namespace RobotBumConsole
             radar.LatitudeX = GetCommandValueDouble(LatitudeXCommand, cmds);
             radar.LongitudeY = GetCommandValueDouble(LongitudeYCommand, cmds);
             radar.LatitudeY = GetCommandValueDouble(LatitudeYCommand, cmds);
+
+            radar.User = GetCommandValue(UserCommand, cmds);
+            radar.Password = GetCommandValue(PasswordCommand, cmds);
+
 
             radar.TwitterConsumerKey = GetCommandValue(TwitterConsumerKeyCommand, cmds);
             radar.TwitterConsumerSecret = GetCommandValue(TwitterConsumerSecretCommand, cmds);

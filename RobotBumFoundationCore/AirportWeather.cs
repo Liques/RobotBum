@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace RobotBumFoundationCore
+namespace RobotBumConsole
 {
     /// <summary>
     /// Type of Weather, if it's a rain, fog and so on.
@@ -311,7 +311,7 @@ namespace RobotBumFoundationCore
                 }
                 if (listWeatherLines.ContainsKey("Temperature"))
                 {
-                    airportWeather.Temperature = Convert.ToDouble(listWeatherLines["Temperature"]);
+                    airportWeather.Temperature = Convert.ToDouble(listWeatherLines["Temperature"], System.Globalization.CultureInfo.InvariantCulture);
                 }
 
                 if (listWeatherLines.ContainsKey("FlightCategory"))
@@ -352,7 +352,8 @@ namespace RobotBumFoundationCore
 
                 return airportWeather;
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw e;
             }
@@ -365,7 +366,7 @@ namespace RobotBumFoundationCore
 
             if (String.IsNullOrEmpty(ICAO))
                 throw new ArgumentException("You must to provide a valid ICAO code. For more information about what is ICAO code, see https://en.wikipedia.org/wiki/International_Civil_Aviation_Organization_airport_code.");
-            
+
             var airportWeatherStandart = new AirportWeather();
             airportWeatherStandart.ICAO = ICAO;
 

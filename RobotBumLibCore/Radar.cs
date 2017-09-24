@@ -26,15 +26,15 @@ namespace RobotBumLibCore
         public List<Plugins.IPlugin> Plugins { get; set; }
         [IgnoreDataMemberAttribute]
         public List<AirplaneBasic> LastAirplanes { get; set; }
-       
+        [IgnoreDataMemberAttribute]
         public List<RunwayBasic> ListRunways { get; set; }
-       
+        [IgnoreDataMemberAttribute]
         public double LongitudeX { get; set; }
-        
+        [IgnoreDataMemberAttribute]
         public double LatitudeX { get; set; }
-       
+        [IgnoreDataMemberAttribute]
         public double LongitudeY { get; set; }
-        
+        [IgnoreDataMemberAttribute]
         public double LatitudeY { get; set; }
 
         [IgnoreDataMemberAttribute]
@@ -92,8 +92,11 @@ namespace RobotBumLibCore
         [IgnoreDataMemberAttribute]
         public bool ShowAllApproximationLowWeightAirplanes { get; set; }
 
+        [IgnoreDataMemberAttribute]
+        public bool IgnoreUnknow { get; set; }
 
-         [IgnoreDataMemberAttribute]
+
+        [IgnoreDataMemberAttribute]
         public bool AvoidAllApproximationHeavyWeightAirplanes { get; set; }
 
         [IgnoreDataMemberAttribute]
@@ -125,6 +128,10 @@ namespace RobotBumLibCore
         [IgnoreDataMemberAttribute]
         public string TwitterAccessTokenSecret { get; set; }
 
+        [IgnoreDataMemberAttribute]
+        public string User { get; set; }
+        [IgnoreDataMemberAttribute]
+        public string Password { get; set; }
         public Radar()
         {
 

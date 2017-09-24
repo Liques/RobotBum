@@ -75,6 +75,8 @@ It's the enough to run Robot Bum. But if you want to filter some traffic or if y
 |  -ModeSMixerURL         | text                                             | 
 |  -TwitterAccessToken            | text                                             | 
 |  -URLServerFolder               | text                                             |
+|  -User               | text                                             |
+|  -Password               | text                                             |
 |                        |                                                   | 
 |  -TwitterConsumerKey            | text                                             | 
 |  -TwitterConsumerSecret         | text                                             | 

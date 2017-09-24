@@ -93,10 +93,25 @@ namespace RobotBumConsole
                 currentPath += fileName;
 
 
-            if (File.Exists(currentPath))
-                File.Delete(currentPath);
+            if (!File.Exists(currentPath))
+            {
+                using (var stream = File.Create(currentPath))
+                {
+                    
+                }
+            }
+               
 
-            File.AppendAllText(currentPath, content, Encoding.UTF8);
+
+
+            using (var stream = File.Open(currentPath, FileMode.Open))
+            {
+                var streamWriter = new StreamWriter(stream, Encoding.UTF8, 602048);
+
+                streamWriter.Write(content);
+            }
+
+            //File.AppendAllText(currentPath, content, Encoding.UTF8);
 
         }
 

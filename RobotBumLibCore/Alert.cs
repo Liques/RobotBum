@@ -48,7 +48,7 @@ namespace RobotBumLibCore
 
     public class Alert
     {
-        public static List<Alert> ListOfAlerts { get; set; }
+        public static List<Alert> ListOfAlerts;
         public static List<Alert> ListOfRecentAlerts { get; set; }
 
 
@@ -60,6 +60,13 @@ namespace RobotBumLibCore
         public DateTime TimeToBeRemoved { get; set; }
         public string AirplaneID { get; set; }
         public IconType Icon { get; set; }
+
+        public string AirplaneHexa { get; set; }
+        public string AirplaneReg { get; set; }
+        public string AirplaneFlight { get; set; }
+        public string AirplaneFrom { get; set; }
+        public string AirplaneTo { get; set; }
+
 
         private PluginAlertType alertType { get; set; }
         public PluginAlertType AlertType
@@ -124,8 +131,20 @@ namespace RobotBumLibCore
         public AirplaneBasic Airplane { get; set; }
         [IgnoreDataMemberAttribute]
         public string PluginName { get; set; }
-
+        [IgnoreDataMemberAttribute]
         public Radar Radar { get; set; }
+        
+        public string RadarName
+        {
+            get
+            {
+                return Radar.Name;
+            }
+            set
+            {
+                this.Radar = Radar.GetRadar(value);
+            }
+        }
         RatificationType RatificationType = RatificationType.NoRatification;
 
         static Alert()
@@ -136,6 +155,8 @@ namespace RobotBumLibCore
 
                 var lastAlertsRaw = LoadFile(strJSONPath, "lastAlerts.json");
                 Alert.ListOfAlerts = JsonConvert.DeserializeObject<List<Alert>>(lastAlertsRaw);
+
+                //var teste = JsonConvert.DeserializeObject<List<Alert>>(lastAlertsRaw);
 
                 if (Alert.ListOfAlerts == null)
                     Alert.ListOfAlerts = new List<Alert>();
@@ -182,6 +203,23 @@ namespace RobotBumLibCore
         public Alert()
         {
 
+            if (AirplaneHexa == null)
+                AirplaneHexa = String.Empty;
+            if (AirplaneReg == null)
+                AirplaneReg = String.Empty;
+            if (AirplaneFlight == null)
+                AirplaneFlight = String.Empty;
+            if (AirplaneFrom == null)
+                AirplaneFrom = String.Empty;
+            if (AirplaneTo == null)
+                AirplaneTo = String.Empty;
+
+
+            //    public string AirplaneHexa { get; set; }
+            //public string AirplaneReg { get; set; }
+            //public string AirplaneFlight { get; set; }
+            //public string AirplaneFrom { get; set; }
+            //public string AirplaneTo { get; set; }
         }
 
         public Alert(Radar radar, string Pluginname, string nameOrMessage, IconType iconType, MessageType messageType = MessageType.General)
@@ -220,6 +258,12 @@ namespace RobotBumLibCore
 
             AirplaneID = airplane.ID;
 
+            this.AirplaneHexa = airplane.ID;
+            this.AirplaneFlight = airplane.FlightName;
+            this.AirplaneReg = airplane.Registration.Name;
+            this.AirplaneFrom = airplane.From.ICAO;
+            this.AirplaneTo = airplane.To.ICAO;
+
             SetMessage(messageType);
         }
 
@@ -237,7 +281,22 @@ namespace RobotBumLibCore
             else
                 currentPath += fileName;
 
-            return File.ReadAllText(currentPath);
+            if (File.Exists(currentPath))
+            {
+              
+
+            using (var stream = File.Open(currentPath, FileMode.Open))
+            {
+                var streamWriter = new StreamReader(stream);
+
+                    return streamWriter.ReadToEnd();
+            }
+
+            //return File.ReadAllText(currentPath);
+
+            }
+
+            return String.Empty;
         }
 
 

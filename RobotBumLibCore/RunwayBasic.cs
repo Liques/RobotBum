@@ -8,7 +8,6 @@ using RobotBumLibCore.Map;
 
 namespace RobotBumLibCore
 {
-    [Serializable]
     public class RunwayBasic : Runway
     {
        

@@ -34,9 +34,15 @@ namespace RobotBumLibCore.Plugins
 
                         foreach (var radar in airplane.Radars)
                         {
+                           
+
                             // If the airplane does not have enough data...
-                            if(airplane.State == AirplaneStatus.DataImcomplete)
+                            if (airplane.State == AirplaneStatus.DataImcomplete)
                                 continue;
+
+                            
+                            // Just record everything now.
+                            MakeAlert(listAlerts, radar, airplane, PluginAlertType.Low, true);
 
                             // If is to show everyting...
                             if (radar.ShowEverything)
@@ -44,6 +50,8 @@ namespace RobotBumLibCore.Plugins
                                 MakeAlert(listAlerts, radar, airplane);
                                 continue;
                             }
+
+
 
                             // If the airplane is "special" on specialpaintings.json
                             if (!String.IsNullOrEmpty(airplane.SpecialDescription)){
@@ -86,14 +94,6 @@ namespace RobotBumLibCore.Plugins
                                 continue;
                             }
 
-                            // If the airplane's flight name is not wanted...
-                            if(radar.AvoidAllFlightsStartingWith.Any(a => airplane.FlightName.StartsWith(a, StringComparison.OrdinalIgnoreCase)) ||
-                               radar.AvoidAllModelsStartingWith.Any(a => airplane.AircraftType.ICAO.StartsWith(a, StringComparison.OrdinalIgnoreCase))
-                            )
-                            {
-                                continue;
-                            }
-
                             // If ShowAllCruisesOnlyOnServer is true...
                             if(airplane.State == AirplaneStatus.Cruise && radar.ShowAllCruisesHeavyWeight &&
                             airplane.Weight == AirplaneWeight.Heavy) {
@@ -104,8 +104,25 @@ namespace RobotBumLibCore.Plugins
                                 continue;   
                             }
 
+
+                            // If the airplane's flight name is not wanted...
+                            if (radar.AvoidAllFlightsStartingWith.Any(a => airplane.FlightName.StartsWith(a, StringComparison.OrdinalIgnoreCase)) ||
+                               radar.AvoidAllModelsStartingWith.Any(a => airplane.AircraftType.ICAO.StartsWith(a, StringComparison.OrdinalIgnoreCase))
+                            )
+                            {
+                                continue;
+                            }
+
+                            if (!radar.IgnoreUnknow && !airplane.Registration.IsValid)
+                            {
+                                MakeAlert(listAlerts, radar, airplane, PluginAlertType.Low);
+                                continue;
+                            }
+
                             // If this line is reached, the airplane is unknow. So we can make an alert for it!
-                            MakeAlert(listAlerts,radar,airplane); 
+                            MakeAlert(listAlerts, radar, airplane, PluginAlertType.Low);
+
+                            
 
                         }
 
@@ -122,11 +139,42 @@ namespace RobotBumLibCore.Plugins
 
 
 
-        private void MakeAlert(List<Alert> listAlerts, Radar radar, AirplaneBasic airplane, PluginAlertType alertType = PluginAlertType.High)
+        private void MakeAlert(List<Alert> listAlerts, Radar radar, AirplaneBasic airplane, PluginAlertType alertType = PluginAlertType.High, bool subAlert = false)
         {
             Alert pluginAlert = new Alert(radar, Name, airplane, IconType.NoIcon);
             pluginAlert.AlertType = alertType;
             pluginAlert.TimeToBeRemoved = DateTime.Now.AddHours(23);
+
+            switch (airplane.State)
+            {
+                case AirplaneStatus.Cruise:
+
+                    pluginAlert.Icon = IconType.Cruise;
+
+                    break;
+
+                case AirplaneStatus.Landing:
+
+                    pluginAlert.Icon = IconType.Landing;
+
+                    break;
+
+                case AirplaneStatus.TakingOff:
+
+                    pluginAlert.Icon = IconType.TakingOff;
+
+                    break;
+
+                case AirplaneStatus.ParkingOrTaxing:
+
+                    pluginAlert.Icon = IconType.Taxing;
+
+                    break;
+            }
+
+            if (subAlert)
+                pluginAlert.ID += "_sub";
+
             listAlerts.Add(pluginAlert);
         }
 

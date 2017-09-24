@@ -185,6 +185,12 @@ namespace RobotBumLibCore
                     article = this.indefinitiveArticle;
                     airplaneTypeLongPhrase = String.Empty;
                 }
+                else if (!String.IsNullOrEmpty(this.Airplane.FlightName))
+                {
+                    airplaneRegistrationOrModel = String.Format("{1} {2} (?)", airplane.AircraftType.Name, this.article, this.Airplane.FlightName);
+                    if (ratificationType == RatificationType.NoRatification)
+                        article = this.indefinitiveArticle;
+                }
                 else
                 {
                     airplaneRegistrationOrModel = String.Format("{0} (Hex: {1})", notIdentifiedMessage, this.Airplane.ID);
@@ -229,26 +235,29 @@ namespace RobotBumLibCore
                     #region Setting what is the route of the airplane
                     if (airplane.From.City != airplane.To.City)
                     {
-                        string fromPlace = !String.IsNullOrEmpty(airplane.From.City) ? String.Format(" {0} {1}", RandomListPhrases(listOfFromMessages), airplane.From.City) : String.Empty;
-                        string toPlace = !String.IsNullOrEmpty(airplane.To.City) ? String.Format(" {0} {1}", RandomListPhrases(listOfToMessages), airplane.From.City) : String.Empty;
+                        fromPlace = !String.IsNullOrEmpty(airplane.From.City) ? String.Format(" {0} {1}", RandomListPhrases(listOfFromMessages), airplane.From.City) : String.Empty;
+                        toPlace = !String.IsNullOrEmpty(airplane.To.City) ? String.Format(" {0} {1}", RandomListPhrases(listOfToMessages), airplane.To.City) : String.Empty;
                     }
                     #endregion
-
+                    
                     if (this.Airplane != null)
                     {
                         if (airplane.State == AirplaneStatus.TakingOff)
                         {
                             Message = GetTakingOffPhrase();
 
+
                         }
                         else if (airplane.State == AirplaneStatus.Landing)
                         {
                             Message = GetLandingPhrase();
 
+
                         }
                         else if (airplane.State == AirplaneStatus.Cruise)
                         {
-                            Message = GetCruisePhrase();
+                            Message = GetCruisePhrase() + fromPlace + toPlace;
+                            
                         }
                         else if (airplane.State == AirplaneStatus.ParkingOrTaxing)
                         {

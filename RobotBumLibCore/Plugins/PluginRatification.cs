@@ -20,7 +20,7 @@ namespace RobotBumLibCore.Plugins
         public PluginRatification(bool analyseRunwayLowAircraft, bool analyseRunwayHeavyAircraft, bool analyseChartLowAircraft, bool analyseChartHeavyAircraft, bool analyseOrbit)
         {
             Name = "Ratification";
-            IsActive = true;
+            IsActive = false;
             IsTesting = false;
 
             AnalyseRunwayLowAircraft = analyseRunwayLowAircraft;

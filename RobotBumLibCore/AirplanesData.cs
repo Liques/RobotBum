@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net;
 
 namespace RobotBumLibCore
 {
@@ -33,15 +34,30 @@ namespace RobotBumLibCore
 
             string responseBodyAsText = String.Empty;
             List<AirplaneBasic> listAirplanes = null;
-            HttpClient httpClient = new HttpClient();
+
+            var credentials = new NetworkCredential(radar.User, radar.Password);
+            var handler = new HttpClientHandler { Credentials = credentials };
+
+            HttpClient httpClient = new HttpClient(handler);
             HttpResponseMessage response = null;
+
 
             try
             {
                 if (!String.IsNullOrEmpty(radar.EndpointUrl))
                 {
-                    response = httpClient.PostAsync(radar.EndpointUrl, new StringContent("{\"req\":\"getStats\",\"data\":{\"statsType\":\"flights\",\"id\":38209319}}", Encoding.UTF8, "application/x-www-form-urlencoded")).Result;
+                    try
+                    {
+                        response = httpClient.PostAsync(radar.EndpointUrl, new StringContent("{\"req\":\"getStats\",\"data\":{\"statsType\":\"flights\",\"id\":38209319}}", Encoding.UTF8, "application/x-www-form-urlencoded")).Result;
+                    } catch(Exception e)
+                    {
+                        Console.WriteLine("Radar " + radar.Name + " is out.");
+                        ErrorManager.ThrowError(e, "Radar " + radar.Name + " is out.", false);
+                    }
+
                     responseBodyAsText = response.Content.ReadAsStringAsync().Result;
+
+                    PluginsManager.LastConnectionDate = DateTime.Now;
                 }
                 else if (radar.RadarParent != null)
                 {
