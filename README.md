@@ -8,9 +8,9 @@ Note: The application, for a while, is not running on RaspberryPI devices, even 
 
  - [Download page](https://github.com/Liques/RobotBum/releases)
 
-##How to Install
+## How to Install
 
-###Step 1: 
+### Step 1: 
 
 If you don't have a ADS-B reciever or you already have an instance running ModeSMixer2, even if it's not running in your machine, please skip to the step 2.
 
@@ -19,7 +19,7 @@ If you have your own ADS-B reciever you have to install ***ModeSMixer2***. This 
 - [Download link page for ModeSMixer2](http://xdeco.org/?page_id=30)
 - [How to install and run ModeSMixer2](http://xdeco.org/?page_id=48)
 
-###Step 2: 
+### Step 2: 
 
 1. Make sure that you already have an instance ModeSMixer2 running and the machine where you are installing Robot Bum have access to it webserver.
 2. Download the lastest code of RobotBum or clone this repository 
@@ -27,7 +27,7 @@ If you have your own ADS-B reciever you have to install ***ModeSMixer2***. This 
 4. If you are on windows, open DOS Command Prompt or if you are on Linux or Mac OS, make sure that you are on terminal or on a SSH client.
 5. Navigate to the folder that you unziped.
 
-###Step 3: 
+### Step 3: 
 Type the following line, replacing the parameters:
   
   ```
