@@ -1,4 +1,7 @@
-# RobotBum for ModeSMixer2
+> ## This project is not supported anymore.
+> If you are looking for a .NET software related to aviation, take a look at the project [NiceAirplanesRadar](https://github.com/Liques/NiceAirplanesRadar).
+
+# RobotBum
 RobotBum is application that tracks airplanes and sends messages to Twitter or a webserver. Works on Windows, Linux and Mac OS X, using .NET Core.
 
 ![alt tag](https://github.com/Liques/RobotBum/raw/master/example.PNG)
